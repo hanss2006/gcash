@@ -1,0 +1,15 @@
+<ng-container *ngIf="plant">
+  <h1>Удаление растения &quot;{{plant.name}}&quot;</h1>
+  <div class="centered">
+    <form (ngSubmit)="deletePlant()">
+      <input type="hidden" [(ngModel)]="plant.id" name="id">
+      <p>Название: {{plant.name}}</p>
+      <p>Краткое описание: {{plant.short}}</p>
+      <p>Полное описание: {{plant.lng}}</p>
+      <p>Цена: {{plant.price}}</p>
+      <p *ngIf="plant.featured">Особое предложение</p>
+      <p><input type="submit" value="Удалить"></p>
+    </form>
+    <p><a [routerLink]="['/goods', plant.cat]" [queryParams]="getPageParams(page)">Назад</a></p>
+  </div>
+</ng-container>

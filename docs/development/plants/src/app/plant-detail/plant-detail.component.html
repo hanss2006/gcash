@@ -1,0 +1,37 @@
+<ng-container *ngIf="plant">
+  <table class="main">
+    <tr>
+      <td rowspan="3" class="image">
+        <img *ngIf="plant.mainPic" [src]="plant.mainPic">
+      </td>
+      <td><h1>{{plant.name}}</h1></td>
+    </tr>
+    <tr>
+      <td>{{plant.lng}}</td>
+    </tr>
+    <tr class="right">
+      <td>{{plant.price|price}}</td>
+    </tr>
+  </table>
+  <ng-container *ngIf="plant.additionalPics">
+    <p>Дополнительные иллюстрации</p>
+    <div class="list">
+      <table *ngFor="let pic of plant.additionalPics"><tr><td><img [src]="pic.path"></td></tr></table>
+    </div>
+  </ng-container>
+  <p><a *ngIf="!featured" [routerLink]="['/goods', plant.cat]"
+  [queryParams]="getPageParams(page)">Назад</a></p>
+  <p><a *ngIf="featured" routerLink="/">Назад</a></p>
+  <h4>Комментарии</h4>
+  <form #commentform="ngForm" (ngSubmit)="submitComment();commentform.reset()">
+    <input type="hidden" [(ngModel)]="comment.plant" name="plant">
+    <p>Автор<br><input [(ngModel)]="comment.username" name="username" required maxlength="20"></p>
+    <p>Содержание<br><textarea [(ngModel)]="comment.content" name="content" required></textarea></p>
+    <p><input type="submit" value="Сохранить" [disabled]="!commentform.valid"></p>
+  </form>
+  <div class="comment" *ngFor="let comment of comments">
+    <p>{{comment.added.toLocaleString()}}: {{comment.username}}</p>
+    <p>{{comment.content}}</p>
+  </div>
+  <div #lastcomment></div>
+</ng-container>

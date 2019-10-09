@@ -1,0 +1,51 @@
+table {
+  border-collapse: collapse;
+}
+table.main {
+  width: 100%;
+}
+table.main td {
+  vertical-align: top;
+  padding: 10px;
+}
+table.main td.image {
+  width: 320px;
+  height: 240px;
+  text-align: center;
+}
+table.main td.image img {
+  max-width: 320px;
+  max-height: 240px;
+}
+table.main td h1 {
+  margin: 0px;
+}
+tr.right td {
+  text-align: right;
+}
+div.list + * {
+  clear: both;
+}
+div.list > table {
+  float: left;
+  width: 320px;
+  height: 240px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 10px;
+}
+div.list > table img {
+  max-width: 320px;
+  height: 240px;
+}
+div.comment {
+  padding: 5px;
+  margin: 20px 0px;
+  border: #ebff9a 2px solid;
+}
+div.comment p:first-child {
+  font-style: italic;
+}
+textarea {
+  height: 10em;
+}

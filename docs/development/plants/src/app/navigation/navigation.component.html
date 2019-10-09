@@ -1,0 +1,14 @@
+<a routerLink="/" routerLinkActive="active-link"
+[routerLinkActiveOptions]="{ exact: true }">Главная</a>
+<p></p>
+<a *ngFor="let cat of (cats|async)" [routerLink]="['goods', cat.id]"
+routerLinkActive="active-link">{{cat.name}}</a>
+<p></p>
+<a routerLink="/howtobuy" routerLinkActive="active-link">Оплата</a>
+<a routerLink="/about" routerLinkActive="active-link">О фирме</a>
+<p></p>
+<a *ngIf="role === ''" routerLink="/auth/login" routerLinkActive="active-link">Вход</a>
+<a *ngIf="role !== ''" routerLink="/cat" routerLinkActive="active-link">Категории</a>
+<a *ngIf="role !== ''" routerLink="/comment" routerLinkActive="active-link">Комментарии</a>
+<a *ngIf="role === 'a'" routerLink="/user" routerLinkActive="active-link">Пользователи</a>
+<a *ngIf="role !== ''" routerLink="/auth/logout" routerLinkActive="active-link">Выход</a>

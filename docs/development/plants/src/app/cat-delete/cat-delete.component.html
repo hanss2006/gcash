@@ -1,0 +1,12 @@
+<ng-container *ngIf="cat">
+  <h1>Удаление категории &quot;{{cat.name}}&quot;</h1>
+  <div class="centered">
+    <form (ngSubmit)="deleteCat()">
+      <input type="hidden" [(ngModel)]="cat.id" name="id">
+      <p>Название: {{cat.name}}</p>
+      <p>Порядок: {{cat.ordr}}</p>
+      <p><input type="submit" value="Удалить"></p>
+    </form>
+    <p><a routerLink="/cat">Назад</a></p>
+  </div>
+</ng-container>

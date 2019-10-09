@@ -1,0 +1,15 @@
+<h1>Правка комментария</h1>
+<ng-container *ngIf="comment">
+  <div class="centered">
+    <form #commentform="ngForm" (ngSubmit)="submitComment()">
+      <input type="hidden" [(ngModel)]="comment.id" name="id">
+      <p>Дата и время создания: {{comment.added.toString()}}</p>
+      <p>Категория / растение: {{comment.catName}} / {{comment.plantName}}</p>
+      <p>Автор<br><input [(ngModel)]="comment.username" name="username" required maxlength="20"></p>
+      <p>Содержание<br><textarea [(ngModel)]="comment.content" name="content" required></textarea></p>
+      <p><input type="checkbox" [(ngModel)]="comment.hidden" name="hidden"> Скрыт</p>
+      <p><input type="submit" value="Сохранить" [disabled]="!commentform.valid"></p>
+    </form>
+    <p><a [routerLink]="['/comment']" [queryParams]="getPageParams(page)">Назад</a></p>
+  </div>
+</ng-container>

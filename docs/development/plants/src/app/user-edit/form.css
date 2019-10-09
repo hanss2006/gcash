@@ -1,0 +1,18 @@
+div.centered {
+  margin: 30px auto;
+}
+form {
+  border: Black 1px dotted;
+  padding: 10px;
+}
+form input, form select, form textarea {
+  width: calc(100% - 2 * 3px - 2 * 3px);
+  border: Black 3px double;
+  padding: 3px;
+}
+form input[type=submit], form input[type=checkbox] {
+  width: auto;
+}
+form *.ng-invalid.ng-dirty {
+  border-color: Red;
+}

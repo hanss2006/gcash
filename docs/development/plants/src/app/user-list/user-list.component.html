@@ -1,0 +1,15 @@
+<h1>Пользователи</h1>
+<p><a routerLink="/user/create">Добавить</a></p>
+<table>
+  <tr>
+    <th>Имя</th>
+    <th>Роль</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+  <tr *ngFor="let user of (users|async)">
+    <td>{{user.name}}</td>
+    <td class="centered">{{user.role == 'e' ? 'Редактор' : 'Администратор'}}</td>
+    <td class="link"><a [routerLink]="['/user', user.id, 'edit']">Изменить</a></td>
+    <td class="link"><a [routerLink]="['/user', user.id, 'delete']">Удалить</a></td>
+  </tr>
+</table>

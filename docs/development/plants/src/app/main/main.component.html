@@ -1,0 +1,21 @@
+<h1>Добро пожаловать</h1>
+<p>Вас приветствует фирма <strong>&quot;Садовые растения&quot;</strong>,
+занимающаяся продажей садовых растений.</p>
+<h2>Особые предложения</h2>
+<table *ngFor="let plant of plants">
+  <tr>
+    <td rowspan="3" class="image">
+      <a [routerLink]="['/goods', plant.cat, plant.id]" [queryParams]="{ featured: 1}">
+        <img *ngIf="plant.mainPic" [src]="plant.mainPic">
+      </a>
+    </td>
+    <td><h3><a [routerLink]="['/goods', plant.cat, plant.id]"
+    [queryParams]="{ featured: 1}">{{plant.name}}</a></h3></td>
+  </tr>
+  <tr>
+    <td>{{plant.short}}</td>
+  </tr>
+  <tr class="right">
+    <td>{{plant.price|price}}</td>
+  </tr>
+</table>

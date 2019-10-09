@@ -1,0 +1,45 @@
+<h1>Каталог</h1>
+<ng-container *ngIf="cat">
+  <h2>{{cat.name}}</h2>
+  <form (ngSubmit)="find()">
+    <input [(ngModel)]="__search" name="__search">
+    <input type="submit" value="Искать">
+  </form>
+  <p *ngIf="role !== ''">
+    <a [routerLink]="['/plant', cat.id, 'create']" [queryParams]="getPageParams(page)">Добавить</a>
+  </p>
+  <table *ngFor="let plant of plants">
+    <tr>
+      <td rowspan="3" class="image">
+        <a [routerLink]="['/goods', cat.id, plant.id]" [queryParams]="getPageParams(page)">
+          <img *ngIf="plant.mainPic" [src]="plant.mainPic">
+        </a>
+      </td>
+      <td><h3><a [routerLink]="['/goods', cat.id, plant.id]"
+      [queryParams]="getPageParams(page)">{{plant.name}}</a></h3></td>
+    </tr>
+    <tr>
+      <td>{{plant.short}}</td>
+    </tr>
+    <tr class="right">
+      <td>{{plant.price|price}}</td>
+    </tr>
+    <tr class="right" *ngIf="role !== ''">
+      <td colspan="2">
+        <a [routerLink]="['/plant', plant.id, 'edit']"
+        [queryParams]="getPageParams(page)">Изменить</a>&nbsp;&nbsp;&nbsp;
+        <a [routerLink]="['/plant', plant.id, 'delete']"
+        [queryParams]="getPageParams(page)">Удалить</a>
+      </td>
+    </tr>
+  </table>
+  <div class="pagination">
+    <span *ngFor="let pg of __pages">
+      &nbsp;&nbsp;
+      <a *ngIf="pg != page" [routerLink]="['/goods', cat.id]"
+      [queryParams]="getPageParams(pg)">{{pg}}</a>
+      <span *ngIf="pg == page">{{pg}}</span>
+      &nbsp;&nbsp;
+    </span>
+  </div>
+</ng-container>

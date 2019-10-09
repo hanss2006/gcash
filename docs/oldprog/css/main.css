@@ -1,0 +1,172 @@
+@CHARSET "UTF-8";
+
+.ui-autocomplete {
+    max-height: 100px;
+    max-width: 300px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 100px;
+    width: 300px;
+  }
+  
+.paginate {
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 3px;
+	margin: 3px;
+    margin-left: auto; /* Отступ слева */
+    margin-right: auto; /* Отступ справа */
+}
+
+.paginate a {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #999;
+	text-decoration: none;
+	color: #666;
+}
+
+.paginate a:hover,.paginate a:active {
+	border: 1px solid #999;
+	color: #000;
+}
+
+.paginate span.current {
+	margin: 2px;
+	padding: 2px 5px 2px 5px;
+	border: 1px solid #999;
+	font-weight: bold;
+	background-color: #999;
+	color: #FFF;
+}
+
+.paginate span.disabled {
+	padding: 2px 5px 2px 5px;
+	margin: 2px;
+	border: 1px solid #eee;
+	color: #DDD;
+}
+
+li {
+	padding: 4px;
+	margin-bottom: 3px;
+	background-color: #FCC;
+	list-style: none;
+}
+
+ul {
+	margin: 6px;
+	padding: 0px;
+}
+
+table {
+	/*
+	border-collapse: collapse;
+	border: thin solid black;
+	margin: 10px;
+	*/
+}
+
+#placeholder {
+	text-align: center;
+}
+
+#show {
+	margin: 10px;
+}
+
+td,th {
+	padding: 5px;
+}
+
+#dialog input {
+	width: 150px;
+	margin: 5px;
+	text-align: left;
+}
+
+#dialog label {
+	/*display: inline-block;*/
+	width: 120px;
+}
+
+#dialog #description {
+	width: 300px;
+}
+
+.even td, .table tr.odd td.invert{
+    background-color:rgb(247,249,251);
+}
+
+.odd td, .table tr.even td.invert{
+    background-color:white;
+}
+
+.editDep, .deleteDep{
+	vertical-align: middle;
+	width: 45px;
+	height:45px;
+	padding: 1px 1px;
+}
+
+.editImg, .deleteImg{
+	width: 40px;
+	height:40px;
+}
+
+a{
+
+   color: #664EDF;
+   text-decoration: none;
+}
+
+a:hover{
+   background-color: #DFDCF0;
+}
+
+#container {
+	margin: 30px auto;
+	width: 600px;
+}
+
+#header {
+	text-align: center;
+}
+
+#navigation {
+	text-align: center;
+}
+
+#menu {
+	float: left;
+}
+
+#tree {
+	display: none;
+	clear: both;
+}
+
+
+#content {
+	float: left;
+}
+
+#footer {
+	text-align: center;
+	clear: both;
+}
+
+.col2 {
+    width: 200px; /* Ширина ячейки */
+    overflow: auto;
+ }
+ 
+ #tree{
+    width: 250px; /* Ширина ячейки */
+    overflow: auto;
+ }

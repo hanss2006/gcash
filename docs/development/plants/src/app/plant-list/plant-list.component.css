@@ -1,0 +1,10 @@
+form {
+  float: right;
+}
+form + * {
+  clear: both;
+}
+div.pagination {
+  margin-top: 30px;
+  text-align: center;
+}

@@ -1,0 +1,24 @@
+<h1>Комментарии</h1>
+<form (ngSubmit)="find()">
+  <input [(ngModel)]="__search" name="__search">
+  <input type="submit" value="Искать">
+</form>
+<div class="comment" *ngFor="let comment of comments">
+  <p *ngIf="comment.hidden"><strong>Комментарий скрыт</strong></p>
+  <p>{{comment.catName}} &gt; {{comment.plantName}}</p>
+  <p class="date">{{comment.added.toLocaleString()}}: {{comment.username}}</p>
+  <p>{{comment.content}}</p>
+  <p class="link"><a [routerLink]="['/comment', comment.id, 'edit']"
+  [queryParams]="getPageParams(page)">Изменить</a>&nbsp;&nbsp;&nbsp;
+  <a [routerLink]="['/comment', comment.id, 'delete']"
+  [queryParams]="getPageParams(page)">Удалить</a></p>
+</div>
+<div class="pagination">
+  <span *ngFor="let pg of __pages">
+    &nbsp;&nbsp;
+    <a *ngIf="pg != page" [routerLink]="['/comment']"
+    [queryParams]="getPageParams(pg)">{{pg}}</a>
+    <span *ngIf="pg == page">{{pg}}</span>
+    &nbsp;&nbsp;
+  </span>
+</div>

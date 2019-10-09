@@ -1,0 +1,11 @@
+div.comment {
+  padding: 5px;
+  margin: 20px 0px;
+  border: #ebff9a 2px solid;
+}
+div.comment p.date {
+  font-style: italic;
+}
+div.comment p.link {
+  text-align: right;
+}

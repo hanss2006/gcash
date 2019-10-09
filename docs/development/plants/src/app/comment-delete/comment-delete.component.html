@@ -1,0 +1,15 @@
+<h1>Удаление комментария</h1>
+<ng-container *ngIf="comment">
+  <div class="centered">
+    <form (ngSubmit)="deleteComment()">
+      <input type="hidden" [(ngModel)]="comment.id" name="id">
+      <p>Дата и время создания: {{comment.added.toString()}}</p>
+      <p>Категория / растение: {{comment.catName}} / {{comment.plantName}}</p>
+      <p>Автор: {{comment.username}}</p>
+      <p>Содержание:<br>{{comment.content}}</p>
+      <p *ngIf="comment.hidden">Комментарий скрыт</p>
+      <p><input type="submit" value="Удалить"></p>
+    </form>
+    <p><a [routerLink]="['/comment']" [queryParams]="getPageParams(page)">Назад</a></p>
+  </div>
+</ng-container>

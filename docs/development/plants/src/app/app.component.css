@@ -1,0 +1,46 @@
+div#maincont {
+  background-color: White;
+  width: 980px;
+  margin: 0px auto;
+}
+header, footer {
+  color: White;
+  background-color: #6a9273;
+}
+header {
+  height: 70pt;
+}
+header h1 {
+  font-size: 50pt;
+  letter-spacing: 12px;
+  text-align: center;
+  margin: 0px;
+}
+footer {
+  height: 16pt;
+  padding: 0px 10px;
+}
+footer p {
+  font-size: 12pt;
+  font-style: italic;
+  text-align: right;
+  margin: 0px;
+}
+div#table {
+  display: table;
+}
+div#table > div {
+  display: table-row;
+}
+div#table > div > * {
+  display: table-cell;
+  vertical-align: top;
+}
+nav {
+  width: 220px;
+  padding: 10px;
+}
+section {
+  width: 720px;
+  padding: 10px;
+}

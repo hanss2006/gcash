@@ -1,0 +1,18 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th, table td {
+  padding: 4px;
+  border: Black 1px dotted;
+}
+table th {
+  font-size: 16pt;
+  text-align: center;
+}
+td.centered, td.link {
+  text-align: center;
+}
+td.link {
+  width: 100px;
+}

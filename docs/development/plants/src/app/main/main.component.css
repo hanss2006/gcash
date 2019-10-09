@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: #ebff9a 2px solid;
+  margin: 20px 0px;
+}
+table td {
+  vertical-align: top;
+  padding: 8px;
+}
+table td.image {
+  width: 240px;
+  height: 180px;
+  text-align: center;
+}
+table td.image img {
+  max-width: 240px;
+  max-height: 180px;
+}
+h3 {
+  margin: 0px;
+}
+tr.right td {
+  text-align: right;
+}

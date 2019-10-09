@@ -1,0 +1,19 @@
+textarea[name=lng] {
+  height: 10em;
+}
+div.list + * {
+  clear: both;
+}
+div.list > table {
+  float: left;
+  width: 200px;
+  height: 150px;
+  text-align: center;
+  vertical-align: middle;
+  border-collapse: collapse;
+  margin: 10px 19px;
+}
+div.list > table img {
+  max-width: 200px;
+  height: 150px;
+}

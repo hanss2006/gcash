@@ -1,0 +1,31 @@
+a {
+  display: block;
+  color: #6a9273;
+  font-family: Verdana, sans-serif;
+  font-size: 20pt;
+  text-align: center;
+  text-decoration: none;
+  width: calc(100% - 2 * 2px);
+  height: 24pt;
+  padding: 5px 0px;
+  margin: 20px 0px;
+  border: #ebff9a 2px solid;
+
+  &:link, &:visited {
+    background-color: #ebff9a;
+    transition: background-color 0.5s;
+  }
+  &:active, &:hover {
+    background-color: White;
+    transition: background-color 0.25s;
+  }
+  &.active-link {
+    &:link, &:visited, &:active, &:hover {
+      color: Black;
+      background-color: White;
+    }
+  }
+}
+p {
+  height: 5px;
+}

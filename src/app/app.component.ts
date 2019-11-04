@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import {NavigationComponent} from './navigation/navigation.component';
 
 @Component({
   selector: 'gcash-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'gcash';
+  @ViewChild(NavigationComponent, {static: false}) nav: NavigationComponent;
 }

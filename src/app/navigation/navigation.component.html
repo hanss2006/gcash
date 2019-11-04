@@ -1,0 +1,11 @@
+<a routerLink="/" routerLinkActive="active-link"
+  [routerLinkActiveOptions]="{ exact: true }">Главная</a>
+<p></p>
+<a *ngIf="role !== ''" [routerLink]="['/transaction', 'account', '4cb873379b39e82a3d16e0f4082dd916']" routerLinkActive="active-link">Учет</a>
+<p></p>
+<a routerLink="/howtobuy" routerLinkActive="active-link">Оплата</a>
+<p></p>
+<a *ngIf="role === ''" routerLink="/auth/login" routerLinkActive="active-link">Вход</a>
+<a *ngIf="role === 'a'" routerLink="/user" routerLinkActive="active-link">Пользователи</a>
+<a *ngIf="role !== ''" routerLink="/auth/logout" routerLinkActive="active-link">Выход</a>
+

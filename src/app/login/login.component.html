@@ -1,0 +1,9 @@
+<h1>Вход</h1>
+<div class="centered">
+  <form #loginform="ngForm" (ngSubmit)="login()">
+    <p>Имя<br><input [(ngModel)]="credentials.name" name="name" required maxlenght="20" autocomplete="username"></p>
+    <p>Пароль<br><input type="password" [(ngModel)]="credentials.password" name="password"
+    required maxlenght="20" autocomplete="current-password"></p>
+    <p><input type="submit" value="Войти" [disabled]="!loginform.valid"></p>
+  </form>
+</div>

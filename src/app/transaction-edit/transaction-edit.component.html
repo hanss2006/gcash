@@ -1,0 +1,21 @@
+<ng-container *ngIf="transaction">
+  <h1 *ngIf="transaction.guid==''">Добавление проводки</h1>
+  <h1 *ngIf="transaction.guid!=''">Правка проводки &quot;{{transaction.description}}&quot;</h1>
+  <div class="centered">
+    <form #transactionform="ngForm" (ngSubmit)="submitTransaction()">
+      <input type="hidden" [(ngModel)]="transaction.guid" name="guid">
+      <input type="hidden" [(ngModel)]="transaction.currentAccount" name="currentAccount">
+      <p>Дата<br><input [(ngModel)]="transaction.date" name="date" required></p>
+      <p>Счет<br>
+      <select size="1" [(ngModel)]="transaction.account" name="account" required>
+        <option *ngFor="let accountItem of (accounts)" [value]="accountItem.guid">{{accountItem.name}}</option>
+      </select><!--|async-->
+      </p>
+      <p>Описание<br><textarea [(ngModel)]="transaction.description" name="description" required maxlength="2048"></textarea></p>
+      <p>Стоимость<br><input type="number" [(ngModel)]="transaction.value" name="value" required></p>
+      <p><input type="submit" value="Сохранить" [disabled]="!transactionform.valid"></p>
+    </form>
+    <p><a [routerLink]="['/transaction', 'account', currAccount.guid]"
+          [queryParams]="{'page':page}">Назад</a></p>
+  </div>
+</ng-container>

@@ -1,0 +1,12 @@
+<ng-container *ngIf="user">
+  <h1>Удаление пользователя &quot;{{user.name}}&quot;</h1>
+  <div class="centered">
+    <form (ngSubmit)="deleteUser()">
+      <input type="hidden" [(ngModel)]="user.id" name="id">
+      <p>Имя: {{user.name}}</p>
+      <p>Роль: {{user.role == 'e' ? 'редактор' : 'администратор'}}</p>
+      <p><input type="submit" value="Удалить"></p>
+    </form>
+    <p><a routerLink="/user">Назад</a></p>
+  </div>
+</ng-container>

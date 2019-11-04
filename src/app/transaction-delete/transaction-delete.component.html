@@ -1,0 +1,13 @@
+<ng-container *ngIf="transaction">
+  <h1>Удаление проводки &quot;{{transaction.description}}&quot;</h1>
+  <div class="centered">
+    <form (ngSubmit)="deleteTransaction()">
+      <input type="hidden" [(ngModel)]="transaction.guid" name="id">
+      <p>Дата: {{transaction.date}}</p>
+      <p>Описание: {{transaction.description}}</p>
+      <p>Сумма: {{transaction.value}}</p>
+      <p><input type="submit" value="Удалить"></p>
+    </form>
+    <p><a routerLink="/transaction">Назад</a></p>
+  </div>
+</ng-container>

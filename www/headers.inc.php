@@ -10,4 +10,5 @@ $username = 'cash1';
 $password = 'cash123';
 
 $conn = new mysqli($host, $username, $password, $dbname);
+mysqli_set_charset($conn, 'utf8');
 

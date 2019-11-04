@@ -1,0 +1,32 @@
+<h1>Проводки</h1>
+<form (ngSubmit)="find()">
+  <input [(ngModel)]="__search" name="__search">
+  <input type="submit" value="Искать">
+</form>
+
+<p><a routerLink="/transaction/create">Добавить</a></p>
+<table>
+  <tr>
+    <th>Дата</th>
+    <th>Счет</th>
+    <th>Описание</th>
+    <th>Стоимость</th>
+    <th colspan="2">&nbsp;</th>
+  </tr>
+  <tr *ngFor="let transaction of (transactions)">
+    <td>{{transaction.date}}</td>
+    <td>{{transaction.description}}</td>
+    <td>{{transaction.value|price}}</td>
+    <td class="link"><a [routerLink]="['/transaction', transaction.guid, 'edit', 'account', '4cb873379b39e82a3d16e0f4082dd916']">Изменить</a></td>
+    <td class="link"><a [routerLink]="['/transaction', transaction.guid, 'delete', 'account', '4cb873379b39e82a3d16e0f4082dd916']">Удалить</a></td>
+  </tr>
+</table>
+<div class="pagination">
+    <span *ngFor="let pg of __pages">
+      &nbsp;&nbsp;
+      <a *ngIf="pg != page" [routerLink]="['/transaction/account', account.guid]"
+         [queryParams]="getPageParams(pg)">{{pg}}</a>
+      <span *ngIf="pg == page">{{pg}}</span>
+      &nbsp;&nbsp;
+    </span>
+</div>

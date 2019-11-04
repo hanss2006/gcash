@@ -2,7 +2,7 @@
 include "headers.inc.php";
 $output = ["status" => 0];
 session_start();
-// if ((isset($_SESSION["role"])) && ($_SESSION["role"]) == "a"){
+if ((isset($_SESSION["role"])) && ($_SESSION["role"]) == "a"){
     if (!($conn->connect_errno)){
         $_POST = json_decode(file_get_contents("php://input"), true);
         $id = $conn->real_escape_string($_POST["id"]);
@@ -24,7 +24,7 @@ session_start();
         $output["status"] = ($q) ? 1 : 0;
         $conn->close();
     }
-//} else {
-//    session_destroy();
-//}
+} else {
+    session_destroy();
+}
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

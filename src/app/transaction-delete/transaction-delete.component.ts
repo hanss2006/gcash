@@ -15,6 +15,7 @@ import { AppComponent } from '../app.component';
 })
 export class TransactionDeleteComponent implements OnInit {
   transaction: Transaction;
+  currAccountGuid: string;
 
   constructor(private route: ActivatedRoute, private ts: TransactionsService,
               private router: Router, private title: Title,
@@ -22,6 +23,8 @@ export class TransactionDeleteComponent implements OnInit {
 
   ngOnInit() {
     const guid: string = this.route.snapshot.paramMap.get('guid');
+    this.currAccountGuid = this.route.snapshot.paramMap.get('account');
+
     // TODO: текущий счет
     this.ts.getTransaction('4cb873379b39e82a3d16e0f4082dd916', guid).subscribe((transaction: Transaction) => {
       this.transaction = transaction;
@@ -32,8 +35,7 @@ export class TransactionDeleteComponent implements OnInit {
     this.ts.deleteTransactions(this.transaction.guid).subscribe(response => {
       if (response.status === 1) {
         //this.router.navigate(['/transaction']);
-        const currAccountGuid = this.route.snapshot.paramMap.get('account');
-        this.router.navigateByUrl('transaction/account/' + currAccountGuid);
+        this.router.navigateByUrl('transaction/account/' + this.currAccountGuid);
       }
     });
   }

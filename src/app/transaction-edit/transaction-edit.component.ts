@@ -43,12 +43,11 @@ export class TransactionEditComponent extends TransactionBase implements OnInit 
       });
     } else {
       this.currAccount = new Account();
-      this.currAccount.guid = '4cb873379b39e82a3d16e0f4082dd916';
+      this.currAccount.guid = currAccountGuid;
     }
 
     if (guid) { // this.router.url === '/transaction/create'
-      // TODO: Протянуть текущий счет
-      this.ts.getTransaction(this.currAccount.guid, guid).subscribe((transaction: Transaction) => {
+      this.ts.getTransaction(currAccountGuid, guid).subscribe((transaction: Transaction) => {
         this.transaction = transaction;
         this.as.getAccount(transaction.account).subscribe((account: Account) => {
           this.corrAccount = account;
@@ -58,8 +57,8 @@ export class TransactionEditComponent extends TransactionBase implements OnInit 
       this.title.setTitle('Правка :: Проводки :: ' + Settings.title);
     } else {
       this.transaction = new Transaction();
-      this.transaction.currentAccount = this.currAccount.guid;
-      this.as.getAccount(this.currAccount.guid).subscribe((account: Account) => {
+      this.transaction.currentAccount = currAccountGuid;
+      this.as.getAccount(currAccountGuid).subscribe((account: Account) => {
         this.currAccount = account;
         this.title.setTitle('Добавление :: ' + this.currAccount.name + ' :: ' + Settings.title);
       });

@@ -8,6 +8,7 @@
       <p>Сумма: {{transaction.value}}</p>
       <p><input type="submit" value="Удалить"></p>
     </form>
-    <p><a routerLink="/transaction">Назад</a></p>
+    <!--[queryParams]="{'page':page}"-->
+    <p><a [routerLink]="['/transaction', 'account', this.currAccountGuid]">Назад</a></p>
   </div>
 </ng-container>

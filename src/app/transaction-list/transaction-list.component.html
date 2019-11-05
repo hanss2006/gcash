@@ -4,7 +4,7 @@
   <input type="submit" value="Искать">
 </form>
 
-<p><a routerLink="/transaction/create">Добавить</a></p>
+<p><a routerLink="/transaction/create/account/4cb873379b39e82a3d16e0f4082dd916">Добавить</a></p>
 <table>
   <tr>
     <th>Дата</th>
@@ -17,8 +17,8 @@
     <td>{{transaction.date}}</td>
     <td>{{transaction.description}}</td>
     <td>{{transaction.value|price}}</td>
-    <td class="link"><a [routerLink]="['/transaction', transaction.guid, 'edit', 'account', '4cb873379b39e82a3d16e0f4082dd916']">Изменить</a></td>
-    <td class="link"><a [routerLink]="['/transaction', transaction.guid, 'delete', 'account', '4cb873379b39e82a3d16e0f4082dd916']">Удалить</a></td>
+    <td class="link"><a [routerLink]="['/transaction', 'guid', transaction.guid, 'edit', 'account', '4cb873379b39e82a3d16e0f4082dd916']">Изменить</a></td>
+    <td class="link"><a [routerLink]="['/transaction', 'guid',transaction.guid, 'delete', 'account', '4cb873379b39e82a3d16e0f4082dd916']">Удалить</a></td>
   </tr>
 </table>
 <div class="pagination">

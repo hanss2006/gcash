@@ -15,7 +15,7 @@
       <p>Стоимость<br><input type="number" [(ngModel)]="transaction.value" name="value" required></p>
       <p><input type="submit" value="Сохранить" [disabled]="!transactionform.valid"></p>
     </form>
-    <p><a [routerLink]="['/transaction', 'account', currAccount.guid]"
+    <p><a [routerLink]="['/transaction', 'account', this.transaction.currentAccount]"
           [queryParams]="{'page':page}">Назад</a></p>
   </div>
 </ng-container>

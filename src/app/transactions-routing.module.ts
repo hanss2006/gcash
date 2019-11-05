@@ -7,9 +7,9 @@ import { TransactionDeleteComponent } from './transaction-delete/transaction-del
 
 const appRoutes: Routes = [
   { path: '', children: [
-      { path: 'create', component: TransactionEditComponent },
-      { path: ':guid/edit/account/4cb873379b39e82a3d16e0f4082dd916', component: TransactionEditComponent },
-      { path: ':guid/delete/account/:account', component: TransactionDeleteComponent },
+      { path: 'create/account/:account', component: TransactionEditComponent },
+      { path: 'guid/:guid/edit/account/:account', component: TransactionEditComponent },
+      { path: 'guid/:guid/delete/account/:account', component: TransactionDeleteComponent },
       { path: 'account/:account', component: TransactionListComponent }
       // ,{ path: '', component: TransactionListComponent }
     ]}

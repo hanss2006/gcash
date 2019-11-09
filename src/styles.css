@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css"; [@import '~@angular/material/prebuilt-themes/indigo-pink.css';]
+/*@import "~@angular/material/prebuilt-themes/indigo-pink.css"; [@import '~@angular/material/prebuilt-themes/indigo-pink.css';]*/
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body {
+  font-family: Roboto, Arial, sans-serif;
   margin: 0px;
-  background-color: #ebff9a;
-  background-image: repeating-linear-gradient(White 0px, White 1px, #ebff9a 2px, White 3px, White 4px);
 }
 p, td, th {
   font-family: Tahoma, Arial, sans-serif;
@@ -27,14 +27,14 @@ h4 {
   font-size: 16pt;
 }
 a:link {
-  color: #81b083;
+  /*color: #81b083;*/
   text-decoration: none;
 }
 a:active, a:hover {
-  color: #81b083;
+  /*color: #81b083;*/
   text-decoration: underline;
 }
 a:visited {
-  color: #87d291;
+  /*color: #87d291;*/
   text-decoration: none;
 }

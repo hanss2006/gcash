@@ -1,18 +1,40 @@
 <div id="maincont">
   <header>
-    <h1>Gnucash</h1>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <!--        *ngIf="isHandset$ | async">-->
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <nav>
+          <gcash-navigation></gcash-navigation>
+        </nav>
+    </mat-toolbar-row>
+    </mat-toolbar>
   </header>
-  <div id="table">
-    <div>
-      <nav>
-        <gcash-navigation></gcash-navigation>
-      </nav>
-      <section>
-        <router-outlet></router-outlet>
-      </section>
-    </div>
-  </div>
-  <footer>
-    <p>@copy; &quot;Gnucash&quot;, 2019 г.</p>
-  </footer>
+  <mat-sidenav-container class="main-container">
+    <mat-sidenav #drawer mode="side" opened>Sidenav content</mat-sidenav>
+    <mat-sidenav-content>
+
+      <div id="table">
+        <div>
+          <section>
+            <router-outlet></router-outlet>
+          </section>
+        </div>
+      </div>
+
+
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+
+<!--  <footer>-->
+<!--    <p>@copy; &quot;Gnucash&quot;, 2019 г.</p>-->
+<!--  </footer>-->
 </div>

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialAppModule } from './ngmaterial.module';
+import { MaterialAppModule } from './materialapp.module';
 import {NavigationComponent} from './navigation/navigation.component';
 import { HttpClientModule } from '@angular/common/http';
 import {StaticPageComponent} from './static-page/static-page.component';
@@ -16,7 +16,7 @@ import {AuthService} from './auth.service';
     AppComponent,
     MainComponent,
     NavigationComponent,
-    StaticPageComponent
+    StaticPageComponent,
   ],
   imports: [
     BrowserModule,

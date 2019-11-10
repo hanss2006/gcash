@@ -8,17 +8,22 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
 import { TransactionEditComponent } from './transaction-edit/transaction-edit.component';
 import { TransactionDeleteComponent } from './transaction-delete/transaction-delete.component';
 import { PricePipe } from './price.pipe';
+import { AccountTreeComponent } from './account-tree/account-tree.component';
+import { MaterialAppModule } from './materialapp.module';
+
 
 @NgModule({
   declarations: [TransactionListComponent,
     TransactionEditComponent,
     TransactionDeleteComponent,
     PricePipe
+    ,AccountTreeComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     TransactionsRoutingModule
+    ,MaterialAppModule
   ],
   providers: [TransactionsService, AccountsService],
   exports: [

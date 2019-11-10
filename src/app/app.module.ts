@@ -10,13 +10,16 @@ import {NavigationComponent} from './navigation/navigation.component';
 import { HttpClientModule } from '@angular/common/http';
 import {StaticPageComponent} from './static-page/static-page.component';
 import {AuthService} from './auth.service';
+//import { AccountTreeComponent } from './account-tree/account-tree.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     NavigationComponent,
-    StaticPageComponent,
+    StaticPageComponent
+    // ,AccountTreeComponent
   ],
   imports: [
     BrowserModule,

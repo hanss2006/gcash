@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -14,7 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
   imports: [
     MatButtonModule,
     MatToolbarModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -27,7 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
   exports: [
     MatButtonModule,
     MatToolbarModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -36,6 +36,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule
-  ]
+  ],
+  declarations: []
 })
 export class MaterialAppModule { }

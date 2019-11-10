@@ -17,7 +17,10 @@
     </mat-toolbar>
   </header>
   <mat-sidenav-container class="main-container">
-    <mat-sidenav #drawer mode="side" opened>Sidenav content</mat-sidenav>
+    <mat-sidenav #drawer mode="side" closed>
+<!--      <gcash-account-tree></gcash-account-tree>-->
+      <router-outlet name="left"></router-outlet>
+    </mat-sidenav>
     <mat-sidenav-content>
 
       <div id="table">
@@ -27,8 +30,6 @@
           </section>
         </div>
       </div>
-
-
 
     </mat-sidenav-content>
   </mat-sidenav-container>

@@ -7,7 +7,6 @@ import 'rxjs/add/observable/of';
 
 import {Account} from './account';
 import {catchError} from 'rxjs/operators';
-import {throwError} from 'rxjs';
 import {BaseService} from './base-service';
 
 @Injectable()

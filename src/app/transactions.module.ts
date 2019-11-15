@@ -10,6 +10,7 @@ import { TransactionDeleteComponent } from './transaction-delete/transaction-del
 import { PricePipe } from './price.pipe';
 import { AccountTreeComponent } from './account-tree/account-tree.component';
 import { MaterialAppModule } from './materialapp.module';
+import {AccountTreeService} from './account-tree.service';
 
 
 @NgModule({
@@ -17,15 +18,19 @@ import { MaterialAppModule } from './materialapp.module';
     TransactionEditComponent,
     TransactionDeleteComponent,
     PricePipe
-    ,AccountTreeComponent
+    , AccountTreeComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     TransactionsRoutingModule
-    ,MaterialAppModule
+    , MaterialAppModule
   ],
-  providers: [TransactionsService, AccountsService],
+  providers: [
+    TransactionsService,
+    AccountsService,
+    AccountTreeService
+  ],
   exports: [
     PricePipe
   ]

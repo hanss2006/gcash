@@ -3,7 +3,12 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button disabled></button>
-    {{node.name}}
+    <a [routerLink]="['/transaction', 'account', node.value]"
+       routerLinkActive="active-link">{{node.name}}
+    </a>
+<!--    <a [routerLink]="" (click)="load(node.value)"-->
+<!--       routerLinkActive="active-link">{{node.name}}-->
+<!--    </a>-->
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
@@ -13,6 +18,12 @@
         {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
       </mat-icon>
     </button>
-    {{node.name}}
+
+    <a [routerLink]="['/transaction', 'account', node.value]"
+       routerLinkActive="active-link" _target='_self'>{{node.name}}
+    </a>
+<!--    <a [routerLink]="" (click)="load(node.value)"-->
+<!--       routerLinkActive="active-link">{{node.name}}-->
+<!--    </a>-->
   </mat-tree-node>
 </mat-tree>

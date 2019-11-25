@@ -38,3 +38,11 @@ a:visited {
   /*color: #87d291;*/
   text-decoration: none;
 }
+
+.mat-drawer-inner-container{
+  padding: 5px;
+}
+
+.filler {
+  flex: 1 1 auto;
+}

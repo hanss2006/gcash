@@ -10,7 +10,8 @@ import {NavigationComponent} from './navigation/navigation.component';
 import { HttpClientModule } from '@angular/common/http';
 import {StaticPageComponent} from './static-page/static-page.component';
 import {AuthService} from './auth.service';
-//import { AccountTreeComponent } from './account-tree/account-tree.component';
+import {MenuMainLeftComponent} from './menu-main-left/menu-main-left.component';
+// import { AccountTreeComponent } from './account-tree/account-tree.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {AuthService} from './auth.service';
     AppComponent,
     MainComponent,
     NavigationComponent,
-    StaticPageComponent
+    StaticPageComponent,
+    MenuMainLeftComponent
     // ,AccountTreeComponent
   ],
   imports: [

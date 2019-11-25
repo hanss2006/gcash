@@ -8,6 +8,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MenuMainLeftComponent } from './menu-main-left/menu-main-left.component';
 
 
 @NgModule({

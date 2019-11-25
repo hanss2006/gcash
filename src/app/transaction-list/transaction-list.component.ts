@@ -28,19 +28,20 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
   ngOnInit() {
     // TODO: Провести текущий счет
     this.title.setTitle('Проводки :: ' + Settings.title);
+    //let currAccountGuid = this.route.snapshot.paramMap.get('account');
 
-    this.route.queryParams.subscribe((qs) => {
-      this.page = parseInt(qs.page || '1');
-      this.search = qs.search || '';
-      this.__search = this.search;
-
-      let currAccountGuid: string = qs.account;
-      if (!currAccountGuid)
-        currAccountGuid = '4cb873379b39e82a3d16e0f4082dd916';
+    this.route.params.subscribe(routeParams => {
+      const currAccountGuid = routeParams.account;
       this.acs.getAccount(currAccountGuid).subscribe((account: Account) => {
         this.account = account;
         this.title.setTitle(account.name + ' :: Счет :: ' + Settings.title);
         this.getData(this.account);
+
+        this.route.queryParams.subscribe((qs) => {
+          this.page = parseInt(qs.page || '1');
+          this.search = qs.search || '';
+          this.__search = this.search;
+        });
       });
     });
   }

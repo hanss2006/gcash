@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 
 @Component({
-  selector: 'gcash-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.less']
+  selector: 'gcash-menu-main-left',
+  templateUrl: './menu-main-left.component.html',
+  styleUrls: ['./menu-main-left.component.css']
 })
-export class NavigationComponent implements OnInit {
+export class MenuMainLeftComponent implements OnInit {
   role: string = '';
 
   constructor(private as: AuthService) { }
@@ -18,5 +18,6 @@ export class NavigationComponent implements OnInit {
   refreshRole(): void{
     this.as.getRole().subscribe((role: string)=>{this.role=role;});
   }
+
 
 }

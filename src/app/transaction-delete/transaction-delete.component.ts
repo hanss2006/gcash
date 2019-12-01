@@ -26,7 +26,7 @@ export class TransactionDeleteComponent implements OnInit {
     this.currAccountGuid = this.route.snapshot.paramMap.get('account');
 
     // TODO: текущий счет
-    this.ts.getTransaction('4cb873379b39e82a3d16e0f4082dd916', guid).subscribe((transaction: Transaction) => {
+    this.ts.getTransaction(this.currAccountGuid, guid).subscribe((transaction: Transaction) => {
       this.transaction = transaction;
     });
     this.title.setTitle('Удаление :: Проводки :: ' + Settings.title);

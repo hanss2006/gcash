@@ -15,10 +15,11 @@ import {AccountsService} from '../accounts.service';
   styleUrls: ['./transaction-list.component.css']
 })
 export class TransactionListComponent  extends TransactionBase implements OnInit {
+  currAccountGuid: string;
   account: Account;
   transactions: Transaction[];
-  pages: number = 1;
-  __search: string = '';
+  pages = 1;
+  __search = '';
 
   constructor(private ts: TransactionsService, private acs: AccountsService, private title: Title,
               private as: AuthService, private route: ActivatedRoute, private router: Router) {
@@ -26,23 +27,24 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
   }
 
   ngOnInit() {
-    // TODO: Провести текущий счет
     this.title.setTitle('Проводки :: ' + Settings.title);
-    //let currAccountGuid = this.route.snapshot.paramMap.get('account');
+    // let currAccountGuid = this.route.snapshot.paramMap.get('account');
 
     this.route.params.subscribe(routeParams => {
-      const currAccountGuid = routeParams.account;
-      this.acs.getAccount(currAccountGuid).subscribe((account: Account) => {
-        this.account = account;
-        this.title.setTitle(account.name + ' :: Счет :: ' + Settings.title);
-        this.getData(this.account);
+      this.currAccountGuid = routeParams.account;
+      this.route.queryParams.subscribe((qs) => {
+        this.page = parseInt(qs.page || '1');
+        this.search = qs.search || '';
+        this.__search = this.search;
 
-        this.route.queryParams.subscribe((qs) => {
-          this.page = parseInt(qs.page || '1');
-          this.search = qs.search || '';
-          this.__search = this.search;
+        this.acs.getAccount(this.currAccountGuid).subscribe((account: Account) => {
+          this.account = account;
+          this.title.setTitle(account.name + ' :: Счет :: ' + Settings.title);
+          this.getData(this.account);
+
         });
       });
+
     });
   }
 
@@ -53,7 +55,7 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
   }
   get __pages(): number[] {
     const pages: number[] = [];
-    for (var i = 1; i <= this.pages; i++) {
+    for (let i = 1; i <= this.pages; i++) {
       pages.push(i);
     }
     return pages;

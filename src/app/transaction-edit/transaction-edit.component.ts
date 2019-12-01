@@ -20,6 +20,8 @@ export class TransactionEditComponent extends TransactionBase implements OnInit 
   accounts: Account[];
   corrAccount: Account;
   currAccount: Account;
+  currAccountGuid: string;
+  guid: string;
 
   constructor(private route: ActivatedRoute, private ts: TransactionsService, private as: AccountsService,
               private router: Router, private title: Title,
@@ -28,41 +30,49 @@ export class TransactionEditComponent extends TransactionBase implements OnInit 
   }
 
   ngOnInit() {
-    const guid: string = this.route.snapshot.paramMap.get('guid');
+
     this.as.getAccounts().subscribe((accounts: Account[]) => {
       this.accounts = accounts;
     });
 
-    this.page = parseInt(this.route.snapshot.queryParamMap.get('page') || '1');
-    this.search = this.route.snapshot.queryParamMap.get('search') || '';
+    this.route.params.subscribe(routeParams => {
+      this.currAccountGuid = routeParams.account;
+      this.guid = routeParams.guid;
 
-    const currAccountGuid = this.route.snapshot.paramMap.get('account');
-    if (currAccountGuid){
-      this.as.getAccount(currAccountGuid).subscribe((account: Account) => {
-        this.currAccount = account;
-      });
-    } else {
-      this.currAccount = new Account();
-      this.currAccount.guid = currAccountGuid;
-    }
-
-    if (guid) { // this.router.url === '/transaction/create'
-      this.ts.getTransaction(currAccountGuid, guid).subscribe((transaction: Transaction) => {
-        this.transaction = transaction;
-        this.as.getAccount(transaction.account).subscribe((account: Account) => {
-          this.corrAccount = account;
-          this.title.setTitle('Правка :: ' + account.name + ' :: ' + Settings.title);
+      // const currAccountGuid = this.route.snapshot.paramMap.get('account');
+      if (this.currAccountGuid){
+        this.as.getAccount(this.currAccountGuid).subscribe((account: Account) => {
+          this.currAccount = account;
         });
-      });
-      this.title.setTitle('Правка :: Проводки :: ' + Settings.title);
-    } else {
-      this.transaction = new Transaction();
-      this.transaction.currentAccount = currAccountGuid;
-      this.as.getAccount(currAccountGuid).subscribe((account: Account) => {
-        this.currAccount = account;
-        this.title.setTitle('Добавление :: ' + this.currAccount.name + ' :: ' + Settings.title);
-      });
-    }
+      } else {
+        this.currAccount = new Account();
+        this.currAccount.guid = this.currAccountGuid;
+      }
+
+      if (this.guid) { // this.router.url === '/transaction/create'
+        this.ts.getTransaction(this.currAccountGuid, this.guid).subscribe((transaction: Transaction) => {
+          this.transaction = transaction;
+          this.as.getAccount(transaction.account).subscribe((account: Account) => {
+            this.corrAccount = account;
+            this.title.setTitle('Правка :: ' + account.name + ' :: ' + Settings.title);
+          });
+        });
+        this.title.setTitle('Правка :: Проводки :: ' + Settings.title);
+      } else {
+        this.transaction = new Transaction();
+        this.transaction.currentAccount = this.currAccountGuid;
+        this.as.getAccount(this.currAccountGuid).subscribe((account: Account) => {
+          this.currAccount = account;
+          this.title.setTitle('Добавление :: ' + this.currAccount.name + ' :: ' + Settings.title);
+        });
+      }
+
+    });
+
+    this.route.queryParams.subscribe((qs) => {
+      this.page = parseInt(qs.page || '1');
+      this.search = qs.search || '';
+    });
   }
 
   private submitTransaction(): void {

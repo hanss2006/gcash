@@ -2,7 +2,7 @@
 include "headers.inc.php";
 $output = [];
 //session_start();
-//if ((isset($_SESSION["role"])) && ($_SESSION["role"]) != "") {
+if ((isset($_SESSION["role"])) && ($_SESSION["role"]) != "") {
   if (!($conn->connect_errno)) {
 
 //    $root_id = "124b2ad3633e2b6c8ff26505730c09a7";
@@ -61,9 +61,9 @@ $output = [];
     $records->close();
     $conn->close();
   }
-//} else {
-//  session_destroy();
-//}
+} else {
+  session_destroy();
+}
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
 
 

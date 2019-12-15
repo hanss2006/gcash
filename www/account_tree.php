@@ -41,7 +41,7 @@ if ((isset($_SESSION["role"])) && ($_SESSION["role"]) != "") {
                 description,
                 hidden,
                 placeholder
-             FROM gnucash1.accounts ORDER BY parent_guid"
+             FROM accounts ORDER BY parent_guid"
     );
     // Fetch all records
     // @MYSQLI_ASSOC - Columns are returned into the array having the field name as the array index.

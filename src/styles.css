@@ -2,7 +2,15 @@
 /*@import "~@angular/material/prebuilt-themes/indigo-pink.css"; [@import '~@angular/material/prebuilt-themes/indigo-pink.css';]*/
 
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-html, body { height: 100%; }
+html, body, .mat-sidenav-container { height: 100vh; }
+
+.mat-sidenav-container{
+  .mat-sidenav{
+    width: 200px;
+    background:#999999;
+  }
+}
+
 body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0px;

@@ -9,6 +9,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from '../account';
 import {AccountsService} from '../accounts.service';
 
+
+
 @Component({
   selector: 'gcash-transaction-list',
   templateUrl: './transaction-list.component.html',
@@ -20,6 +22,7 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
   transactions: Transaction[];
   pages = 1;
   __search = '';
+  displayedColumns: string[] = ['date', 'description', 'value'];
 
   constructor(private ts: TransactionsService, private acs: AccountsService, private title: Title,
               private as: AuthService, private route: ActivatedRoute, private router: Router) {

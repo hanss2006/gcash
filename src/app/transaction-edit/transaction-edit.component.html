@@ -5,7 +5,13 @@
     <form #transactionform="ngForm" (ngSubmit)="submitTransaction()">
       <input type="hidden" [(ngModel)]="transaction.guid" name="guid">
       <input type="hidden" [(ngModel)]="transaction.currentAccount" name="currentAccount">
-      <p>Дата<br><input [(ngModel)]="transaction.date" name="date" required></p>
+      <p>Дата<br>
+<!--        <mat-form-field>-->
+          <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="transaction.date" name="date" required>
+          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>
+<!--        </mat-form-field>-->
+<!--        <input [(ngModel)]="transaction.date" name="date" required></p>-->
       <p>Счет<br>
       <select size="1" [(ngModel)]="transaction.account" name="account" required>
         <option *ngFor="let accountItem of (accounts)" [value]="accountItem.guid">{{accountItem.name}}</option>

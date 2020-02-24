@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material';
+import {MatButtonModule, MatDatepickerModule, MatListModule, MatNativeDateModule} from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,7 +23,10 @@ import { MenuMainLeftComponent } from './menu-main-left/menu-main-left.component
     MatTreeModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatButtonModule,
@@ -36,7 +39,10 @@ import { MenuMainLeftComponent } from './menu-main-left/menu-main-left.component
     MatTreeModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: []
 })

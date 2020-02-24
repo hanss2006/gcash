@@ -22,7 +22,7 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
   transactions: Transaction[];
   pages = 1;
   __search = '';
-  displayedColumns: string[] = ['date', 'description', 'value'];
+  displayedColumns: string[] = ['date', 'description', 'value', 'edit', 'delete'];
 
   constructor(private ts: TransactionsService, private acs: AccountsService, private title: Title,
               private as: AuthService, private route: ActivatedRoute, private router: Router) {

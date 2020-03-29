@@ -2,7 +2,7 @@
 include "headers.inc.php";
 $output = [];
 session_start();
-if ((isset($_SESSION["role"])) && ($_SESSION["role"]) != ""){
+if ((isset($_SESSION["role"])) && ($_SESSION["role"]) != "") {
   if (!($conn->connect_errno)) {
     if (isset($_GET["account_guid"])) $account_guid = $conn->real_escape_string($_GET["account_guid"]);
     if (isset($_GET["guid"])) $guid = $conn->real_escape_string($_GET["guid"]);
@@ -22,7 +22,7 @@ if ((isset($_SESSION["role"])) && ($_SESSION["role"]) != ""){
 	                  transactions.guid = t1.tx_guid
                 WHERE
 	                  t1.account_guid = '" . $account_guid . "'" . $s
-                );
+      );
       $rec_count = $q->fetch_assoc()["cnt"];
       $q->close();
       $offset = ($page_num - 1) * $page_count;
@@ -64,10 +64,23 @@ EOD;
 
         while ($row = $q->fetch_assoc()) {
           $arr = ["guid" => $row["guid"], "description" => $row["description"],
-            "date" => $row["date"], "value" => $row["value"], "account" => $row["account"], "currentAccount"=>$row["currentAccount"]];
+            "date" => $row["date"], "value" => $row["value"], "account" => $row["account"], "currentAccount" => $row["currentAccount"]];
           $output["data"][] = $arr;
         }
       }
+
+
+      // Total by account
+      $sql = "SELECT
+  ROUND(SUM(quantity_num / quantity_denom), 2) AS total_by_current
+FROM splits
+WHERE account_guid = '$account_guid'";
+      $q = $conn->query($sql);
+
+      if ($total_by_current = $q->fetch_assoc())
+        $output["total"] = $total_by_current["total_by_current"];
+
+
     } elseif (isset($_GET["account_guid"]) && isset($_GET["guid"])) {
       $sql = <<<EOD
 SELECT
@@ -102,9 +115,9 @@ WHERE
 EOD;
 
       $q = $conn->query($sql);
-      if ($row = $q->fetch_assoc()){
+      if ($row = $q->fetch_assoc()) {
         $output = ["guid" => $row["guid"], "description" => $row["description"],
-          "date" => $row["date"], "value" => $row["value"], "account" => $row["account"], "currentAccount"=>$row["currentAccount"]];
+          "date" => $row["date"], "value" => $row["value"], "account" => $row["account"], "currentAccount" => $row["currentAccount"]];
       }
     }
     $q->close();

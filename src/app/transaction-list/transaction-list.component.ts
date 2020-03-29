@@ -21,6 +21,7 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
   account: Account;
   transactions: Transaction[];
   pages = 1;
+  total: number;
   __search = '';
   displayedColumns: string[] = ['date', 'description', 'value', 'edit', 'delete'];
 
@@ -68,6 +69,7 @@ export class TransactionListComponent  extends TransactionBase implements OnInit
       this.ts.getTransactions(account.guid, this.page.toString(), this.search).subscribe((r) => {
         this.transactions = r.data;
         this.pages = r.pages;
+        this.total = r.total;
       });
     }
   }

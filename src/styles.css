@@ -54,3 +54,11 @@ a:visited {
 .filler {
   flex: 1 1 auto;
 }
+
+.leftstr, .rightstr {
+  float: left; /* Обтекание справа */
+  width: 50%; /* Ширина текстового блока */
+}
+.rightstr {
+  text-align: right; /* Выравнивание по правому краю */
+}

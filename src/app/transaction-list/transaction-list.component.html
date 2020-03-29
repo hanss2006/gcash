@@ -4,8 +4,9 @@
   <input type="submit" value="Искать">
 </form>
 
-<p><a [routerLink]="['/transaction', 'create', 'account', currAccountGuid]">Добавить</a></p>
-
+<p class="leftstr"><a [routerLink]="['/transaction', 'create', 'account', currAccountGuid]">Добавить</a></p>
+<p id="total" class="rightstr">Остаток: {{total}}</p>
+<div style="clear: left"></div>
 <table mat-table [dataSource]="(transactions)" class="mat-elevation-z8" style="width: 100%">
 
   <!--- Note that these columns can be defined in any order.

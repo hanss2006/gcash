@@ -8,8 +8,6 @@ import 'rxjs/add/observable/of';
 
 import {Transaction} from './transaction';
 import {catchError} from 'rxjs/operators';
-import {pipe, throwError} from 'rxjs';
-import {User} from './user';
 import {Settings} from './settings';
 import {BaseService} from './base-service';
 

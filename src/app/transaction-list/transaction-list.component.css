@@ -8,3 +8,6 @@ div.pagination {
   margin-top: 30px;
   text-align: center;
 }
+p#total{
+  font-weight: bold;
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormControl} from '@angular/forms';
+import { DatePipe } from '@angular/common'
 
 import { Settings } from '../settings';
 import { TransactionsService } from '../transactions.service';
@@ -26,7 +26,8 @@ export class TransactionEditComponent extends TransactionBase implements OnInit 
 
   constructor(private route: ActivatedRoute, private ts: TransactionsService, private as: AccountsService,
               private router: Router, private title: Title,
-              private ac: AppComponent) {
+              private ac: AppComponent,
+              public datepipe: DatePipe) {
     super();
   }
 
@@ -62,7 +63,7 @@ export class TransactionEditComponent extends TransactionBase implements OnInit 
       } else {
         this.transaction = new Transaction();
         this.transaction.currentAccount = this.currAccountGuid;
-        this.transaction.date = (new Date()).toISOString();
+        this.transaction.date = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
         this.as.getAccount(this.currAccountGuid).subscribe((account: Account) => {
           this.currAccount = account;
           this.title.setTitle('Добавление :: ' + this.currAccount.name + ' :: ' + Settings.title);

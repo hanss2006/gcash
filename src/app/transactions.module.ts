@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {TransactionsRoutingModule} from './transactions-routing.module';
 import {TransactionsService} from './transactions.service';
@@ -36,7 +36,8 @@ import {MatDatepickerModule} from '@angular/material';
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true} },
     TransactionsService,
     AccountsService,
-    AccountTreeService
+    AccountTreeService,
+    DatePipe
   ],
   exports: [
     PricePipe

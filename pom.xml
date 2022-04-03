@@ -74,6 +74,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>api#${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -81,5 +82,28 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<id>dev-local</id>
+			<properties>
+				<context.path>dev-local</context.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<context.path>test</context.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>master</id>
+			<properties>
+				<context.path>master</context.path>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

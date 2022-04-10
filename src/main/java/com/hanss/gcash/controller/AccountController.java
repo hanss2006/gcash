@@ -1,6 +1,7 @@
 package com.hanss.gcash.controller;
 
 import com.hanss.gcash.model.Account;
+import com.hanss.gcash.model.AccountTreeDto;
 import com.hanss.gcash.repository.AccountRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -11,10 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /*
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -49,4 +51,23 @@ public class AccountController {
         }
     }
 
+    @Operation(summary = "Get tree account", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping("/{guid}")
+    public ResponseEntity<AccountTreeDto> getAllDetails(@PathVariable("guid") String guid) {
+        return accountRepository.findById(guid).map(mapToAccountTreeDto).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Get tree account siblings", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping("/{guid}/siblings")
+    public ResponseEntity<Set<AccountTreeDto>> getAllSiblings(@PathVariable("guid") String guid) {
+        return accountRepository.findById(guid).map(findSiblings).map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    private Function<Account, Set<AccountTreeDto>> findSiblings = person -> person.getParent().getChildren().stream()
+            .map(p -> AccountTreeDto.builder().guid(p.getGuid()).name(p.getName()).build()).collect(Collectors.toSet());
+
+    private Function<Account, AccountTreeDto> mapToAccountTreeDto =
+     p -> AccountTreeDto.builder().guid(p.getGuid()).name(p.getName()).parent(p.getParent()).children(p.getChildren()).build();
 }

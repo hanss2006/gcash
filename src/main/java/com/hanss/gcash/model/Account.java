@@ -1,47 +1,63 @@
 package com.hanss.gcash.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Table(name = "accounts",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UniqueName", columnNames = "name")
         })
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({"hibernate_lazy_initializer", "handler"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
     @Id
-    private UUID guid;
+    @Getter
+    @Setter
+    @EqualsAndHashCode.Include
+    private String guid;
 
     @NotBlank
     @Size(max = 2048)
+    @Getter
+    @Setter
     private String name;
 
-    public Account() {
-    }
+    @NotBlank
+    @Size(max = 2048)
+    @Getter
+    @Setter
+    private String account_type;
 
-    public Account(UUID guid, String name) {
-        this.guid = guid;
-        this.name = name;
-    }
+    @NotBlank
+    @Size(max = 2048)
+    @Getter
+    @Setter
+    private String description;
 
-    public UUID getGuid() {
-        return guid;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter
+    @Setter
+    private Account parent;
 
-    public void setGuid(UUID guid) {
-        this.guid = guid;
-    }
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "parent")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Setter
+    private Set<Account> children;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @JsonIgnore
+    public Set<Account> getChildren() {
+        return this.children;
     }
 }

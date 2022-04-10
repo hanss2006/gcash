@@ -3,7 +3,6 @@ package com.hanss.gcash.controller;
 import com.hanss.gcash.security.jwt.JwtUtils;
 import com.hanss.gcash.security.payload.request.LoginRequest;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -53,6 +52,7 @@ public class AuthController {
         }
     }
 
+ /*
     @GetMapping("/test")
     @Operation(summary = "Test endpoint", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> registerUser() {
@@ -60,9 +60,9 @@ public class AuthController {
     }
 
 
-    //@PostMapping("/signup")
-    //@Operation(summary = "Signup endpoint", security = @SecurityRequirement(name = "bearerAuth"))
- /* public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    @PostMapping("/signup")
+    @Operation(summary = "Signup endpoint", security = @SecurityRequirement(name = "bearerAuth"))
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity
           .badRequest()

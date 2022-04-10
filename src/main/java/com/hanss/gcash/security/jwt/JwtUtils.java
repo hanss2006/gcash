@@ -1,19 +1,16 @@
 package com.hanss.gcash.security.jwt;
 
-import com.hanss.auth.security.services.UserDetailsImpl;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import com.hanss.gcash.security.services.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -25,25 +22,44 @@ public class JwtUtils {
   @Value("${hanss.app.jwtExpirationMs}")
   private int jwtExpirationMs;
 
+  @Value("${hanss.app.jwtClientId}")
+  private String jwtClientId;
+
+  private static final String AUTHORITIES_KEY = "Authorities";
+  private static final String EMAIL_KEY = "email";
+  private static final String USER_ID_KEY = "user_id";
+
+
   public String generateJwtToken(Authentication authentication) {
 
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+    String authorities = userPrincipal.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
 
     return Jwts.builder()
         .setSubject((userPrincipal.getUsername()))
+        .claim(AUTHORITIES_KEY, authorities)
+        .claim(EMAIL_KEY, userPrincipal.getEmail())
+        .claim(USER_ID_KEY, userPrincipal.getId())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-        .signWith(SignatureAlgorithm.HS512, jwtSecret)
+        .signWith(SignatureAlgorithm.HS512, jwtSecret+jwtClientId)
         .compact();
   }
 
-  public String getUserNameFromJwtToken(String token) {
-    return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+  public String[] getUserFromJwtToken(String token) {
+    Claims claims = Jwts.parser().setSigningKey(jwtSecret+jwtClientId).parseClaimsJws(token).getBody();
+    String username = claims.getSubject();
+    String authorities = (String) claims.get(AUTHORITIES_KEY);
+    String email = (String) claims.get(EMAIL_KEY);
+    String user_id = (String) claims.get(USER_ID_KEY);
+    return new String[]{username, authorities};
   }
 
   public boolean validateJwtToken(String authToken) {
     try {
-      Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+      Jwts.parser().setSigningKey(jwtSecret+jwtClientId).parseClaimsJws(authToken);
       return true;
     } catch (SignatureException e) {
       logger.error("Invalid JWT signature: {}", e.getMessage());

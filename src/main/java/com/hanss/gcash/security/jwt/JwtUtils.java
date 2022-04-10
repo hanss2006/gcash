@@ -7,10 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class JwtUtils {
@@ -48,13 +51,16 @@ public class JwtUtils {
         .compact();
   }
 
-  public String[] getUserFromJwtToken(String token) {
+  public UserDetailsImpl getUserFromJwtToken(String token) {
     Claims claims = Jwts.parser().setSigningKey(jwtSecret+jwtClientId).parseClaimsJws(token).getBody();
+    Long user_id = Long.valueOf((Integer)claims.get(USER_ID_KEY));
     String username = claims.getSubject();
-    String authorities = (String) claims.get(AUTHORITIES_KEY);
     String email = (String) claims.get(EMAIL_KEY);
-    String user_id = (String) claims.get(USER_ID_KEY);
-    return new String[]{username, authorities};
+    List<GrantedAuthority> authorities = Stream.of(((String) claims.get(AUTHORITIES_KEY)).split(","))
+            .map(role -> new SimpleGrantedAuthority(role))
+            .collect(Collectors.toList());
+
+    return new UserDetailsImpl(user_id, username, email, null, authorities);
   }
 
   public boolean validateJwtToken(String authToken) {

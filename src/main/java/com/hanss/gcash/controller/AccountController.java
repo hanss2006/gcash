@@ -53,8 +53,17 @@ public class AccountController {
 
     @Operation(summary = "Get tree account", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/{guid}")
-    public ResponseEntity<AccountTreeDto> getAllDetails(@PathVariable("guid") String guid) {
-        return accountRepository.findById(guid).map(mapToAccountTreeDto).map(ResponseEntity::ok)
+    public ResponseEntity<AccountTreeDto> getAllDetails(
+            @PathVariable("guid")
+            @RequestParam(value="guid", defaultValue="root", required = false) String guid
+    ) {
+        String accoutGuid;
+        if (guid.equalsIgnoreCase("root") || guid.isEmpty() ){
+            accoutGuid = "124b2ad3633e2b6c8ff26505730c09a7";
+        } else {
+            accoutGuid = guid;
+        }
+        return accountRepository.findById(accoutGuid).map(mapToAccountTreeDto).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 

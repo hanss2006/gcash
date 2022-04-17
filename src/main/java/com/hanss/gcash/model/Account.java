@@ -48,6 +48,12 @@ public class Account {
     private String accountType;
 
     @NotBlank
+    @Column(name = "commodity_scu")
+    @Getter
+    @Setter
+    private Integer commodityScu;
+
+    @NotBlank
     @Size(max = 2048)
     @Column(length = 2048)
     @Getter
@@ -75,4 +81,9 @@ public class Account {
     public Set<Account> getChildren() {
         return this.children;
     }
+
+    @NotBlank
+    @Getter
+    @Setter
+    private Integer placeholder;
 }

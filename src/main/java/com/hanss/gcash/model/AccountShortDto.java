@@ -6,4 +6,5 @@ import lombok.Data;
 public class AccountShortDto {
     private String guid;
     private String name;
+    private AccountShortDto parent;
 }

@@ -51,8 +51,9 @@ public class AccountController {
                     , sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
 
             Page<AccountShortDto> accountPage;
-            accountPage = accountRepository.findByNameContainingIgnoreCaseAndAccountTypeIn(
-                    query, accTypes, paging).map(mapToAccountShortDto);
+            accountPage = accountRepository.findByNameContainingIgnoreCaseAndAccountTypeInAndCommodityScuEqualsAndPlaceholderEquals(
+                    query, accTypes, 100, 0, paging
+            ).map(mapToAccountShortDto);
             return new ResponseEntity<>(accountPage, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -66,7 +67,7 @@ public class AccountController {
             @RequestParam(value="guid", defaultValue="root", required = false) String guid
     ) {
         String accoutGuid;
-        if (guid.equalsIgnoreCase("root") || guid.isEmpty() ){
+        if ( guid==null || guid.isEmpty() || guid.equalsIgnoreCase("root") ){
             accoutGuid = ROOT_ACCOUT_GUID;
         } else {
             accoutGuid = guid;

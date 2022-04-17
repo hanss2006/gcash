@@ -24,7 +24,7 @@ import java.util.function.Function;
 @CrossOrigin(origins = "*", maxAge = 3600)
 */
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/account")
 public class AccountController {
     public static final String ROOT_ACCOUT_GUID = "124b2ad3633e2b6c8ff26505730c09a7";
     @Autowired
@@ -61,9 +61,8 @@ public class AccountController {
     }
 
     @Operation(summary = "Get tree account", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping("/tree/{guid}")
+    @GetMapping("/tree")
     public ResponseEntity<AccountTreeDto> getAllDetails(
-            @PathVariable("guid")
             @RequestParam(value="guid", defaultValue="root", required = false) String guid
     ) {
         String accoutGuid;

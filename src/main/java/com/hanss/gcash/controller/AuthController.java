@@ -37,7 +37,7 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(summary = "Login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, @RequestParam(required = true) String clientId) {
-        String URL_AUTH = "http://%1$s/api/auth/signin?clientId=%2$s";
+        String URL_AUTH = "%1$s/api/auth/signin?clientId=%2$s";
         String url = String.format(URL_AUTH, this.authUrl, clientId);
 
         RestTemplate restTemplate = new RestTemplate();

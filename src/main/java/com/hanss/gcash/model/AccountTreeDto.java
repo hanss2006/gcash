@@ -17,6 +17,5 @@ import java.util.Set;
 public class AccountTreeDto {
     private String guid;
     private String name;
-    private Account parent;
-    private Set<Account> children;
+    private Set<AccountTreeDto> children;
 }

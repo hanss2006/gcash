@@ -42,10 +42,10 @@ public class Account {
 
     @NotBlank
     @Size(max = 2048)
-    @Column(length = 2048)
+    @Column(name = "account_type", length = 2048)
     @Getter
     @Setter
-    private String account_type;
+    private String accountType;
 
     @NotBlank
     @Size(max = 2048)

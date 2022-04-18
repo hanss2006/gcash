@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SplitRepository extends JpaRepository<Split, String> {
-
+    String deleteByTxGuid(String txGuid);
 }

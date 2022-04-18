@@ -93,5 +93,5 @@ public class Split {
     @Formula("ROUND(quantityNum/quantityDenom, 2)")
     @Getter
     @Setter
-    private Float value;
+    private Double value;
 }

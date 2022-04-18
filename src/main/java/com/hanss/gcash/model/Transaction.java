@@ -3,12 +3,7 @@ package com.hanss.gcash.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,14 +35,14 @@ public class Transaction {
 
     @NotBlank
     @Column(name = "post_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Getter
     @Setter
     LocalDate postDate;
 
     @NotBlank
     @Column(name = "enter_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Getter
     @Setter
     LocalDate enterDate;
@@ -60,7 +55,9 @@ public class Transaction {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction")
+/*
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
+*/
     private Set<Split> splits;
 }

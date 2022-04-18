@@ -23,7 +23,7 @@ public class TransactionController {
     private TransactionRepository transactionRepository;
 
     @Operation(summary = "Get transactions by account guid", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping("/{accoutGuid}")
+    @GetMapping("/account/{accoutGuid}")
     public ResponseEntity<?> getTransaction(
             @PathVariable("accoutGuid") String accoutGuid,
             @RequestParam(defaultValue = "0") int page,
@@ -38,4 +38,17 @@ public class TransactionController {
         }
     }
 
+    @Operation(summary = "Get account sum by account guid", security = @SecurityRequirement(name = "bearerAuth"))
+    @GetMapping("/sum/account/{accoutGuid}")
+    public ResponseEntity<?> getAccountTotal(
+            @PathVariable("accoutGuid") String accoutGuid
+    ) {
+        try {
+            return new ResponseEntity<>(
+                    transactionRepository.getAccountTotal(accoutGuid),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

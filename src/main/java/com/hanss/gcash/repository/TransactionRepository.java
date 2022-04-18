@@ -14,7 +14,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
             value = "SELECT " +
                     "transactions.guid AS guid, " +
                     "transactions.description, " +
-                    "DATE_FORMAT(transactions.post_date, '%Y-%m-%d') AS 'postDate', " +
+                    "transactions.post_date AS postDate, " +
                     "ROUND(t1.quantity_num / t1.quantity_denom, 2) AS value, " +
                     "t2.cred_acc AS accountGuid, " +
                     "t1.account_guid AS currentAccountGuid " +
@@ -61,4 +61,11 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
                     "t1.account_guid =  ?1",
             nativeQuery = true)
     public Page<TransactionShortDto> findByAccountGuidNative(String accountGuid, Pageable pageable);
+
+    @Query(value = " SELECT\n" +
+            "    ROUND(SUM(quantity_num / quantity_denom), 2) AS total_by_current\n" +
+            "    FROM splits\n" +
+            "    WHERE account_guid = ?",
+            nativeQuery = true)
+    Double getAccountTotal(String accountGuid);
 }

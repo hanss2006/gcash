@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public interface TransactionShortDto {
     String getGuid();
     String getDescription();
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     LocalDate getPostDate();
     BigDecimal getValue();
     String getAccountGuid();

@@ -3,12 +3,13 @@ package com.hanss.gcash.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hanss.gcash.common.Constants;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 import java.util.Set;
 
 @Entity
@@ -31,21 +32,21 @@ public class Transaction {
     @Column(name = "currency_guid", length = 32)
     @Getter
     @Setter
-    private String currencyGuid = "eecd73e9d75ee21ffcc4a773eb9831a8";
+    private String currencyGuid = Constants.RUB;
 
     @NotBlank
     @Column(name = "post_date")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Getter
     @Setter
-    LocalDate postDate;
+    LocalDateTime  postDate;
 
     @NotBlank
     @Column(name = "enter_date")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Getter
     @Setter
-    LocalDate enterDate;
+    LocalDateTime  enterDate;
 
     @NotBlank
     @Size(max = 2048)

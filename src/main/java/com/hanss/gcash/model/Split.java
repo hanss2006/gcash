@@ -2,6 +2,7 @@ package com.hanss.gcash.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.hanss.gcash.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -62,13 +63,19 @@ public class Split {
     @Column(length = 2048)
     @Getter
     @Setter
-    private String memo = "webapp";
+    private String memo = Constants.SPLIT_MEMO_WEBAPP;
+
+    @Size(max = 2048)
+    @Column(length = 2048)
+    @Getter
+    @Setter
+    private String action = "";
 
     @Size(max = 1)
     @Column(name = "reconcile_state", length = 1)
     @Getter
     @Setter
-    private String reconcileState = "n";
+    private String reconcileState = Constants.SPLIT_RECONCILE_STATE_N;
 
     @Column(name = "value_num")
     @Getter
@@ -92,6 +99,5 @@ public class Split {
 
     @Formula("ROUND(quantityNum/quantityDenom, 2)")
     @Getter
-    @Setter
     private Double value;
 }

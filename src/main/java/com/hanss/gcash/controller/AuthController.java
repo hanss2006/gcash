@@ -13,9 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 
-/*
 @CrossOrigin(origins = "*", maxAge = 3600)
-*/
 @RestController
 @RequestMapping("/")
 public class AuthController {

@@ -20,9 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-/*
 @CrossOrigin(origins = "*", maxAge = 3600)
-*/
 @RestController
 @RequestMapping("/account")
 public class AccountController {

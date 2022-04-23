@@ -10,10 +10,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Tree />} />
-        <Route path="tansactions" element={<TransactionList />} />
-        <Route path="tansaction" element={<Transaction />} />
-        <Route path="*" element={<Error/>} />
+        <Route exact path="/" element={<Tree />} />
+        <Route exact path="transactions" element={<TransactionList />} />
+        <Route exact path="transactions/:transactionGuid" element={<Transaction />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );

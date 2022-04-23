@@ -1,6 +1,7 @@
 package com.hanss.gcash.controller;
 
 import com.hanss.gcash.common.Constants;
+import com.hanss.gcash.common.UuidUtils;
 import com.hanss.gcash.model.Split;
 import com.hanss.gcash.model.Transaction;
 import com.hanss.gcash.model.TransactionFullDto;
@@ -8,7 +9,6 @@ import com.hanss.gcash.repository.SplitRepository;
 import com.hanss.gcash.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hanss.gcash.common.UuidUtils;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -47,26 +47,24 @@ public class TransactionService {
         split.setTxGuid(transaction.getGuid());
         split.setAccountGuid(transactionFullDto.getCurrentAccountGuid());
         split.setMemo(Constants.SPLIT_MEMO_WEBAPP);
-        split.setAction("");
         split.setReconcileState(Constants.SPLIT_RECONCILE_STATE_N);
         split.setValueNum(new Double(transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
         split.setValueDenom(Constants.SPLIT_DENOM_100);
         split.setQuantityNum(new Double(transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
         split.setQuantityDenom(Constants.SPLIT_DENOM_100);
-        split = splitRepository.save(split);
+        splitRepository.save(split);
 
-        Split splitCont = new Split();
-        splitCont.setGuid(UuidUtils.newGuid());
-        splitCont.setTxGuid(transaction.getGuid());
-        splitCont.setAccountGuid(transactionFullDto.getAccountGuid());
-        splitCont.setMemo(Constants.SPLIT_MEMO_WEBAPP);
-        splitCont.setAction("");
-        splitCont.setReconcileState(Constants.SPLIT_RECONCILE_STATE_N);
-        splitCont.setValueNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
-        splitCont.setValueDenom(Constants.SPLIT_DENOM_100);
-        splitCont.setQuantityNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
-        splitCont.setQuantityDenom(Constants.SPLIT_DENOM_100);
-        splitCont = splitRepository.save(splitCont);
+        Split corSplit = new Split();
+        corSplit.setGuid(UuidUtils.newGuid());
+        corSplit.setTxGuid(transaction.getGuid());
+        corSplit.setAccountGuid(transactionFullDto.getAccountGuid());
+        corSplit.setMemo(Constants.SPLIT_MEMO_WEBAPP);
+        corSplit.setReconcileState(Constants.SPLIT_RECONCILE_STATE_N);
+        corSplit.setValueNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
+        corSplit.setValueDenom(Constants.SPLIT_DENOM_100);
+        corSplit.setQuantityNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
+        corSplit.setQuantityDenom(Constants.SPLIT_DENOM_100);
+        splitRepository.save(corSplit);
         transactionFullDto.setTransactionGuid(transaction.getGuid());
         return transactionFullDto;
     }
@@ -79,6 +77,28 @@ public class TransactionService {
         Optional <Transaction> optionalTransaction = transactionRepository.findById(transactionFullDto.getTransactionGuid());
         if (!optionalTransaction.isPresent()){
             return null;
+        }
+        Transaction transaction = optionalTransaction.get();
+        transaction.setPostDate(transactionFullDto.getPostDate());
+        transaction.setEnterDate(transactionFullDto.getPostDate());
+        transaction.setDescription(transactionFullDto.getDescription());
+        transaction = transactionRepository.save(transaction);
+
+        for (Split split : transaction.getSplits()) {
+            if (split.getAccountGuid().equals(transactionFullDto.getCurrentAccountGuid())){
+                split.setValueNum(new Double(transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
+                split.setValueDenom(Constants.SPLIT_DENOM_100);
+                split.setQuantityNum(new Double(transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
+                split.setQuantityDenom(Constants.SPLIT_DENOM_100);
+                splitRepository.save(split);
+            } else {
+                split.setAccountGuid(transactionFullDto.getAccountGuid());
+                split.setValueNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
+                split.setValueDenom(Constants.SPLIT_DENOM_100);
+                split.setQuantityNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
+                split.setQuantityDenom(Constants.SPLIT_DENOM_100);
+                splitRepository.save(split);
+            }
         }
         return transactionFullDto;
     }

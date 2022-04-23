@@ -10,13 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -44,7 +38,7 @@ public class Split {
     @ManyToOne(fetch = FetchType.LAZY)
     @Getter
     @Setter
-    @JoinColumn(name = "tx_guid", insertable = false, updatable = false)
+    @JoinColumn(name = "tx_guid", referencedColumnName = "guid", insertable = false, updatable = false)
     private Transaction transaction;
 
     @Size(max = 32)
@@ -98,6 +92,7 @@ public class Split {
     private Long quantityDenom;
 
     @Formula("ROUND(quantityNum/quantityDenom, 2)")
+    @Transient
     @Getter
     private Double value;
 }

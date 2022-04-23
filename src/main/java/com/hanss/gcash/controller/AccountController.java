@@ -7,6 +7,8 @@ import com.hanss.gcash.model.AccountTreeDto;
 import com.hanss.gcash.repository.AccountRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,8 @@ public class AccountController {
 
     private List<String> accTypes = Arrays.asList("EXPENSE", "ASSET", "BANK", "INCOME", "CASH", "CREDIT");
 
+    private Logger logger = LoggerFactory.getLogger(AccountController.class);
+
     @GetMapping("/")
     @Operation(summary = "Get accounts", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Page<AccountShortDto>> getAllAccounts(
@@ -54,6 +58,7 @@ public class AccountController {
             ).map(mapToAccountShortDto);
             return new ResponseEntity<>(accountPage, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error(e.getCause().getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -27,7 +27,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    Logger logger = LoggerFactory.getLogger(TransactionController.class);
+    private Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
     @Operation(summary = "Get transactions by account guid", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/account/{accoutGuid}")

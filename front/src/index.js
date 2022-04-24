@@ -4,12 +4,20 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import axios from "axios";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+axios.defaults.baseURL = "/api/gcash";
 root.render(
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <App />
-    </BrowserRouter>
+    <React.StrictMode>
+        <Provider store={store}>
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
+                <App />
+            </BrowserRouter>
+        </Provider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -13,13 +13,29 @@ function Header(props) {
                 <div className="d-flex justify-content-between">
                     <ul className="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-1">
                         <li><Link to="transactions" className="nav-link px-2 text-secondary">...</Link></li>
-                        <li><Link to="login" className="nav-link px-2 text-secondary">+++</Link></li>
+                        <li><Link to="tree" className="nav-link px-2 text-secondary">+++</Link></li>
                     </ul>
-                    <form>
-                        <input type="search" className="form-control form-control-dark" placeholder="Search..."
-                               aria-label="Search" style={{maxWidth: "150px"}}/>
-                    </form>
-                    <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}>Login</button>
+                    {!auth.isLoggedIn ? (
+                        <React.Fragment>
+                            <Link to="./login">
+                                <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}>Login</button>
+                            </Link>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <form>
+                                <input type="search" className="form-control form-control-dark" placeholder="Search..."
+                                       aria-label="Search" style={{maxWidth: "150px"}}/>
+                            </form>
+                            <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}
+                                    onClick={() => {
+                                        logout(navigate);
+                                    }}
+                            >
+                                Logout
+                            </button>
+                        </React.Fragment>
+                    )}
                 </div>
             </div>
         </header>

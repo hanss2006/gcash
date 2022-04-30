@@ -35,7 +35,6 @@ function Login(props) {
 
                                     <div className="form-outline form-white mb-4">
                                         <input
-                                            type=""
                                             id="typeUsernameX" className="form-control form-control-lg"
                                             onChange={(event) => {
                                                 const username = event.target.value;

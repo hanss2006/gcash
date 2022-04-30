@@ -13,7 +13,8 @@ function App() {
         <div className="App">
             <Header></Header>
             <Routes>
-                <Route exact path="/" element={<Tree/>}/>
+                <Route exact path="/" element={<TransactionList/>}/>
+                <Route exact path="tree" element={<Tree/>}/>
                 <Route exact path="transactions" element={<TransactionList/>}/>
                 <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
                 <Route exact path="login" element={<Login/>}/>

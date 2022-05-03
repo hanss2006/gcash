@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Navigate, Route, Routes, useLocation} from "react-router-dom";
+import React from "react";
+import {Route, Routes} from "react-router-dom";
 import './App.css';
 import TransactionList from "./components/TransactionList";
 import Transaction from "./components/Transaction";

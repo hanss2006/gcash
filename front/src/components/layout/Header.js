@@ -2,7 +2,6 @@ import React from "react";
 import {connect} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {LogOutAuthAction} from "../../redux/actions/AuthAction";
-import ErrorHandler from "../Error/ErrorHandler";
 
 function Header(props) {
     const {auth, logout, errorHandler} = props;
@@ -23,10 +22,6 @@ function Header(props) {
                         </React.Fragment>
                     ) : (
                         <React.Fragment>
-                            <form>
-                                <input type="search" className="form-control form-control-dark" placeholder="Search..."
-                                       aria-label="Search" style={{maxWidth: "150px"}}/>
-                            </form>
                             <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}
                                     onClick={() => {
                                         logout(navigate);

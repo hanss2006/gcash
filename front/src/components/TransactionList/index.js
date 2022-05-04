@@ -85,9 +85,9 @@ const TransactionList = () => {
                     <div className="row">
                         <div className="col-md-6">
                             <Pagination
-                                total={totalItems}
+                                total={totalElements}
                                 itemsPerPage={pageSize}
-                                currentPage={currentPage}
+                                currentPage={pageNumber}
                                 onPageChange={page => setCurrentPage(page)}
                             />
                         </div>

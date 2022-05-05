@@ -2,6 +2,8 @@ import React, {useEffect, useMemo, useState} from "react";
 import useFullPageLoader from "../../hooks/useFullPageLoader";
 import {Pagination, Search, TableHeader} from "../DataTable";
 import axios from "axios";
+import {Link} from "react-router-dom";
+import "./index.css";
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
@@ -50,13 +52,13 @@ const TransactionList = () => {
     }, []);
 
     const transactionsData = useMemo(() => {
-        let computedTransactions = (transactions!= null && transactions.content!=null)? transactions.content : [];
+        let computedTransactions = (transactions != null && transactions.content != null) ? transactions.content : [];
 
         if (search) {
             computedTransactions = computedTransactions.filter(
                 transaction =>
                     transaction.description.toLowerCase().includes(search.toLowerCase())
-                    // || transaction.value.toLowerCase().includes(search.toLowerCase())
+                // || transaction.value.toLowerCase().includes(search.toLowerCase())
             );
         }
 
@@ -77,6 +79,7 @@ const TransactionList = () => {
             (currentPage - 1) * pageSize + pageSize
         );
     }, [transactions, currentPage, search, sorting]);
+
 
     return (
         <>
@@ -112,10 +115,20 @@ const TransactionList = () => {
                         {transactionsData.map(transaction => (
                             <tr>
                                 <th scope="row" key={transaction.guid}>
-                                    {transaction.description}
+                                    <Link to={`/transactions/${transaction.guid}`}>
+                                        {transaction.description}
+                                    </Link>
                                 </th>
-                                <td>{new Date(transaction.postDate).toLocaleString('ru-Ru')}</td>
-                                <td>{transaction.value}</td>
+                                <td>
+                                    <Link to={`/transactions/${transaction.guid}`}>
+                                        {new Date(transaction.postDate).toLocaleString('ru-Ru')}
+                                    </Link>
+                                </td>
+                                <td>
+                                    <Link to={`/transactions/${transaction.guid}`}>
+                                        {transaction.value}
+                                    </Link>
+                                </td>
                             </tr>
                         ))}
                         </tbody>

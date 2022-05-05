@@ -5,7 +5,7 @@ import TransactionList from "./components/TransactionList";
 import Transaction from "./components/Transaction";
 import Error from "./components/Error";
 import Login from "./components/auth/Login";
-import Header from "./components/layout/Header";
+import Header from "./components/Header";
 import {connect} from "react-redux";
 import TreePage from "./components/TreePage";
 

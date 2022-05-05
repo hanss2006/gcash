@@ -34,7 +34,7 @@ public class TransactionController {
     public ResponseEntity<?> getTransaction(
             @PathVariable("accoutGuid") String accoutGuid,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size
+            @RequestParam(defaultValue = "5") int size
     ) {
         try {
             Pageable paging = PageRequest.of(page, size);

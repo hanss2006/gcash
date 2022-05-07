@@ -14,7 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -54,6 +62,21 @@ public class TransactionController {
         try {
             return new ResponseEntity<>(
                     transactionRepository.getAccountTotal(accoutGuid),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getCause().getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/{transactionGuid}",
+            method = RequestMethod.GET,
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Get transaction", security = @SecurityRequirement(name = "bearerAuth"))
+    public ResponseEntity<?> getTransaction(@PathVariable("transactionGuid") String transactionGuid) {
+        try {
+            return new ResponseEntity<>(
+                    transactionRepository.getById(transactionGuid),
                     HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getCause().getMessage());

@@ -69,21 +69,6 @@ public class TransactionController {
         }
     }
 
-    @RequestMapping(value = "/{transactionGuid}",
-            method = RequestMethod.GET,
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @Operation(summary = "Get transaction", security = @SecurityRequirement(name = "bearerAuth"))
-    public ResponseEntity<?> getTransaction(@PathVariable("transactionGuid") String transactionGuid) {
-        try {
-            return new ResponseEntity<>(
-                    transactionRepository.getById(transactionGuid),
-                    HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e.getCause().getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @RequestMapping(value = "/",
             method = RequestMethod.POST,
             produces = { MediaType.APPLICATION_JSON_VALUE,

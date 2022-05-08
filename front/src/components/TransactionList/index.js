@@ -38,7 +38,7 @@ const TransactionList = () => {
     const accountGuid = '063ad681f1bef56cdb8be3695a74f9d6';
     const url = '/transaction/account/' + accountGuid;
     useEffect(() => {
-        showLoader();
+        //showLoader();
         axios.get(url)
             .then(res => {
                 setTransactions(res.data);
@@ -56,7 +56,7 @@ const TransactionList = () => {
                 }
             })
             .finally(() => {
-                hideLoader();
+                //hideLoader();
             });
     }, []);
 

@@ -17,8 +17,9 @@ const Header = ({ headers, onSorting }) => {
     return (
         <thead>
             <tr>
-                {headers.map(({ name, field, sortable }) => (
+                {headers.map(({ name, field, sortable }, index) => (
                     <th
+                        className={`${index !== 0 ? "right-th" : ""}`}
                         key={name}
                         onClick={() =>
                             sortable ? onSortingChange(field) : null

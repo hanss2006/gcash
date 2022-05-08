@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useNavigate, useParams} from 'react-router-dom';
-import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import {connect} from "react-redux";
+import "./index.css";
 
 const Transaction = ({currentTransaction}) => {
     const {transactionGuid} = useParams();
@@ -11,22 +11,13 @@ const Transaction = ({currentTransaction}) => {
     const updateFormValue = (formValues) => {
         setInputs((inputObj) => ({...inputObj, [formValues.target.name]: formValues.target.value}));
     }
-
-
-    /*
-    const [currentAccountGuid, setCurrentAccountGuid] = useState('');
-    const [accountGuid, setAccountGuid] = useState('');
-    const [postDate, setPostDate] = useState('');
-    const [description, setDescription] = useState(false);
-    const [value, setValue] = useState(false);
-    */
-
     let url = `/transaction/`;
 
     const updateAPIData = (e) => {
         e.preventDefault();
         axios.put(url, inputs).then(() => {
-            navigate(`/transaction/account/${inputs.currentAccountGuid}`);
+            //navigate(`../transaction/account/${inputs.currentAccountGuid}`);
+            navigate(`../`);
         })
     }
     return (

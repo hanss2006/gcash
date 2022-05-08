@@ -130,12 +130,18 @@ const TransactionList = () => {
                                     </Link>
                                 </th>
                                 <td>
-                                    <Link to={`/transactions/${transaction.guid}`}>
-                                        {new Date(transaction.postDate).toLocaleString('ru-Ru')}
+                                    <Link to={`/transactions/${transaction.guid}`}
+                                          onClick={() => selectCurrentTransaction(transaction)}>
+                                        {new Date(transaction.postDate)
+                                            .toLocaleTimeString('ru-Ru',
+                                                {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}
+                                            )
+                                        }
                                     </Link>
                                 </td>
                                 <td>
-                                    <Link to={`/transactions/${transaction.guid}`}>
+                                    <Link to={`/transactions/${transaction.guid}`}
+                                          onClick={() => selectCurrentTransaction(transaction)}>
                                         {transaction.value}
                                     </Link>
                                 </td>

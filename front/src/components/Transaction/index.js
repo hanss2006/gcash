@@ -5,11 +5,11 @@ import axios from "axios";
 import {connect} from "react-redux";
 
 const Transaction = ({currentTransaction}) => {
-    const { transactionGuid } = useParams();
+    const {transactionGuid} = useParams();
     const navigate = useNavigate();
     const [inputs, setInputs] = useState(currentTransaction);
-    const updateFormValue = (formValues) =>{
-        setInputs((inputObj) => ({ ...inputObj, [ formValues.target.placeholder]:  formValues.target.value }));
+    const updateFormValue = (formValues) => {
+        setInputs((inputObj) => ({...inputObj, [formValues.target.name]: formValues.target.value}));
     }
 
 
@@ -31,28 +31,65 @@ const Transaction = ({currentTransaction}) => {
     }
     return (
         <div>
-            <form onSubmit={updateAPIData} className="transaction-form">
-                    <label>currentAccountGuid</label>
-                    <input placeholder='currentAccountGuid' value={inputs.currentAccountGuid}
-                           onChange={(e) => updateFormValue(e)}/>
+            <form onSubmit={updateAPIData}>
+                <div className="form-outline mb-4">
+                    <input
+                        type='text'
+                        id='currentAccountGuid'
+                        name='currentAccountGuid'
+                        className='form-control'
+                        value={inputs.currentAccountGuid}
+                        onChange={(e) => updateFormValue(e)}
+                    />
+                    <label className='form-label' htmlFor='currentAccountGuid'>currentAccountGuid</label>
+                </div>
+                <div className="form-outline mb-4">
+                    <input
+                        type='text'
+                        id='accountGuid'
+                        name='accountGuid'
+                        className='form-control'
+                        value={inputs.accountGuid}
+                        onChange={(e) => updateFormValue(e)}
+                    />
+                    <label className='form-label' htmlFor='accountGuid'>accountGuid</label>
+                </div>
+                <div className="form-outline mb-4">
+                    <input
+                        type='datetime-local'
+                        id='postDate'
+                        name='postDate'
+                        className='form-control'
+                        value={inputs.postDate}
+                        onChange={(e) => updateFormValue(e)}
+                    />
+                    <label className='form-label' htmlFor='postDate'>postDate</label>
+                </div>
+                <div className="form-outline mb-4">
+                    <input
+                        type='text'
+                        id='description'
+                        name='description'
+                        className='form-control'
+                        value={inputs.description}
+                        onChange={(e) => updateFormValue(e)}
+                    />
+                    <label className='form-label' htmlFor='description'>description</label>
+                </div>
+                <div className="form-outline mb-4">
+                    <input
+                        type='number'
+                        step='0.01'
+                        id='value'
+                        name='value'
+                        className='form-control'
+                        value={inputs.value}
+                        onChange={(e) => updateFormValue(e)}
+                    />
+                    <label className='form-label' htmlFor='value'>value</label>
+                </div>
 
-                    <label>accountGuid</label>
-                    <input placeholder='accountGuid' value={inputs.accountGuid}
-                           onChange={(e) => updateFormValue(e)}/>
-
-                    <label>postDate</label>
-                    <input placeholder='postDate' value={inputs.postDate}
-                           onChange={(e) => updateFormValue(e)}/>
-
-                    <label>description</label>
-                    <input placeholder='description' value={inputs.description}
-                           onChange={(e) => updateFormValue(e)}/>
-
-                    <label>value</label>
-                    <input placeholder='value' value={inputs.value}
-                           onChange={(e) => updateFormValue(e)}/>
-
-                    <button type='submit' onClick={updateAPIData}>Save</button>
+                <button type='submit' onClick={updateAPIData} className="btn btn-primary btn-block mb-4">Send</button>
             </form>
         </div>
     )

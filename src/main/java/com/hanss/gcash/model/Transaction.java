@@ -53,14 +53,14 @@ public class Transaction {
 
     @NotNull
     @Column(name = "post_date")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Getter
     @Setter
     LocalDateTime  postDate;
 
     @NotNull
     @Column(name = "enter_date")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Getter
     @Setter
     LocalDateTime  enterDate;

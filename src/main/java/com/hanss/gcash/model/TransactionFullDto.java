@@ -14,7 +14,7 @@ public class TransactionFullDto {
     private String currentAccountGuid;
     @Size(max = 32)
     private String accountGuid;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime  postDate;
     @Size(max = 2048)
     private String description;

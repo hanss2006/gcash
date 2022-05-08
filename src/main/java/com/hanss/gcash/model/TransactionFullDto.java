@@ -9,7 +9,7 @@ import java.time.LocalDateTime ;
 @Data
 public class TransactionFullDto {
     @Size(max = 32)
-    private String transactionGuid;
+    private String guid;
     @Size(max = 32)
     private String currentAccountGuid;
     @Size(max = 32)

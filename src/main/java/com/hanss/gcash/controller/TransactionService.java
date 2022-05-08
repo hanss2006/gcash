@@ -65,7 +65,7 @@ public class TransactionService {
         corSplit.setQuantityNum(new Double(-transactionFullDto.getValue()*Constants.SPLIT_DENOM_100).longValue());
         corSplit.setQuantityDenom(Constants.SPLIT_DENOM_100);
         splitRepository.save(corSplit);
-        transactionFullDto.setTransactionGuid(transaction.getGuid());
+        transactionFullDto.setGuid(transaction.getGuid());
         return transactionFullDto;
     }
 
@@ -74,7 +74,7 @@ public class TransactionService {
      * */
     @Transactional
     public TransactionFullDto updateTransaction(TransactionFullDto transactionFullDto) throws Exception {
-        Optional <Transaction> optionalTransaction = transactionRepository.findById(transactionFullDto.getTransactionGuid());
+        Optional <Transaction> optionalTransaction = transactionRepository.findById(transactionFullDto.getGuid());
         if (!optionalTransaction.isPresent()){
             return null;
         }

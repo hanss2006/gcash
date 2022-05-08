@@ -2,8 +2,10 @@ import React, {useEffect, useMemo, useState} from "react";
 import useFullPageLoader from "../../hooks/useFullPageLoader";
 import {Pagination, Search, TableHeader} from "../DataTable";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "./index.css";
+import {selectTransaction} from "../../redux/actions/transaction";
+import {connect, useDispatch} from "react-redux";
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
@@ -20,6 +22,13 @@ const TransactionList = () => {
     const [pageSize, setPageSize] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    let navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const selectCurrentTransaction = (transaction) => {
+        dispatch(selectTransaction({ ...transaction }));
+        //navigate(`/transactions/${transaction.guid}`);
+    };
 
     const headers = [
         {name: "Comment", field: "description", sortable: false},
@@ -115,7 +124,8 @@ const TransactionList = () => {
                         {transactionsData.map(transaction => (
                             <tr>
                                 <th scope="row" key={transaction.guid}>
-                                    <Link to={`/transactions/${transaction.guid}`}>
+                                    <Link to={`/transactions/${transaction.guid}`}
+                                          onClick={() => selectCurrentTransaction(transaction)}>
                                         {transaction.description}
                                     </Link>
                                 </th>
@@ -141,3 +151,4 @@ const TransactionList = () => {
 };
 
 export default TransactionList;
+

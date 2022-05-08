@@ -21,7 +21,7 @@ const Transaction = ({currentTransaction}) => {
     const [value, setValue] = useState(false);
     */
 
-    let url = `/transaction`;
+    let url = `/transaction/`;
 
     const updateAPIData = (e) => {
         e.preventDefault();

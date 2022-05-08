@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import useFullPageLoader from "../../hooks/useFullPageLoader";
+//import useFullPageLoader from "../../hooks/useFullPageLoader";
 import Tree from "../Tree";
 import axios from "axios";
 
@@ -7,29 +7,33 @@ const TreePage = () => {
     const url = '/account/tree?guid=root';
 
     const [accTree, setAccTree] = useState([]);
+/*
     const [errorHandler, setErrorHandler] = useState({
         hasError: false,
         message: "",
     });
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
+    const [showLoader, hideLoader] = useFullPageLoader();
+*/
 
 
     useEffect(() => {
-        showLoader();
+        //showLoader();
         axios.get(url)
             .then(res => {
                 setAccTree(res.data);
             })
             .catch(error => {
                 if (error.response) {
+/*
                     setErrorHandler({
                         hasError: true,
                         message: error.response.data.message,
                     });
+*/
                 }
             })
             .finally(() => {
-                hideLoader();
+                //hideLoader();
             });
     }, []);
 

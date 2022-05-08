@@ -2,12 +2,11 @@ import React, {useState} from "react";
 import {connect} from "react-redux";
 import {useNavigate} from 'react-router-dom';
 import {LoginAuthAction} from "../../redux/actions/AuthAction";
-import Header from "../Header";
 
 function Login(props) {
     const {login} = props;
 
-    const [errorHandler, setErrorHandler] = useState({
+    const [setErrorHandler] = useState({
         hasError: false,
         message: "",
     });

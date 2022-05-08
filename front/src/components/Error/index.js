@@ -2,7 +2,9 @@ import React from "react";
 
 const Error = () => {
     return (
-        <>Error</>
+        <React.Fragment>
+            Error
+        </React.Fragment>
     );
 };
 

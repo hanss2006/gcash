@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {useNavigate, useParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {connect} from "react-redux";
 import "./index.css";
 
 const Transaction = ({currentTransaction}) => {
-    const {transactionGuid} = useParams();
+    //const {transactionGuid} = useParams();
     const navigate = useNavigate();
     const [inputs, setInputs] = useState(currentTransaction);
     const updateFormValue = (formValues) => {

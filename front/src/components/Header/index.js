@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {LogOutAuthAction} from "../../redux/actions/AuthAction";
 
 function Header(props) {
-    const {auth, logout, errorHandler} = props;
+    const {auth, logout} = props;
     const navigate = useNavigate();
     return (
         <header className="p-3 bg-dark text-white">

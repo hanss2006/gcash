@@ -7,7 +7,7 @@ const Tree = ({ data = [] }) => {
     <div className="d-tree">
       <ul className="d-flex d-tree-container flex-column">
         {data.map((tree) => (
-          <TreeNode node={tree} />
+          <TreeNode key={tree.guid} node={tree} />
         ))}
       </ul>
     </div>

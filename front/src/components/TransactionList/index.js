@@ -2,27 +2,27 @@ import React, {useEffect, useMemo, useState} from "react";
 import useFullPageLoader from "../../hooks/useFullPageLoader";
 import {Pagination, Search, TableHeader} from "../DataTable";
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 
 const TransactionList = () => {
     const [transactions, setTransactions] = useState([]);
-    const [errorHandler, setErrorHandler] = useState({
+    const [setErrorHandler] = useState({
         hasError: false,
         message: "",
     });
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
-    const [totalItems, setTotalItems] = useState(0);
+    const [loader] = useFullPageLoader();
+    //const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [sorting, setSorting] = useState({field: "", order: ""});
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
-    let navigate = useNavigate();
+    //const [totalPages, setTotalPages] = useState(0);
+    //let navigate = useNavigate();
 
     const dispatch = useDispatch();
     const selectCurrentTransaction = (transaction) => {
@@ -41,11 +41,11 @@ const TransactionList = () => {
         //showLoader();
         axios.get(url)
             .then(res => {
-                setTransactions(res.data);
+                setTransactions(res.data.content);
                 setPageNumber(res.data.number);
                 setPageSize(res.data.size);
                 setTotalElements(res.data.totalElements);
-                setTotalPages(res.data.totalPages);
+                //setTotalPages(res.data.totalPages);
             })
             .catch(error => {
                 if (error.response) {
@@ -61,7 +61,7 @@ const TransactionList = () => {
     }, []);
 
     const transactionsData = useMemo(() => {
-        let computedTransactions = (transactions != null && transactions.content != null) ? transactions.content : [];
+        let computedTransactions = (transactions != null) ? transactions : [];
 
         if (search) {
             computedTransactions = computedTransactions.filter(
@@ -71,7 +71,7 @@ const TransactionList = () => {
             );
         }
 
-        setTotalItems(computedTransactions.length);
+        //setTotalItems(computedTransactions.length);
 
         //Sorting comments
         if (sorting.field) {
@@ -122,8 +122,8 @@ const TransactionList = () => {
                         />
                         <tbody>
                         {transactionsData.map(transaction => (
-                            <tr>
-                                <th scope="row" key={transaction.guid}>
+                            <tr key={transaction.guid}>
+                                <th scope="row">
                                     <Link to={`/transactions/${transaction.guid}`}
                                           onClick={() => selectCurrentTransaction(transaction)}>
                                         {transaction.description}

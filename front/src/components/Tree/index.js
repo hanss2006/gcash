@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import "./index.css";
+import * as fontawesome from "@fortawesome/fontawesome-svg-core";
+import {faCaretRight} from "@fortawesome/free-solid-svg-icons";
 
 const Tree = ({ data = [] }) => {
   return (
@@ -19,6 +21,8 @@ const TreeNode = ({ node }) => {
 
   const hasChild = node.children ? true : false;
 
+  fontawesome.library.add(faCaretRight);
+
   return (
     <li className="d-tree-node border-0">
       <div className="d-flex" onClick={(e) => setChildVisiblity((v) => !v)}>
@@ -33,8 +37,11 @@ const TreeNode = ({ node }) => {
         )}
 
         <div className="col d-tree-head">
-          <i className={`mr-1 fa fa-folder`}> </i>
-          {node.name}
+          <i className={`mr-2 fa fa-folder`}>
+              <div className="tree-item">
+                  {node.name}
+              </div>
+          </i>
         </div>
       </div>
 

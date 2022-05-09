@@ -4,15 +4,25 @@ import {Link, useNavigate} from "react-router-dom";
 import {LogOutAuthAction} from "../../redux/actions/AuthAction";
 
 function Header(props) {
-    const {auth, logout} = props;
+    const {auth, logout, filterState} = props;
     const navigate = useNavigate();
     return (
         <header className="p-3 bg-dark text-white">
             <div className="container">
                 <div className="d-flex justify-content-between">
                     <ul className="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-1">
-                        <li><Link to="transactions" className="nav-link px-2 text-secondary">...</Link></li>
-                        <li><Link to="tree" className="nav-link px-2 text-secondary">+++</Link></li>
+                        {auth.isLoggedIn ? (
+                            <React.Fragment>
+                                <li>
+                                    <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
+                                        <img src='/images/menu.png' alt="Menu" />
+                                    </Link>
+                                </li>
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                            </React.Fragment>
+                        )}
                     </ul>
                     {!auth.isLoggedIn ? (
                         <React.Fragment>
@@ -74,6 +84,7 @@ function Header(props) {
 const mapStateToProps = (state) => {
     return {
         auth: state.authState,
+        filterState: state.filterState,
     };
 };
 

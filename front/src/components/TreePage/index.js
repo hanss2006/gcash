@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 //import useFullPageLoader from "../../hooks/useFullPageLoader";
 import Tree from "../Tree";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {filterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const TreePage = () => {
     const url = '/account/tree?guid=root';
@@ -15,8 +17,9 @@ const TreePage = () => {
     const [showLoader, hideLoader] = useFullPageLoader();
 */
 
-
+    const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(filterMenuLinkTo("transactions"));
         //showLoader();
         axios.get(url)
             .then(res => {

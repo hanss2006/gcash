@@ -20,6 +20,7 @@ function App(props) {
                         <Route exact path="/" element={<TransactionList/>}/>
                         <Route exact path="tree" element={<TreePage/>}/>
                         <Route exact path="transactions" element={<TransactionList/>}/>
+                        <Route exact path="transactions/:accountGuid" element={<TransactionList/>}/>
                         <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
                     </>
                 )}
@@ -34,7 +35,7 @@ function App(props) {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.authState,
+        auth: state.authState
     };
 };
 

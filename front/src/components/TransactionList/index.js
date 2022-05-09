@@ -5,9 +5,11 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {filterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const TransactionList = () => {
+    const  { filterSearchString, filterCurrentAccountGuid } = useSelector((state) => state.filterState);
     const [transactions, setTransactions] = useState([]);
     const [setErrorHandler] = useState({
         hasError: false,
@@ -16,7 +18,7 @@ const TransactionList = () => {
     const [loader] = useFullPageLoader();
     //const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(filterSearchString);
     const [sorting, setSorting] = useState({field: "", order: ""});
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(0);
@@ -24,20 +26,19 @@ const TransactionList = () => {
     //const [totalPages, setTotalPages] = useState(0);
     //let navigate = useNavigate();
 
-    const dispatch = useDispatch();
-    const selectCurrentTransaction = (transaction) => {
-        dispatch(selectTransaction({ ...transaction }));
-        //navigate(`/transactions/${transaction.guid}`);
-    };
-
     const headers = [
         {name: "Comment", field: "description", sortable: false},
         {name: "Date", field: "postDate", sortable: false},
         {name: "Value", field: "value", sortable: false}
     ];
-    const accountGuid = '063ad681f1bef56cdb8be3695a74f9d6';
-    const url = '/transaction/account/' + accountGuid;
+    const url = '/transaction/account/' + filterCurrentAccountGuid;
+    const dispatch = useDispatch();
+    const selectCurrentTransaction = (transaction) => {
+        dispatch(selectTransaction({ ...transaction }));
+        //navigate(`/transactions/${transaction.guid}`);
+    };
     useEffect(() => {
+        dispatch(filterMenuLinkTo("tree"));
         //showLoader();
         axios.get(url)
             .then(res => {

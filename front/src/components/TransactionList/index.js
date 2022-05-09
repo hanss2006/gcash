@@ -6,47 +6,43 @@ import {Link} from "react-router-dom";
 import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
 import {useDispatch, useSelector} from "react-redux";
-import {filterMenuLinkTo} from "../../redux/actions/filterAction";
+import {filterSearchString as setFilterSearchString, filterMenuLinkTo as  setFilterMenuLinkTo,
+    filterPageSize as setFilterPageSize, filterItemsNum as setFilterItemsNum,
+    filterPageNum as setFilterPageNum} from "../../redux/actions/filterAction";
+import { batch } from 'react-redux'
 
 const TransactionList = () => {
-    const  { filterSearchString, filterCurrentAccountGuid } = useSelector((state) => state.filterState);
+    const  { filterSearchString , filterPageNum,filterItemsNum, filterSortCol, filterCurrentAccountGuid,
+        filterPageSize } = useSelector((state) => state.filterState);
     const [transactions, setTransactions] = useState([]);
-    const [setErrorHandler] = useState({
+    const [errorHandler, setErrorHandler] = useState({
         hasError: false,
         message: "",
     });
     const [loader] = useFullPageLoader();
-    //const [totalItems, setTotalItems] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState(filterSearchString);
-    const [sorting, setSorting] = useState({field: "", order: ""});
-    const [pageNumber, setPageNumber] = useState(0);
-    const [pageSize, setPageSize] = useState(0);
-    const [totalElements, setTotalElements] = useState(0);
-    //const [totalPages, setTotalPages] = useState(0);
-    //let navigate = useNavigate();
 
     const headers = [
         {name: "Comment", field: "description", sortable: false},
         {name: "Date", field: "postDate", sortable: false},
         {name: "Value", field: "value", sortable: false}
     ];
-    const url = '/transaction/account/' + filterCurrentAccountGuid;
+    const url = `/transaction/account/${filterCurrentAccountGuid}?page=${filterPageNum}&size=${filterPageSize}`;
     const dispatch = useDispatch();
     const selectCurrentTransaction = (transaction) => {
         dispatch(selectTransaction({ ...transaction }));
         //navigate(`/transactions/${transaction.guid}`);
     };
     useEffect(() => {
-        dispatch(filterMenuLinkTo("tree"));
+        dispatch(setFilterMenuLinkTo("tree"));
         //showLoader();
         axios.get(url)
             .then(res => {
                 setTransactions(res.data.content);
-                setPageNumber(res.data.number);
-                setPageSize(res.data.size);
-                setTotalElements(res.data.totalElements);
-                //setTotalPages(res.data.totalPages);
+                batch(() => {
+                    dispatch(setFilterPageNum(res.data.number));
+                    dispatch(setFilterPageSize(res.data.size));
+                    dispatch(setFilterItemsNum(res.data.totalElements));
+                })
             })
             .catch(error => {
                 if (error.response) {
@@ -54,6 +50,7 @@ const TransactionList = () => {
                         hasError: true,
                         message: error.response.data.message,
                     });
+                    console.log("Error: ", errorHandler.message)
                 }
             })
             .finally(() => {
@@ -61,6 +58,7 @@ const TransactionList = () => {
             });
     }, []);
 
+/*
     const transactionsData = useMemo(() => {
         let computedTransactions = (transactions != null) ? transactions : [];
 
@@ -89,6 +87,7 @@ const TransactionList = () => {
             (currentPage - 1) * pageSize + pageSize
         );
     }, [transactions, currentPage, search, sorting]);
+*/
 
 
     return (
@@ -98,17 +97,17 @@ const TransactionList = () => {
                     <div className="row">
                         <div className="col-md-6">
                             <Pagination
-                                total={totalElements}
-                                itemsPerPage={pageSize}
-                                currentPage={pageNumber}
-                                onPageChange={page => setCurrentPage(page)}
+                                total={filterItemsNum}
+                                itemsPerPage={filterPageSize}
+                                currentPage={filterPageNum}
+                                onPageChange={page => dispatch(setFilterPageNum(page))}
                             />
                         </div>
                         <div className="col-md-6 d-flex flex-row-reverse">
                             <Search
                                 onSearch={value => {
-                                    setSearch(value);
-                                    setCurrentPage(1);
+                                    dispatch(setFilterSearchString(value));
+                                    dispatch(setFilterPageNum(1));
                                 }}
                             />
                         </div>
@@ -117,12 +116,10 @@ const TransactionList = () => {
                     <table className="table table-striped">
                         <TableHeader
                             headers={headers}
-                            onSorting={(field, order) =>
-                                setSorting({field, order})
-                            }
+                            onSorting={(field, order) => dispatch(filterSortCol(field)) }
                         />
                         <tbody>
-                        {transactionsData.map(transaction => (
+                        {transactions.map(transaction => (
                             <tr key={transaction.guid}>
                                 <th scope="row">
                                     <Link to={`/transactions/${transaction.guid}`}

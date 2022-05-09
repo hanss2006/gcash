@@ -4,7 +4,8 @@ export const ActionTypesFilter = {
     FILTER_PAGE_NUM: "Filter/PageNum",
     FILTER_ITEMS_NUM: "Filter/ItemsNum",
     FILTER_SORT_COL: "Filter/SortCol",
-    FILTER_CURRENT_ACCOUNT_GUID: "Filter/CurrentAccountGuid"
+    FILTER_CURRENT_ACCOUNT_GUID: "Filter/CurrentAccountGuid",
+    FILTER_PAGE_SIZE: "Filter/FilterPageSize",
 };
 
 const filterMenuLinkTo = (menuLinkTo) => {
@@ -48,11 +49,19 @@ const filterCurrentAccountGuid = (currentAccountGuid) => {
     };
 }
 
+const filterPageSize = (pageSize) => {
+    return {
+        type: ActionTypesFilter.FILTER_PAGE_SIZE,
+        payload: pageSize
+    };
+}
+
 export {
     filterMenuLinkTo,
     filterSearchString,
     filterPageNum,
     filterItemsNum,
     filterSortCol,
-    filterCurrentAccountGuid
+    filterCurrentAccountGuid,
+    filterPageSize
 };

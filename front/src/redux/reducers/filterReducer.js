@@ -4,9 +4,10 @@ const filterState = {
     filterMenuLinkTo: '/',
     filterSearchString: '',
     filterPageNum: 0,
-    filterItemsNum: 10,
+    filterItemsNum: 0,
     filterSortCol: '',
-    filterCurrentAccountGuid: '063ad681f1bef56cdb8be3695a74f9d6'
+    filterCurrentAccountGuid: '063ad681f1bef56cdb8be3695a74f9d6',
+    filterPageSize: 10,
 };
 
 export default (state= filterState, action) => {
@@ -42,6 +43,12 @@ export default (state= filterState, action) => {
             return {
                 ...state,
                 filterCurrentAccountGuid: action.payload
+            };
+
+        case ActionTypesFilter.FILTER_PAGE_SIZE:
+            return {
+                ...state,
+                filterPageSize: action.payload
             };
 
         default:

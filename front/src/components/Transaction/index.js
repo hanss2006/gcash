@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import "./index.css";
+import {filterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const Transaction = ({currentTransaction}) => {
     //const {transactionGuid} = useParams();
@@ -12,7 +13,11 @@ const Transaction = ({currentTransaction}) => {
         setInputs((inputObj) => ({...inputObj, [formValues.target.name]: formValues.target.value}));
     }
     let url = `/transaction/`;
-
+    const dispatch = useDispatch();
+    const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
+    useEffect(() => {
+        dispatch(filterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
+    }, []);
     const updateAPIData = (e) => {
         e.preventDefault();
         axios.put(url, inputs).then(() => {

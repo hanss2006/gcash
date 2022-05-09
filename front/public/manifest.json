@@ -3,12 +3,12 @@
   "name": "Home accounting",
   "icons": [
     {
-      "src": "/gcash/images/gcash.png",
+      "src": "./images/gcash.png",
       "type": "image/png",
       "sizes": "1024x1024"
     },
     {
-      "src": "/gcash/images/gcash_x192.png",
+      "src": "./images/gcash_x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"

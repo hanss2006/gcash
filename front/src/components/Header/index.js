@@ -15,7 +15,7 @@ function Header(props) {
                             <React.Fragment>
                                 <li>
                                     <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
-                                        <img src='/images/menu.png' alt="Menu" />
+                                        <img src='./images/menu.png' alt="Menu" />
                                     </Link>
                                 </li>
                             </React.Fragment>

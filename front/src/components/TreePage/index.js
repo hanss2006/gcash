@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 //import useFullPageLoader from "../../hooks/useFullPageLoader";
 import Tree from "../Tree";
 import axios from "axios";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {filterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const TreePage = () => {
@@ -16,10 +16,10 @@ const TreePage = () => {
     });
     const [showLoader, hideLoader] = useFullPageLoader();
 */
-
+    const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(filterMenuLinkTo("transactions"));
+        dispatch(filterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
         //showLoader();
         axios.get(url)
             .then(res => {

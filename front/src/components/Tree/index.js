@@ -4,7 +4,7 @@ import "./index.css";
 import * as fontawesome from "@fortawesome/fontawesome-svg-core";
 import {faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch} from "react-redux";
-import {filterCurrentAccountGuid} from "../../redux/actions/filterAction";
+import {filterCurrentAccountGuid, filterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const Tree = ({data = []}) => {
     return (
@@ -23,6 +23,7 @@ const TreeNode = ({node}) => {
     const selectCurrentAccount = (guid) => {
         setChildVisiblity((v) => !v);
         dispatch(filterCurrentAccountGuid(guid));
+        dispatch(filterMenuLinkTo(`/transactions/account/${guid}`));
     };
 
     const [childVisible, setChildVisiblity] = useState(false);

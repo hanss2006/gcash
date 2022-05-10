@@ -2,9 +2,8 @@ package com.hanss.gcash.controller;
 
 import com.hanss.gcash.common.Constants;
 import com.hanss.gcash.common.UuidUtils;
-import com.hanss.gcash.model.Split;
-import com.hanss.gcash.model.Transaction;
-import com.hanss.gcash.model.TransactionFullDto;
+import com.hanss.gcash.model.*;
+import com.hanss.gcash.repository.AccountRepository;
 import com.hanss.gcash.repository.SplitRepository;
 import com.hanss.gcash.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ public class TransactionService {
     @Autowired
     private SplitRepository splitRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
     /*
      *  Удаление
      * */
@@ -101,5 +102,18 @@ public class TransactionService {
             }
         }
         return transactionFullDto;
+    }
+
+    public AccountTotalDto getAccountTotal(String accountGuid) {
+        AccountTotalDto accountTotalDto = new AccountTotalDto();
+        accountTotalDto.setAccountGuid(accountGuid);
+        accountTotalDto.setAccountTotal(transactionRepository.getAccountTotal(accountGuid));
+        Account account = accountRepository.findById(accountGuid).get();
+        String fullName = account.getName();
+        for (Account acc = account.getParent(); acc.getParent()!=null; acc=acc.getParent()){
+            fullName = acc.getName() + ":" + fullName;
+        }
+        accountTotalDto.setAccountFullName(fullName);
+        return accountTotalDto;
     }
 }

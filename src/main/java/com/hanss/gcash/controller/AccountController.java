@@ -68,13 +68,13 @@ public class AccountController {
     public ResponseEntity<AccountTreeDto> getAllDetails(
             @RequestParam(value="guid", defaultValue="root", required = false) String guid
     ) {
-        String accoutGuid;
+        String accountGuid;
         if ( guid==null || guid.isEmpty() || guid.equalsIgnoreCase("root") ){
-            accoutGuid = ROOT_ACCOUT_GUID;
+            accountGuid = ROOT_ACCOUT_GUID;
         } else {
-            accoutGuid = guid;
+            accountGuid = guid;
         }
-        return accountRepository.findById(accoutGuid).map(mapToAccountTreeDto).map(ResponseEntity::ok)
+        return accountRepository.findById(accountGuid).map(mapToAccountTreeDto).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 

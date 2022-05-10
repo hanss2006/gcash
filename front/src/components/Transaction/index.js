@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {connect, useDispatch, useSelector} from "react-redux";
 import "./index.css";
-import {filterMenuLinkTo} from "../../redux/actions/filterAction";
+import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const Transaction = ({currentTransaction}) => {
     //const {transactionGuid} = useParams();
@@ -16,7 +16,7 @@ const Transaction = ({currentTransaction}) => {
     const dispatch = useDispatch();
     const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
     useEffect(() => {
-        dispatch(filterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
+        dispatch(setFilterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
     }, []);
     const updateAPIData = (e) => {
         e.preventDefault();

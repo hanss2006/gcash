@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import Tree from "../Tree";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {filterMenuLinkTo} from "../../redux/actions/filterAction";
+import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
 
 const TreePage = () => {
     const url = '/account/tree?guid=root';
@@ -19,7 +19,7 @@ const TreePage = () => {
     const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(filterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
+        dispatch(setFilterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
         //showLoader();
         axios.get(url)
             .then(res => {

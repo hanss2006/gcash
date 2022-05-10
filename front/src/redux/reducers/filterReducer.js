@@ -8,6 +8,7 @@ const filterState = {
     filterSortCol: '',
     filterCurrentAccountGuid: '063ad681f1bef56cdb8be3695a74f9d6',
     filterPageSize: 10,
+    filterCurrentAccountFullName: ''
 };
 
 export default (state= filterState, action) => {
@@ -49,6 +50,12 @@ export default (state= filterState, action) => {
             return {
                 ...state,
                 filterPageSize: action.payload
+            };
+
+        case ActionTypesFilter.FILTER_CURRENT_ACCOUNT_FULL_NAME:
+            return {
+                ...state,
+                filterCurrentAccountFullName: action.payload
             };
 
         default:

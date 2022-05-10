@@ -1,11 +1,13 @@
 import React from "react";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {LogOutAuthAction} from "../../redux/actions/AuthAction";
 
 function Header(props) {
     const {auth, logout, filterState} = props;
     const navigate = useNavigate();
+    const {filterCurrentAccountFullName} = useSelector((state) => state.filterState);
+
     return (
         <header className="p-3 bg-dark text-white">
             <div className="container">
@@ -16,6 +18,11 @@ function Header(props) {
                                 <li>
                                     <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
                                         <img src='./images/menu.png' alt="Menu" />
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
+                                        <span>{filterCurrentAccountFullName}</span>
                                     </Link>
                                 </li>
                             </React.Fragment>

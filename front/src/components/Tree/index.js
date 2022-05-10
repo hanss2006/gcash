@@ -4,7 +4,8 @@ import "./index.css";
 import * as fontawesome from "@fortawesome/fontawesome-svg-core";
 import {faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch} from "react-redux";
-import {filterCurrentAccountGuid, filterMenuLinkTo} from "../../redux/actions/filterAction";
+import {setFilterCurrentAccountFullName, setFilterCurrentAccountGuid, setFilterMenuLinkTo} from "../../redux/actions/filterAction";
+import axios from "axios";
 
 const Tree = ({data = []}) => {
     return (
@@ -22,9 +23,22 @@ const TreeNode = ({node}) => {
     const dispatch = useDispatch();
     const selectCurrentAccount = (guid) => {
         setChildVisiblity((v) => !v);
-        dispatch(filterCurrentAccountGuid(guid));
-        dispatch(filterMenuLinkTo(`/transactions/account/${guid}`));
+        dispatch(setFilterCurrentAccountGuid(guid));
+        dispatch(setFilterMenuLinkTo(`/transactions/account/${guid}`));
+        loadTotal(guid);
     };
+
+    const loadTotal = (filterCurrentAccountGuid) => {
+        axios.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
+            .then(res => {
+                dispatch(setFilterCurrentAccountFullName(`${res.data.accountFullName} : ${res.data.accountTotal}`));
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log("Error: ", error.response.message)
+                }
+            });
+    }
 
     const [childVisible, setChildVisiblity] = useState(false);
 

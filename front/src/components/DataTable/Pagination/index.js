@@ -1,52 +1,81 @@
-import React, { useEffect, useState, useMemo } from "react";
-import Pagination from "react-bootstrap/Pagination";
+import React from 'react';
+import classnames from 'classnames';
+import { usePagination, DOTS } from './usePagination';
+import './pagination.css';
+const Pagination = props => {
+    const {
+        onPageChange,
+        totalCount,
+        siblingCount = 1,
+        currentPage,
+        pageSize,
+        className
+    } = props;
 
-const PaginationComponent = ({
-    total = 0,
-    itemsPerPage = 10,
-    currentPage = 1,
-    onPageChange
-}) => {
-    const [totalPages, setTotalPages] = useState(0);
+    const paginationRange = usePagination({
+        currentPage,
+        totalCount,
+        siblingCount,
+        pageSize
+    });
 
-    useEffect(() => {
-        if (total > 0 && itemsPerPage > 0)
-            setTotalPages(Math.ceil(total / itemsPerPage));
-    }, [total, itemsPerPage]);
+    // If there are less than 2 times in pagination range we shall not render the component
+    if (currentPage === 0 || paginationRange.length < 2) {
+        return null;
+    }
 
-    const paginationItems = useMemo(() => {
-        const pages = [];
+    const onNext = () => {
+        onPageChange(currentPage + 1);
+    };
 
-        for (let i = 1; i <= totalPages; i++) {
-            pages.push(
-                <Pagination.Item
-                    key={i}
-                    active={i === currentPage}
-                    onClick={() => onPageChange(i)}
-                >
-                    {i}
-                </Pagination.Item>
-            );
-        }
+    const onPrevious = () => {
+        onPageChange(currentPage - 1);
+    };
 
-        return pages;
-    }, [totalPages, currentPage]);
-
-    if (totalPages === 0) return null;
-
+    let lastPage = paginationRange[paginationRange.length - 1];
     return (
-        <Pagination>
-            <Pagination.Prev
-                onClick={() => onPageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-            />
-            {paginationItems}
-            <Pagination.Next
-                onClick={() => onPageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-            />
-        </Pagination>
+        <ul
+            className={classnames('pagination-container', { [className]: className })}
+        >
+            {/* Left navigation arrow */}
+            <li
+                className={classnames('pagination-item', {
+                    disabled: currentPage === 1
+                })}
+                onClick={onPrevious}
+            >
+                <div className="arrow left" />
+            </li>
+            {paginationRange.map(pageNumber => {
+
+                // If the pageItem is a DOT, render the DOTS unicode character
+                if (pageNumber === DOTS) {
+                    return <li className="pagination-item dots">&#8230;</li>;
+                }
+
+                // Render our Page Pills
+                return (
+                    <li key={pageNumber}
+                        className={classnames('pagination-item', {
+                            selected: pageNumber === currentPage
+                        })}
+                        onClick={() => onPageChange(pageNumber)}
+                    >
+                        {pageNumber}
+                    </li>
+                );
+            })}
+            {/*  Right Navigation arrow */}
+            <li
+                className={classnames('pagination-item', {
+                    disabled: currentPage === lastPage
+                })}
+                onClick={onNext}
+            >
+                <div className="arrow right" />
+            </li>
+        </ul>
     );
 };
 
-export default PaginationComponent;
+export default Pagination;

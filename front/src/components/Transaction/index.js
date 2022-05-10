@@ -5,26 +5,66 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import "./index.css";
 import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
 
-const Transaction = ({currentTransaction}) => {
+const Transaction = () => {
     //const {transactionGuid} = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
+    const {currentTransaction} = useSelector((state) => state.transactionState);
     const [inputs, setInputs] = useState(currentTransaction);
+    const [accounts, setAccounts] = useState([]);
     const updateFormValue = (formValues) => {
         setInputs((inputObj) => ({...inputObj, [formValues.target.name]: formValues.target.value}));
     }
-    let url = `/transaction/`;
-    const dispatch = useDispatch();
-    const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
+
     useEffect(() => {
         dispatch(setFilterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
+        loadAccounts();
     }, []);
+
     const updateAPIData = (e) => {
         e.preventDefault();
-        axios.put(url, inputs).then(() => {
-            //navigate(`../transaction/account/${inputs.currentAccountGuid}`);
-            navigate(`../`);
-        })
+        if (inputs.guid==='new'){
+            axios.post(`/transaction/`, inputs).then(() => {
+                navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+            })
+        } else {
+            axios.put(`/transaction/`, inputs).then(() => {
+                navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+            })
+        }
     }
+    const deleteAPIData = (e) => {
+        e.preventDefault();
+        if (inputs.guid==='new'){
+            navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+        } else {
+            axios.delete(`/transaction/${currentTransaction.guid}`).then(() => {
+                navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+            })
+        }
+    }
+    const cancelAPIData = (e) => {
+        e.preventDefault();
+        navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+    }
+
+    const loadAccounts = () => {
+        //showLoader();
+        axios.get(`/account/`)
+            .then(res => {
+                setAccounts(res.data.content);
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log("Error: ", error.response.message)
+                }
+            })
+            .finally(() => {
+                //hideLoader();
+            });
+    };
+
     return (
         <div>
             <form onSubmit={updateAPIData}>
@@ -40,14 +80,19 @@ const Transaction = ({currentTransaction}) => {
                     <label className='form-label' htmlFor='currentAccountGuid'>currentAccountGuid</label>
                 </div>
                 <div className="form-outline mb-4">
-                    <input
-                        type='text'
+                    <select
                         id='accountGuid'
                         name='accountGuid'
                         className='form-control'
                         value={inputs.accountGuid}
                         onChange={(e) => updateFormValue(e)}
-                    />
+                    >
+                        {accounts.map((account) => (
+                            <option key={account.guid} value={account.guid}>
+                                {account.name}
+                            </option>
+                        ))}
+                    </select>
                     <label className='form-label' htmlFor='accountGuid'>accountGuid</label>
                 </div>
                 <div className="form-outline mb-4">
@@ -86,11 +131,11 @@ const Transaction = ({currentTransaction}) => {
                 </div>
 
                 <button type='submit' onClick={updateAPIData} className="btn btn-primary btn-block mb-4">Send</button>
+                <button type='button' onClick={deleteAPIData} className="btn btn-danger btn-block mb-4">Delete</button>
+                <button type='reset' onClick={cancelAPIData} className="btn btn-secondary btn-block mb-4">Cancel</button>
             </form>
         </div>
     )
 }
 
-const mapStateToProps = state => ({currentTransaction: state.transactionState.currentTransaction});
-
-export default connect(mapStateToProps)(Transaction);
+export default Transaction;

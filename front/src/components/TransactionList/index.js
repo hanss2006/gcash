@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import useFullPageLoader from "../../hooks/useFullPageLoader";
 import {Pagination, Search, TableHeader} from "../DataTable";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,6 +13,7 @@ import {
 import {batch} from 'react-redux'
 
 const TransactionList = () => {
+    const navigate = useNavigate();
     const {
         filterSearchString, filterPageNum, filterItemsNum, filterSortCol, filterCurrentAccountGuid,
         filterPageSize
@@ -57,7 +58,6 @@ const TransactionList = () => {
             .finally(() => {
                 hideLoader();
             });
-
     };
 
     const loadTotal = (transactionsData) => {
@@ -90,6 +90,21 @@ const TransactionList = () => {
         loadTransactions();
     }, [filterSearchString, filterPageNum, filterItemsNum, filterSortCol, filterCurrentAccountGuid,
         filterPageSize]);
+
+    const addTransaction = (e) => {
+        e.preventDefault();
+        selectCurrentTransaction(newTransaction);
+        navigate(`/transactions/new`);
+    }
+
+    const newTransaction = {
+        postDate: new Date().toISOString().slice(0, 16),
+        guid: 'new',
+        currentAccountGuid: filterCurrentAccountGuid,
+        accountGuid: '',
+        description: '',
+        value: 0
+    }
 
     /*
         const transactionsData = useMemo(() => {
@@ -129,6 +144,7 @@ const TransactionList = () => {
                 <div className="col mb-3 col-12 text-center">
                     <div className="row">
                         <div className="col-md-6">
+                            <button type='submit' onClick={addTransaction} className="btn btn-primary btn-block mb-4">New</button>
                         </div>
                         <div className="col-md-6 d-flex flex-row-reverse">
                             <Search

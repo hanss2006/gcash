@@ -7,7 +7,7 @@ const filterState = {
     filterItemsNum: 0,
     filterSortCol: '',
     filterCurrentAccountGuid: '063ad681f1bef56cdb8be3695a74f9d6',
-    filterPageSize: 10,
+    filterPageSize: 5,
     filterCurrentAccountFullName: ''
 };
 

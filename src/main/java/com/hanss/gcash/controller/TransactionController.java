@@ -34,12 +34,14 @@ public class TransactionController {
     @GetMapping("/account/{accoutGuid}")
     public ResponseEntity<?> getTransaction(
             @PathVariable("accoutGuid") String accoutGuid,
+            @RequestParam(defaultValue = "", required = false) String searchString,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
         try {
+            String search = new StringBuffer(searchString).append("%").insert(0, "%").toString();
             Pageable paging = PageRequest.of(page, size);
-            Page<TransactionShortDto> transactionShortDtoPage = transactionRepository.findByAccountGuidNative(accoutGuid, paging);
+            Page<TransactionShortDto> transactionShortDtoPage = transactionRepository.findByAccountGuidNative(accoutGuid, search, paging);
             return new ResponseEntity<Page<TransactionShortDto>>(transactionShortDtoPage, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getCause().getMessage());

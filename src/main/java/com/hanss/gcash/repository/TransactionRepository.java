@@ -36,6 +36,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
                     "transactions.guid = t1.tx_guid " +
                     "WHERE " +
                     "t1.account_guid = ?1 " +
+                    "AND transactions.description LIKE ?2 " +
                     "ORDER BY " +
                     "transactions.post_date DESC, " +
                     "enter_date DESC",
@@ -58,9 +59,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
                     "ON " +
                     "transactions.guid = t1.tx_guid " +
                     "WHERE " +
-                    "t1.account_guid =  ?1",
+                    "t1.account_guid =  ?1 " +
+                    "AND transactions.description LIKE ?2 ",
             nativeQuery = true)
-    public Page<TransactionShortDto> findByAccountGuidNative(String accountGuid, Pageable pageable);
+    public Page<TransactionShortDto> findByAccountGuidNative(String accountGuid, String searchString, Pageable pageable);
 
     @Query(value = " SELECT\n" +
             "    ROUND(SUM(quantity_num / quantity_denom), 2) AS total_by_current\n" +

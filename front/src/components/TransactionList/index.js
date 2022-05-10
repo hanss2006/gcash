@@ -36,7 +36,10 @@ const TransactionList = () => {
 
     const loadTransactions = () => {
         showLoader();
-        const url = `/transaction/account/${filterCurrentAccountGuid}?page=${filterPageNum}&size=${filterPageSize}`;
+        let url = `/transaction/account/${filterCurrentAccountGuid}?page=${filterPageNum}&size=${filterPageSize}`;
+        if (filterSearchString !== ""){
+            url = `${url}&searchString=${encodeURIComponent(filterSearchString)}`;
+        }
         axios.get(url)
             .then(res => {
                 setTransactions(res.data.content);

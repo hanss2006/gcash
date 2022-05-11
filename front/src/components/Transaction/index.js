@@ -9,7 +9,7 @@ const Transaction = () => {
     //const {transactionGuid} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const  { filterCurrentAccountGuid } = useSelector((state) => state.filterState);
+    const {filterCurrentAccountGuid} = useSelector((state) => state.filterState);
     const {currentTransaction} = useSelector((state) => state.transactionState);
     const [inputs, setInputs] = useState(currentTransaction);
     const [accounts, setAccounts] = useState([]);
@@ -24,7 +24,7 @@ const Transaction = () => {
 
     const updateAPIData = (e) => {
         e.preventDefault();
-        if (inputs.guid==='new'){
+        if (inputs.guid === 'new') {
             axios.post(`/transaction/`, inputs).then(() => {
                 navigate(`../transactions/account/${inputs.currentAccountGuid}`);
             })
@@ -36,7 +36,7 @@ const Transaction = () => {
     }
     const deleteAPIData = (e) => {
         e.preventDefault();
-        if (inputs.guid==='new'){
+        if (inputs.guid === 'new') {
             navigate(`../transactions/account/${inputs.currentAccountGuid}`);
         } else {
             axios.delete(`/transaction/${currentTransaction.guid}`).then(() => {
@@ -68,17 +68,14 @@ const Transaction = () => {
     return (
         <div>
             <form onSubmit={updateAPIData}>
-                <div className="form-outline mb-4">
-                    <input
-                        type='text'
-                        id='currentAccountGuid'
-                        name='currentAccountGuid'
-                        className='form-control'
-                        value={inputs.currentAccountGuid}
-                        onChange={(e) => updateFormValue(e)}
-                    />
-                    <label className='form-label' htmlFor='currentAccountGuid'>currentAccountGuid</label>
-                </div>
+                <input
+                    type='hidden'
+                    id='currentAccountGuid'
+                    name='currentAccountGuid'
+                    className='form-control'
+                    value={inputs.currentAccountGuid}
+                    onChange={(e) => updateFormValue(e)}
+                />
                 <div className="form-outline mb-4">
                     <select
                         id='accountGuid'
@@ -130,9 +127,10 @@ const Transaction = () => {
                     <label className='form-label' htmlFor='value'>value</label>
                 </div>
 
-                <button type='submit' onClick={updateAPIData} className="btn btn-primary btn-block mb-4">Send</button>
+                <button type='submit' onClick={updateAPIData} className="btn btn-primary btn-block mb-4">Save</button>
                 <button type='button' onClick={deleteAPIData} className="btn btn-danger btn-block mb-4">Delete</button>
-                <button type='reset' onClick={cancelAPIData} className="btn btn-secondary btn-block mb-4">Cancel</button>
+                <button type='reset' onClick={cancelAPIData} className="btn btn-secondary btn-block mb-4">Cancel
+                </button>
             </form>
         </div>
     )

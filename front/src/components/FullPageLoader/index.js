@@ -1,10 +1,9 @@
 import React from "react";
-import {Spinner} from "react-bootstrap";
 
 const FullPageLoader = () => {
     return (
         <div className="fp-container">
-            <img src={Spinner} className="fp-loader" alt="loading" />
+            <img src='./images/spinner.gif' className="fp-loader" alt="loading" />
         </div>
     );
 };

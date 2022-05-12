@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import "./index.css";
 import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
 
@@ -126,10 +126,9 @@ const Transaction = () => {
                     />
                     <label className='form-label' htmlFor='value'>value</label>
                 </div>
-
-                <button type='submit' onClick={updateAPIData} className="btn btn-primary btn-block mb-4">Save</button>
-                <button type='button' onClick={deleteAPIData} className="btn btn-danger btn-block mb-4">Delete</button>
-                <button type='reset' onClick={cancelAPIData} className="btn btn-secondary btn-block mb-4">Cancel
+                <button type='submit' onClick={updateAPIData} className="btn btn-outline-primary">Save</button>
+                <button type='button' onClick={deleteAPIData} className="btn btn-outline-danger">Delete</button>
+                <button type='reset' onClick={cancelAPIData} className="btn btn-outline-secondary">Cancel
                 </button>
             </form>
         </div>

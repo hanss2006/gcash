@@ -97,8 +97,11 @@ const TransactionList = () => {
         navigate(`/transactions/new`);
     }
 
+    let date = new Date();
+    date.setHours(new Date().getHours()+3);
+
     const newTransaction = {
-        postDate: new Date().toISOString().slice(0, 16),
+        postDate: date.toISOString().slice(0, -8),
         guid: 'new',
         currentAccountGuid: filterCurrentAccountGuid,
         accountGuid: '',

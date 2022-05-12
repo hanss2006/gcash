@@ -147,7 +147,7 @@ const TransactionList = () => {
                 <div className="col mb-3 col-12 text-center">
                     <div className="row">
                         <div className="col-md-6">
-                            <button type='submit' onClick={addTransaction} className="btn btn-primary btn-block mb-4">New</button>
+                            <button type='submit' onClick={addTransaction} className="btn btn-outline-primary">New</button>
                         </div>
                         <div className="col-md-6 d-flex flex-row-reverse">
                             <Search

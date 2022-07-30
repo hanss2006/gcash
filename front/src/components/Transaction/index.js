@@ -4,6 +4,7 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import "./index.css";
 import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
+import {selectTransaction} from "../../redux/actions/transaction";
 
 const Transaction = () => {
     //const {transactionGuid} = useParams();
@@ -11,10 +12,14 @@ const Transaction = () => {
     const dispatch = useDispatch();
     const {filterCurrentAccountGuid} = useSelector((state) => state.filterState);
     const {currentTransaction} = useSelector((state) => state.transactionState);
-    const [inputs, setInputs] = useState(currentTransaction);
+    //const [inputs, setInputs] = useState(currentTransaction);
     const [accounts, setAccounts] = useState([]);
     const updateFormValue = (formValues) => {
-        setInputs((inputObj) => ({...inputObj, [formValues.target.name]: formValues.target.value}));
+        //setInputs((inputObj) => ({...inputObj, [formValues.target.name]: formValues.target.value}));
+        dispatch(selectTransaction({
+            ...currentTransaction,
+            [formValues.target.name]: formValues.target.value
+        }))
     }
 
     useEffect(() => {
@@ -24,29 +29,52 @@ const Transaction = () => {
 
     const updateAPIData = (e) => {
         e.preventDefault();
-        if (inputs.guid === 'new') {
-            axios.post(`/transaction/`, inputs).then(() => {
-                navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+        if (currentTransaction.guid === 'new') {
+            axios.post(`/transaction/`, currentTransaction).then(() => {
+                navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
             })
         } else {
-            axios.put(`/transaction/`, inputs).then(() => {
-                navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+            axios.put(`/transaction/`, currentTransaction).then(() => {
+                navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
             })
         }
     }
+
+    const duplicateAPIData = (e) => {
+        if (currentTransaction.guid !== 'new') {
+            if (window.confirm("Are you sure you want to duplicate?")) {
+                let date = new Date();
+                date.setHours(new Date().getHours()+3);
+                const newTransaction = {
+                    postDate: date.toISOString().slice(0, -8),
+                    guid: 'new',
+                    currentAccountGuid: currentTransaction.currentAccountGuid,
+                    accountGuid: currentTransaction.accountGuid,
+                    description: currentTransaction.description,
+                    value: currentTransaction.value
+                }
+
+                dispatch(selectTransaction({...newTransaction}));
+                navigate(`../transactions/new`);
+            }
+        }
+    }
+
     const deleteAPIData = (e) => {
-        e.preventDefault();
-        if (inputs.guid === 'new') {
-            navigate(`../transactions/account/${inputs.currentAccountGuid}`);
-        } else {
-            axios.delete(`/transaction/${currentTransaction.guid}`).then(() => {
-                navigate(`../transactions/account/${inputs.currentAccountGuid}`);
-            })
+        if (window.confirm("Are you sure you want to delete?")) {
+            e.preventDefault();
+            if (currentTransaction.guid === 'new') {
+                navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
+            } else {
+                axios.delete(`/transaction/${currentTransaction.guid}`).then(() => {
+                    navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
+                })
+            }
         }
     }
     const cancelAPIData = (e) => {
         e.preventDefault();
-        navigate(`../transactions/account/${inputs.currentAccountGuid}`);
+        navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
     }
 
     const loadAccounts = () => {
@@ -73,7 +101,7 @@ const Transaction = () => {
                     id='currentAccountGuid'
                     name='currentAccountGuid'
                     className='form-control'
-                    value={inputs.currentAccountGuid}
+                    value={currentTransaction.currentAccountGuid}
                     onChange={(e) => updateFormValue(e)}
                 />
                 <div className="form-outline mb-4">
@@ -81,7 +109,7 @@ const Transaction = () => {
                         id='accountGuid'
                         name='accountGuid'
                         className='form-control'
-                        value={inputs.accountGuid}
+                        value={currentTransaction.accountGuid}
                         onChange={(e) => updateFormValue(e)}
                     >
                         {accounts.map((account) => (
@@ -98,7 +126,7 @@ const Transaction = () => {
                         id='postDate'
                         name='postDate'
                         className='form-control'
-                        value={inputs.postDate}
+                        value={currentTransaction.postDate}
                         onChange={(e) => updateFormValue(e)}
                     />
                     <label className='form-label' htmlFor='postDate'>postDate</label>
@@ -109,7 +137,7 @@ const Transaction = () => {
                         id='description'
                         name='description'
                         className='form-control'
-                        value={inputs.description}
+                        value={currentTransaction.description}
                         onChange={(e) => updateFormValue(e)}
                     />
                     <label className='form-label' htmlFor='description'>description</label>
@@ -121,15 +149,15 @@ const Transaction = () => {
                         id='value'
                         name='value'
                         className='form-control'
-                        value={inputs.value}
+                        value={currentTransaction.value}
                         onChange={(e) => updateFormValue(e)}
                     />
                     <label className='form-label' htmlFor='value'>value</label>
                 </div>
                 <button type='submit' onClick={updateAPIData} className="btn btn-outline-primary">Save</button>
                 <button type='button' onClick={deleteAPIData} className="btn btn-outline-danger">Delete</button>
-                <button type='reset' onClick={cancelAPIData} className="btn btn-outline-secondary">Cancel
-                </button>
+                <button type='button' onClick={duplicateAPIData} className="btn btn-outline-info">Duplicate</button>
+                <button type='reset' onClick={cancelAPIData} className="btn btn-outline-secondary">Cancel</button>
             </form>
         </div>
     )

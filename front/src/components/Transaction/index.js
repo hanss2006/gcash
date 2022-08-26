@@ -156,7 +156,7 @@ const Transaction = () => {
                 </div>
                 <button type='submit' onClick={updateAPIData} className="btn btn-outline-primary">Save</button>
                 <button type='button' onClick={deleteAPIData} className="btn btn-outline-danger">Delete</button>
-                <button type='button' onClick={duplicateAPIData} className="btn btn-outline-info">Duplicate</button>
+                <button type='button' onClick={duplicateAPIData} className="btn btn-outline-info">Double</button>
                 <button type='reset' onClick={cancelAPIData} className="btn btn-outline-secondary">Cancel</button>
             </form>
         </div>

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.hanss</groupId>
 	<artifactId>gcash</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>gcash</name>
 	<description>Home bookkeeping backend</description>

@@ -4,7 +4,6 @@ import './App.css';
 import TransactionList from "./components/TransactionList";
 import Transaction from "./components/Transaction";
 import Error from "./components/Error";
-import Login from "./components/auth/Login";
 import Header from "./components/Header";
 import {connect} from "react-redux";
 import TreePage from "./components/TreePage";
@@ -15,17 +14,18 @@ function App(props) {
         <div className="App">
             <Header></Header>
             <Routes>
+{/*
                 {auth.isLoggedIn && (
+*/}
                     <>
                         <Route exact path="/" element={<TransactionList/>}/>
                         <Route exact path="tree" element={<TreePage/>}/>
                         <Route exact path="transactions/account/:accountGuid" element={<TransactionList/>}/>
                         <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
                     </>
+{/*
                 )}
-                {!auth.isLoggedIn && (
-                    <Route exact path="login" element={<Login/>}/>
-                )}
+*/}
                 <Route path="*" element={<Error/>}/>
             </Routes>
         </div>

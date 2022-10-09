@@ -1,7 +1,6 @@
 import React from "react";
 import {connect, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import {LogOutAuthAction} from "../../redux/actions/AuthAction";
 
 function Header(props) {
     const {auth, logout, filterState} = props;
@@ -13,7 +12,9 @@ function Header(props) {
             <div className="container">
                 <div className="d-flex justify-content-between">
                     <ul className="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-1">
+{/*
                         {auth.isLoggedIn ? (
+*/}
                             <React.Fragment>
                                 <li>
                                     <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
@@ -26,18 +27,26 @@ function Header(props) {
                                     </Link>
                                 </li>
                             </React.Fragment>
+{/*
                         ) : (
+*/}
                             <React.Fragment>
                             </React.Fragment>
+{/*
                         )}
+*/}
                     </ul>
+{/*
                     {!auth.isLoggedIn ? (
+*/}
                         <React.Fragment>
                             <Link to="./login">
                                 <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}>Login</button>
                             </Link>
                         </React.Fragment>
+{/*
                     ) : (
+*/}
                         <React.Fragment>
                             <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}
                                     onClick={() => {
@@ -47,7 +56,9 @@ function Header(props) {
                                 Logout
                             </button>
                         </React.Fragment>
+{/*
                     )}
+*/}
                 </div>
             </div>
         </header>
@@ -90,7 +101,6 @@ function Header(props) {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.authState,
         filterState: state.filterState,
     };
 };
@@ -98,7 +108,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: (navigate) => {
-            dispatch(LogOutAuthAction(navigate));
+            //dispatch(LogOutAuthAction(navigate));
         },
     };
 };

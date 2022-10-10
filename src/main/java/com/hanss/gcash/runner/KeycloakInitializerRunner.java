@@ -24,6 +24,7 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        if (true) return;
         log.info("Initializing '{}' realm in Keycloak ...", COMPANY_SERVICE_REALM_NAME);
 
         Optional<RealmRepresentation> representationOptional = keycloakAdmin.realms()

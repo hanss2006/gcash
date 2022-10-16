@@ -1,6 +1,6 @@
 import Keycloak from "keycloak-js";
 const keycloak = new Keycloak({
-    url: "https://fs:8443/",
+    url: "http://fs:8081/",
     realm: "hanss-realm",
     clientId: "gcash-client",
 });

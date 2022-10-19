@@ -1,55 +1,41 @@
 import React from "react";
-import {ReactKeycloakProvider} from "@react-keycloak/web";
-import keycloak from "./Keycloak";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import './App.css';
 import TransactionList from "./components/TransactionList";
 import Transaction from "./components/Transaction";
 import Error from "./components/Error";
+import Login from "./components/auth/Login";
 import Header from "./components/Header";
+import {connect} from "react-redux";
 import TreePage from "./components/TreePage";
-import PrivateRoute from "./helpers/PrivateRoute";
-import axios from "axios";
-import {useEffect} from 'react';
 
-function App() {
-    useEffect(() => {
-        axios.interceptors.request.use(
-            (config) => {
-                axios.defaults.baseURL = "/api/gcash";
-                axios.defaults.headers.common.Realm = keycloak.realm;
-                config.headers.Authorization = `Bearer ${keycloak.token}`;
-                return config;
-            },
-            (error) => {
-                return Promise.reject(error);
-            }
-        );
-    }, []);
+function App(props) {
+    const {auth} = props;
     return (
         <div className="App">
-            <ReactKeycloakProvider authClient={keycloak}>
-                <BrowserRouter basename="/gcash">
-                    <Header></Header>
-                    <Routes>
-                        {/*
+            <Header></Header>
+            <Routes>
                 {auth.isLoggedIn && (
-*/}
-                        <>
-                            <Route exact path="/" element={<PrivateRoute><TransactionList/></PrivateRoute>}/>
-                            <Route exact path="tree" element={<PrivateRoute><TreePage/></PrivateRoute>}/>
-                            <Route exact path="transactions/account/:accountGuid" element={<PrivateRoute><TransactionList/></PrivateRoute>}/>
-                            <Route exact path="transactions/:transactionGuid" element={<PrivateRoute><Transaction/></PrivateRoute>}/>
-                        </>
-                        {/*
+                    <>
+                        <Route exact path="/" element={<TransactionList/>}/>
+                        <Route exact path="tree" element={<TreePage/>}/>
+                        <Route exact path="transactions/account/:accountGuid" element={<TransactionList/>}/>
+                        <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
+                    </>
                 )}
-*/}
-                        <Route path="*" element={<Error/>}/>
-                    </Routes>
-                </BrowserRouter>
-            </ReactKeycloakProvider>
+                {!auth.isLoggedIn && (
+                    <Route exact path="login" element={<Login/>}/>
+                )}
+                <Route path="*" element={<Error/>}/>
+            </Routes>
         </div>
     );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.authState
+    };
+};
+
+export default connect(mapStateToProps)(App);

@@ -100,13 +100,13 @@ public class KeycloakInitializerRunner implements CommandLineRunner {
         return Map.of(GCASH_APP_CLIENT_ID, roles);
     }
 
-    private static final String KEYCLOAK_SERVER_URL = "http://fs:8081";
+    private static final String KEYCLOAK_SERVER_URL = "http://fs:8180";
     private static final String COMPANY_SERVICE_REALM_NAME = "hanss-realm";
     private static final String GCASH_APP_CLIENT_ID = "gcash-client";
     private static final String GCASH_APP_REDIRECT_URL = "http://localhost:3000/*";
     private static final List<UserPass> GCASH_APP_USERS = Arrays.asList(
-            new UserPass("admin", "******"),
-            new UserPass("user", "******"));
+            new UserPass("admin", "admin"),
+            new UserPass("user", "user"));
 
     private record UserPass(String username, String password) {
     }

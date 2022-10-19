@@ -24,7 +24,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.GET, "/actuator/**").hasRole(ADMIN)
                 .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                 .antMatchers("/admin").hasRole(ADMIN)
-                .antMatchers("/**").hasAnyRole(ADMIN, USER)
+//                .antMatchers("/**").hasAnyRole(ADMIN, USER)
                 .anyRequest().authenticated();
         http.oauth2ResourceServer()
                 .jwt()

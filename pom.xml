@@ -16,10 +16,9 @@
 	<description>Home bookkeeping backend</description>
 	<properties>
 		<java.version>17</java.version>
-		<keycloak.version>19.0.2</keycloak.version>
-		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
-		<springdoc-openapi.version>1.6.11</springdoc-openapi.version>
+		<springdoc-openapi.version>1.6.12</springdoc-openapi.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -29,14 +28,6 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
-<!--
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok-mapstruct-binding</artifactId>
-			<version>${lombok-mapstruct-binding.version}</version>
-		</dependency>
--->
-		<!-- SpringDoc OpenApi -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
@@ -100,14 +91,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
-		<!-- Keycloak Admin Client -->
-		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-admin-client</artifactId>
-			<version>${keycloak.version}</version>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>
@@ -173,5 +156,4 @@
 			</properties>
 		</profile>
 	</profiles>
-
 </project>

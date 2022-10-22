@@ -15,10 +15,15 @@ const getAuthState = () => {
   const auth = sessionStorage.getItem("auth");
   try {
     const authobj = JSON.parse(auth);
-    const { expires, access_token } = authobj.user;
+    const { expires, access_token, refresh_token } = authobj.user;
     if (new Date(expires) > new Date()) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
       return authobj;
+    } else {
+/*      const res = await axios.post("/auth/refresh", {refresh_token});
+      const { data } = res;
+      dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });*/
+      alert(refresh_token);
     }
     return authState;
   } catch (error) {

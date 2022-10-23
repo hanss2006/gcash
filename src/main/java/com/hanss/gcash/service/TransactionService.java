@@ -1,4 +1,4 @@
-package com.hanss.gcash.controller;
+package com.hanss.gcash.service;
 
 import com.hanss.gcash.common.Constants;
 import com.hanss.gcash.common.UuidUtils;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class LoginService {
@@ -23,6 +24,12 @@ public class LoginService {
 
     @Value("${spring.security.oauth2.client.registration.oauth2-client-credentials.authorization-grant-type}")
     private String grantType;
+
+    @Value("${keycloak.realm}")
+    private String realm;
+
+    @Value("${keycloak.auth-server-url}")
+    private String keyCloakUrl;
 
 
     public ResponseEntity<LoginResponse> login(LoginRequest loginrequest) {
@@ -40,8 +47,34 @@ public class LoginService {
 
         ResponseEntity<LoginResponse> response = restTemplate.postForEntity("https://fs:8443/realms/hanss-realm/protocol/openid-connect/token", httpEntity, LoginResponse.class);
         return new ResponseEntity<>(response.getBody(),HttpStatus.OK);
+    }
 
+    public LoginResponse refresh(TokenRequest refreshToken) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("grant_type", "refresh_token");
+        parameters.add("client_id", clientId);
+        parameters.add("client_secret", clientSecret);
+        parameters.add("refresh_token", refreshToken.getToken());
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(parameters, headers);
+
+        return restTemplate.exchange(getAuthUrl(),
+                HttpMethod.POST,
+                entity,
+                LoginResponse.class).getBody();
+    }
+
+    private String getAuthUrl() {
+        return UriComponentsBuilder.fromHttpUrl(keyCloakUrl)
+                .pathSegment("realms")
+                .pathSegment(realm)
+                .pathSegment("protocol")
+                .pathSegment("openid-connect")
+                .pathSegment("token")
+                .toUriString();
     }
 
     public ResponseEntity<Response> logout(TokenRequest request) {

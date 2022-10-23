@@ -77,14 +77,14 @@ public class LoginService {
                 .toUriString();
     }
 
-    public ResponseEntity<Response> logout(TokenRequest request) {
+    public ResponseEntity<Response> logout(TokenRequest refreshToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("client_id", clientId);
         map.add("client_secret", clientSecret);
-        map.add("refresh_token", request.getToken());
+        map.add("refresh_token", refreshToken.getToken());
 
 
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map,headers);

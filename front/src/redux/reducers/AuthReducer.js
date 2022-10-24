@@ -8,17 +8,22 @@ const authState = {
     email: "",
     expires: "",
     roles: [],
-    accessToken: ""
+    access_token: ""
   },
 };
 const getAuthState = () => {
-  const auth = localStorage.getItem("auth");
+  const auth = sessionStorage.getItem("auth");
   try {
     const authobj = JSON.parse(auth);
-    const { expires, accessToken } = authobj.user;
+    const { expires, access_token, refresh_token } = authobj.user;
     if (new Date(expires) > new Date()) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
       return authobj;
+    } else {
+/*      const res = await axios.post("/auth/refresh", {refresh_token});
+      const { data } = res;
+      dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });*/
+      alert(refresh_token);
     }
     return authState;
   } catch (error) {
@@ -35,12 +40,12 @@ const authreducer = (state = newAuth, action) => {
       };
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${action.payload.accessToken}`;
-      localStorage.setItem("auth", JSON.stringify(newAuthState));
+      ] = `Bearer ${action.payload.access_token}`;
+      sessionStorage.setItem("auth", JSON.stringify(newAuthState));
       return newAuthState;
 
     case AuthActionType.LOGOUT_SUCCESS:
-      localStorage.removeItem("auth");
+      sessionStorage.removeItem("auth");
       return authState;
 
     case AuthActionType.LOGIN_SUCCESS:
@@ -50,8 +55,8 @@ const authreducer = (state = newAuth, action) => {
       };
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${action.payload.accessToken}`;
-      localStorage.setItem("auth", JSON.stringify(loginAuthState));
+      ] = `Bearer ${action.payload.access_token}`;
+      sessionStorage.setItem("auth", JSON.stringify(loginAuthState));
       return loginAuthState;
 
     default:

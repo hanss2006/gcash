@@ -34,7 +34,7 @@ const RegisterAuthAction = (userState, navigate, setErrorHandler) => {
 const LoginAuthAction = (loginState, navigate, setErrorHandler) => {
   return async (dispatch) => {
     try {
-      const res = await axios.post("/login?clientId=gcash", loginState);
+      const res = await axios.post("/auth/login", loginState);
       const { data } = res;
       dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });
       navigate("/");
@@ -50,14 +50,17 @@ const LoginAuthAction = (loginState, navigate, setErrorHandler) => {
   };
 };
 
-const LogOutAuthAction = (navigate) => {
+const LogOutAuthAction = (logoutState, navigate) => {
   return async (dispatch) => {
     try {
-      //const res = await axios.get("/logout");
-      //const { data } = res;
+      const auth = sessionStorage.getItem("auth");
+      const authobj = JSON.parse(auth);
+      const { refresh_token } = authobj.user;
+      const res = await axios.post("/auth/logout", { token: refresh_token });
+      const { data } = res;
       dispatch({
         type: AuthActionType.LOGOUT_SUCCESS,
-        payload: "",
+        payload: data,
       });
       navigate("login");
     } catch (error) {

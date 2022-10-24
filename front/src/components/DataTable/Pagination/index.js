@@ -39,6 +39,7 @@ const Pagination = props => {
         >
             {/* Left navigation arrow */}
             <li
+                key="previous_key"
                 className={classnames('pagination-item', {
                     disabled: currentPage === 1
                 })}
@@ -50,7 +51,7 @@ const Pagination = props => {
 
                 // If the pageItem is a DOT, render the DOTS unicode character
                 if (pageNumber === DOTS) {
-                    return <li className="pagination-item dots">&#8230;</li>;
+                    return <li key="dots_key" className="pagination-item dots">&#8230;</li>;
                 }
 
                 // Render our Page Pills
@@ -67,6 +68,7 @@ const Pagination = props => {
             })}
             {/*  Right Navigation arrow */}
             <li
+                key="next_key"
                 className={classnames('pagination-item', {
                     disabled: currentPage === lastPage
                 })}

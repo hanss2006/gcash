@@ -4,6 +4,7 @@ import com.hanss.gcash.model.AccountTotalDto;
 import com.hanss.gcash.model.TransactionFullDto;
 import com.hanss.gcash.model.TransactionShortDto;
 import com.hanss.gcash.repository.TransactionRepository;
+import com.hanss.gcash.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;

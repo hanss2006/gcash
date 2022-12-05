@@ -6,7 +6,9 @@ const AuthActionType = {
   LOGOUT_SUCCESS: "LOGOUT_SUCCESS",
   LOGOUT_FAIL: "LOGOUT_FAIL",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
+  REFRESH_SUCCESS: "REFRESH_SUCCESS",
   LOGIN_FAIL: "LOGIN_FAIL",
+  REFRESH_FAIL: "REFRESH_FAIL",
 };
 
 const RegisterAuthAction = (userState, navigate, setErrorHandler) => {
@@ -49,6 +51,61 @@ const LoginAuthAction = (loginState, navigate, setErrorHandler) => {
     }
   };
 };
+
+const RefreshAuthAction = (setErrorHandler) => {
+  return async (dispatch) => {
+    try {
+      const auth = sessionStorage.getItem("auth");
+      const authobj = JSON.parse(auth);
+      const { refresh_token } = authobj.user;
+      const res = await axios.post("/auth/refresh", { token: refresh_token });
+      const { data } = res;
+      dispatch({ type: AuthActionType.REFRESH_SUCCESS, payload: data });
+    } catch (error) {
+      if (error.response) {
+        dispatch({
+          type: AuthActionType.REFRESH_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+      setErrorHandler({ hasError: true, message: error.response.data.message });
+    }
+  };
+};
+
+axios.interceptors.response.use(
+    (res) => {
+      return res;
+    },
+    async (err) => {
+      const originalConfig = err.config;
+
+      if (originalConfig.url !== "/auth/login" && err.response) {
+        // Access Token was expired
+        if (err.response.status === 401 && !originalConfig._retry) {
+          originalConfig._retry = true;
+          try {
+            const auth = sessionStorage.getItem("auth");
+            const authobj = JSON.parse(auth);
+            const { refresh_token } = authobj.user;
+            const rs = await axios.post("/auth/refresh", {
+              token: refresh_token,
+            });
+            const loginAuthState = {
+              isLoggedIn: true,
+              user: rs.data,
+            };
+            sessionStorage.setItem("auth", JSON.stringify(loginAuthState));
+            return axios(originalConfig);
+          } catch (_error) {
+            return Promise.reject(_error);
+          }
+        }
+      }
+
+      return Promise.reject(err);
+    }
+);
 
 const LogOutAuthAction = (logoutState, navigate) => {
   return async (dispatch) => {

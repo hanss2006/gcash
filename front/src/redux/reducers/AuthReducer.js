@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthActionType } from "../actions/AuthAction";
+import {AuthActionType, LoginAuthAction, LogOutAuthAction} from "../actions/AuthAction";
 
 const authState = {
   isLoggedIn: false,
@@ -8,24 +8,18 @@ const authState = {
     email: "",
     expires: "",
     roles: [],
-    access_token: ""
+    access_token: "",
+    refresh_token: ""
   },
 };
+
 const getAuthState = () => {
   const auth = sessionStorage.getItem("auth");
   try {
     const authobj = JSON.parse(auth);
-    const { expires, access_token, refresh_token } = authobj.user;
-    if (new Date(expires) > new Date()) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
-      return authobj;
-    } else {
-/*      const res = await axios.post("/auth/refresh", {refresh_token});
-      const { data } = res;
-      dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });*/
-      alert(refresh_token);
-    }
-    return authState;
+    const { access_token, refresh_token } = authobj.user;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+    return authobj;
   } catch (error) {
     return authState;
   }
@@ -58,6 +52,17 @@ const authreducer = (state = newAuth, action) => {
       ] = `Bearer ${action.payload.access_token}`;
       sessionStorage.setItem("auth", JSON.stringify(loginAuthState));
       return loginAuthState;
+
+    case AuthActionType.REFRESH_SUCCESS:
+      const refreshAuthState = {
+        isLoggedIn: true,
+        user: action.payload,
+      };
+      axios.defaults.headers.common[
+          "Authorization"
+          ] = `Bearer ${action.payload.access_token}`;
+      sessionStorage.setItem("auth", JSON.stringify(refreshAuthState));
+      return refreshAuthState;
 
     default:
       return state;

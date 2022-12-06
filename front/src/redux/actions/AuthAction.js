@@ -53,10 +53,8 @@ const LoginAuthAction = (loginState, navigate, setErrorHandler) => {
 const LogOutAuthAction = (logoutState, navigate) => {
   return async (dispatch) => {
     try {
-      const auth = sessionStorage.getItem("auth");
-      const authobj = JSON.parse(auth);
-      const { refresh_token } = authobj.user;
-      const res = await axios.post("/auth/logout", { token: refresh_token });
+      const authobj = JSON.parse(sessionStorage.getItem("session"));
+      const res = await axios.post("/auth/logout", { token: authobj?.user?.refresh_token });
       const { data } = res;
       dispatch({
         type: AuthActionType.LOGOUT_SUCCESS,

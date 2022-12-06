@@ -15,17 +15,15 @@ function App(props) {
         <div className="App">
             <Header></Header>
             <Routes>
-                {auth.isLoggedIn && (
-                    <>
+                {auth?.isLoggedIn
+                    ? <>
                         <Route exact path="/" element={<TransactionList/>}/>
                         <Route exact path="tree" element={<TreePage/>}/>
                         <Route exact path="transactions/account/:accountGuid" element={<TransactionList/>}/>
                         <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
-                    </>
-                )}
-                {!auth.isLoggedIn && (
-                    <Route exact path="login" element={<Login/>}/>
-                )}
+                      </>
+                    : <Route exact path="login" element={<Login/>}/>
+                }
                 <Route path="*" element={<Error/>}/>
             </Routes>
         </div>

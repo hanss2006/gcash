@@ -92,10 +92,10 @@ axios.interceptors.response.use(
             const rs = await axios.post("/auth/refresh", {
               token: refresh_token,
             });
-            axios.defaults.headers.common["Authorization"] = `Bearer ${rs.access_token}`;
+            axios.defaults.headers.common["Authorization"] = `Bearer ${rs.data.access_token}`;
             const loginAuthState = {
               isLoggedIn: true,
-              user: rs,
+              user: rs.data,
             };
             sessionStorage.setItem("auth", JSON.stringify(loginAuthState));
             return axios(originalConfig);

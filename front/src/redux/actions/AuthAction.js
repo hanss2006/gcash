@@ -95,7 +95,7 @@ axios.interceptors.response.use(
             axios.defaults.headers.common["Authorization"] = `Bearer ${rs.access_token}`;
             const loginAuthState = {
               isLoggedIn: true,
-              user: rs.data,
+              user: rs,
             };
             sessionStorage.setItem("auth", JSON.stringify(loginAuthState));
             return axios(originalConfig);

@@ -5,7 +5,7 @@ import * as fontawesome from "@fortawesome/fontawesome-svg-core";
 import {faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch} from "react-redux";
 import {setFilterCurrentAccountFullName, setFilterCurrentAccountGuid, setFilterMenuLinkTo} from "../../redux/actions/filterAction";
-import axios from "axios";
+import {axiosPrivate} from "../../helpers/axiosPrivate";
 
 const Tree = ({data = []}) => {
     return (
@@ -29,7 +29,7 @@ const TreeNode = ({node}) => {
     };
 
     const loadTotal = (filterCurrentAccountGuid) => {
-        axios.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
+        axiosPrivate.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
             .then(res => {
                 dispatch(setFilterCurrentAccountFullName(`${res.data.accountFullName} : ${res.data.accountTotal}`));
             })

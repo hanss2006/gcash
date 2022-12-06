@@ -1,4 +1,3 @@
-import axios from "axios";
 import {AuthActionType, LoginAuthAction, LogOutAuthAction} from "../actions/AuthAction";
 
 const authState = {
@@ -14,16 +13,13 @@ const authState = {
 };
 
 const getAuthState = () => {
-  const auth = sessionStorage.getItem("auth");
-  try {
-    const authobj = JSON.parse(auth);
-    const { access_token, refresh_token } = authobj.user;
-    axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
-    return authobj;
-  } catch (error) {
-    return authState;
+  const session = sessionStorage.getItem("session");
+  if (session?.user?.access_token) {
+    return JSON.parse(sessionStorage.getItem("session"));
   }
+  return authState;
 };
+
 const newAuth = getAuthState();
 const authreducer = (state = newAuth, action) => {
   switch (action.type) {
@@ -32,14 +28,11 @@ const authreducer = (state = newAuth, action) => {
         isLoggedIn: true,
         user: action.payload,
       };
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${action.payload.access_token}`;
-      sessionStorage.setItem("auth", JSON.stringify(newAuthState));
+      sessionStorage.setItem("session", JSON.stringify(newAuthState));
       return newAuthState;
 
     case AuthActionType.LOGOUT_SUCCESS:
-      sessionStorage.removeItem("auth");
+      sessionStorage.removeItem("session");
       return authState;
 
     case AuthActionType.LOGIN_SUCCESS:
@@ -47,22 +40,8 @@ const authreducer = (state = newAuth, action) => {
         isLoggedIn: true,
         user: action.payload,
       };
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${action.payload.access_token}`;
-      sessionStorage.setItem("auth", JSON.stringify(loginAuthState));
+      sessionStorage.setItem("session", JSON.stringify(loginAuthState));
       return loginAuthState;
-
-    case AuthActionType.REFRESH_SUCCESS:
-      const refreshAuthState = {
-        isLoggedIn: true,
-        user: action.payload,
-      };
-      axios.defaults.headers.common[
-          "Authorization"
-          ] = `Bearer ${action.payload.access_token}`;
-      sessionStorage.setItem("auth", JSON.stringify(refreshAuthState));
-      return refreshAuthState;
 
     default:
       return state;

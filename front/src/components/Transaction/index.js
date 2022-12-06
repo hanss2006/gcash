@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import "./index.css";
 import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
 import {selectTransaction} from "../../redux/actions/transaction";
+import {axiosPrivate} from "../../helpers/axiosPrivate";
 
 const Transaction = () => {
     //const {transactionGuid} = useParams();
@@ -30,11 +30,11 @@ const Transaction = () => {
     const updateAPIData = (e) => {
         e.preventDefault();
         if (currentTransaction.guid === 'new') {
-            axios.post(`/transaction/`, currentTransaction).then(() => {
+            axiosPrivate.post(`/transaction/`, currentTransaction).then(() => {
                 navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
             })
         } else {
-            axios.put(`/transaction/`, currentTransaction).then(() => {
+            axiosPrivate.put(`/transaction/`, currentTransaction).then(() => {
                 navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
             })
         }
@@ -66,7 +66,7 @@ const Transaction = () => {
             if (currentTransaction.guid === 'new') {
                 navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
             } else {
-                axios.delete(`/transaction/${currentTransaction.guid}`).then(() => {
+                axiosPrivate.delete(`/transaction/${currentTransaction.guid}`).then(() => {
                     navigate(`../transactions/account/${currentTransaction.currentAccountGuid}`);
                 })
             }
@@ -79,7 +79,7 @@ const Transaction = () => {
 
     const loadAccounts = () => {
         //showLoader();
-        axios.get(`/account/`)
+        axiosPrivate.get(`/account/`)
             .then(res => {
                 setAccounts(res.data.content);
             })

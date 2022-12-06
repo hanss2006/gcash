@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useFullPageLoader from "../../hooks/useFullPageLoader";
 import {Pagination, Search, TableHeader} from "../DataTable";
-import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
@@ -11,6 +10,7 @@ import {
     setFilterPageNum, setFilterCurrentAccountFullName
 } from "../../redux/actions/filterAction";
 import {batch} from 'react-redux'
+import {axiosPrivate} from "../../helpers/axiosPrivate";
 
 const TransactionList = () => {
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ const TransactionList = () => {
         if (filterSearchString !== ""){
             url = `${url}&searchString=${encodeURIComponent(filterSearchString)}`;
         }
-        axios.get(url)
+        axiosPrivate.get(url)
             .then(res => {
                 setTransactions(res.data.content);
                 loadTotal(res.data);
@@ -61,7 +61,7 @@ const TransactionList = () => {
     };
 
     const loadTotal = (transactionsData) => {
-        axios.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
+        axiosPrivate.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
             .then(res => {
                 batch(() => {
                     dispatch(setFilterPageNum(transactionsData.number));
@@ -108,38 +108,6 @@ const TransactionList = () => {
         description: '',
         value: 0
     }
-
-    /*
-        const transactionsData = useMemo(() => {
-            let computedTransactions = (transactions != null) ? transactions : [];
-
-            if (search) {
-                computedTransactions = computedTransactions.filter(
-                    transaction =>
-                        transaction.description.toLowerCase().includes(search.toLowerCase())
-                    // || transaction.value.toLowerCase().includes(search.toLowerCase())
-                );
-            }
-
-            //setTotalItems(computedTransactions.length);
-
-            //Sorting comments
-            if (sorting.field) {
-                const reversed = sorting.order === "asc" ? 1 : -1;
-                computedTransactions = computedTransactions.sort(
-                    (a, b) =>
-                        reversed * a[sorting.field].localeCompare(b[sorting.field])
-                );
-            }
-
-            //Current Page slice
-            return computedTransactions.slice(
-                (currentPage - 1) * pageSize,
-                (currentPage - 1) * pageSize + pageSize
-            );
-        }, [transactions, currentPage, search, sorting]);
-    */
-
 
     return (
         <>

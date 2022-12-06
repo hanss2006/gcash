@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 //import useFullPageLoader from "../../hooks/useFullPageLoader";
 import Tree from "../Tree";
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {setFilterMenuLinkTo} from "../../redux/actions/filterAction";
+import {axiosPrivate} from "../../helpers/axiosPrivate";
 
 const TreePage = () => {
     const url = '/account/tree?guid=root';
@@ -21,7 +21,7 @@ const TreePage = () => {
     useEffect(() => {
         dispatch(setFilterMenuLinkTo(`/transactions/account/${filterCurrentAccountGuid}`));
         //showLoader();
-        axios.get(url)
+        axiosPrivate.get(url)
             .then(res => {
                 setAccTree(res.data);
             })

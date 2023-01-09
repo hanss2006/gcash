@@ -45,7 +45,7 @@ public class LoginService {
 
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map,headers);
 
-        ResponseEntity<LoginResponse> response = restTemplate.postForEntity("https://fs:8443/realms/hanss-realm/protocol/openid-connect/token", httpEntity, LoginResponse.class);
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity("https://fs:8443/auth/realms/hanss-realm/protocol/openid-connect/token", httpEntity, LoginResponse.class);
         return new ResponseEntity<>(response.getBody(),HttpStatus.OK);
     }
 
@@ -89,7 +89,7 @@ public class LoginService {
 
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map,headers);
 
-        ResponseEntity<Response> response = restTemplate.postForEntity("https://fs:8443/realms/hanss-realm/protocol/openid-connect/logout", httpEntity, Response.class);
+        ResponseEntity<Response> response = restTemplate.postForEntity("https://fs:8443/auth/realms/hanss-realm/protocol/openid-connect/logout", httpEntity, Response.class);
 
         Response res = new Response();
         if(response.getStatusCode().is2xxSuccessful()) {
@@ -110,7 +110,7 @@ public class LoginService {
 
         HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map,headers);
 
-        ResponseEntity<IntrospectResponse> response = restTemplate.postForEntity("https://fs:8443/realms/hanss-realm/protocol/openid-connect/token/introspect", httpEntity, IntrospectResponse.class);
+        ResponseEntity<IntrospectResponse> response = restTemplate.postForEntity("https://fs:8443/auth/realms/hanss-realm/protocol/openid-connect/token/introspect", httpEntity, IntrospectResponse.class);
         return new ResponseEntity<>(response.getBody(),HttpStatus.OK);
     }
 }

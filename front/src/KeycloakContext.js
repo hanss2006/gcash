@@ -19,7 +19,6 @@ const KeycloackContextProvider = (props) => {
         keycloak.init({
             onLoad: 'login-required'
         }).then(authenticated => {
-            debugger
             setKeycloackValue(keycloak)
             setAuthenticated(authenticated)
             sessionStorage.setItem('token', keycloak.token)

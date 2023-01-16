@@ -21,11 +21,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/actuator/**").hasRole(ADMIN)
-                .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/admin").hasRole(ADMIN)
-                .antMatchers("/**").hasAnyRole(ADMIN, USER)
+                .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole(ADMIN)
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/admin").hasRole(ADMIN)
+                .requestMatchers("/**").hasAnyRole(ADMIN, USER)
                 .anyRequest().denyAll();
         http.oauth2ResourceServer()
                 .jwt()

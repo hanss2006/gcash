@@ -1,37 +1,33 @@
 {
-  "name": "front",
-  "version": "0.1.3",
+  "name": "gcash1",
+  "version": "0.1.0",
   "private": true,
-  "homepage": "/gcash/",
-  "proxy": "http://localhost:8081",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@react-keycloak/web": "^3.4.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
+    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.0",
     "bootstrap": "^5.2.3",
     "keycloak-js": "^20.0.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.2",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.4.4",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
-    "web-vitals": "^3.1.0"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prod": "set \"PUBLIC_URL=/gcash\" && react-scripts build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

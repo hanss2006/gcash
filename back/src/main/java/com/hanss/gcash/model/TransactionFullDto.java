@@ -3,7 +3,7 @@ package com.hanss.gcash.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime ;
 
 @Data

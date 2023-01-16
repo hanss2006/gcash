@@ -1,19 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 import {connect, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import {LogOutAuthAction} from "../../redux/actions/AuthAction";
+import {KeycloackContext} from "../../KeycloakContext";
 
 function Header(props) {
-    const {auth, logout, filterState} = props;
+    const {logout, filterState} = props;
     const navigate = useNavigate();
     const {filterCurrentAccountFullName} = useSelector((state) => state.filterState);
+    const { keycloackValue, authenticated } = useContext(KeycloackContext)
 
     return (
         <header className="p-3 bg-dark text-white">
             <div className="container">
                 <div className="d-flex justify-content-between">
                     <ul className="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-1">
-                        {auth.isLoggedIn ? (
+                        {authenticated ? (
                             <React.Fragment>
                                 <li>
                                     <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
@@ -31,7 +32,7 @@ function Header(props) {
                             </React.Fragment>
                         )}
                     </ul>
-                    {!auth.isLoggedIn ? (
+                    {!authenticated ? (
                         <React.Fragment>
                             <Link to="./login">
                                 <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}>Login</button>
@@ -51,40 +52,6 @@ function Header(props) {
                 </div>
             </div>
         </header>
-        /*
-          <div className="header d-flex justify-content-center py-2 shadow-sm">
-            <ErrorHandler
-              errorHandler={errorHandler || { hasError: false, message: "" }}
-            />
-            <Link to="/">
-              <h5 className="font-weight-bold text-danger mx-3">Gcash</h5>
-            </Link>
-            <div className="ml-auto d-flex">
-              {!auth.isLoggedIn ? (
-                <React.Fragment>
-                  <Link to="./login">
-                    <button className="btn btn-danger btn-sm mx-2">Login</button>
-                  </Link>
-                  <Link to="./register">
-                    <button className="btn btn-danger btn-sm mr-5">Sign up</button>
-                  </Link>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <h5>{auth.user.name}</h5>
-                  <button
-                    className="btn btn-danger btn-sm mx-2"
-                    onClick={() => {
-                      logout(navigate);
-                    }}
-                  >
-                    Log Out
-                  </button>
-                </React.Fragment>
-              )}
-            </div>
-          </div>
-      */
     );
 }
 
@@ -98,7 +65,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         logout: (navigate) => {
-            dispatch(LogOutAuthAction(navigate));
+            //dispatch(LogOutAuthAction(navigate));
         },
     };
 };

@@ -3,17 +3,17 @@ import axios from "axios";
 const axiosInstance = axios.create();
 
 
-const baseURL = "/api/gcash";
+const baseURL = "http://localhost:8081/api/gcash";
 axiosInstance.defaults.baseURL = baseURL;
 axios.defaults.baseURL = baseURL;
 axiosInstance.interceptors.request.use(
     async (config) => {
-        const session = JSON.parse(sessionStorage.getItem("session"));
+        const accessToken = JSON.parse(sessionStorage.getItem("token"));
 
-        if (session?.user?.access_token) {
+        if (accessToken) {
             config.headers = {
                 ...config.headers,
-                authorization: `Bearer ${session?.user?.access_token}`,
+                authorization: `Bearer ${accessToken}`,
             };
         }
         return config;
@@ -28,10 +28,9 @@ axiosInstance.interceptors.response.use(
 
         if (error?.response?.status === 401 && !config?.sent) {
             config.sent = true;
-            const session = JSON.parse(sessionStorage.getItem("session"));
-            const {refresh_token} = session.user;
+            const refreshToken = JSON.parse(sessionStorage.getItem("refresh-token"));
             const result = await axios.post("/auth/refresh", {
-                token: refresh_token,
+                token: refreshToken,
             });
             if (result?.data?.access_token) {
                 config.headers = {
@@ -42,7 +41,7 @@ axiosInstance.interceptors.response.use(
                     isLoggedIn: true,
                     user: result?.data,
                 };
-                sessionStorage.setItem("session", JSON.stringify(newAuthState));
+                sessionStorage.setItem("token", JSON.stringify(newAuthState));
             }
 
             return axios(config);

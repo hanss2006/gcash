@@ -11,7 +11,7 @@ const filterState = {
     filterCurrentAccountFullName: ''
 };
 
-export default (state= filterState, action) => {
+const filterReduser = (state= filterState, action) => {
     switch (action.type) {
         case ActionTypesFilter.FILTER_MENU_LINK_TO:
             return {...state, filterMenuLinkTo: action.payload};
@@ -62,3 +62,5 @@ export default (state= filterState, action) => {
             return state;
     }
 };
+
+export default filterReduser;

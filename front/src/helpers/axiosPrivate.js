@@ -3,14 +3,14 @@ import axios from "axios";
 const axiosInstance = axios.create();
 
 
-const baseURL = "http://localhost:8081/api/gcash";
+const baseURL = "/api/gcash";
 axiosInstance.defaults.baseURL = baseURL;
 axios.defaults.baseURL = baseURL;
 axiosInstance.interceptors.request.use(
     async (config) => {
-        const accessToken = JSON.parse(sessionStorage.getItem("token"));
+        const accessToken = sessionStorage.getItem("token");
 
-        if (accessToken) {
+        if (!!accessToken) {
             config.headers = {
                 ...config.headers,
                 authorization: `Bearer ${accessToken}`,
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
 
         if (error?.response?.status === 401 && !config?.sent) {
             config.sent = true;
-            const refreshToken = JSON.parse(sessionStorage.getItem("refresh-token"));
+            const refreshToken = sessionStorage.getItem("refresh-token");
             const result = await axios.post("/auth/refresh", {
                 token: refreshToken,
             });

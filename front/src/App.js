@@ -11,9 +11,7 @@ function App() {
   const { keycloackValue, authenticated } = useContext(KeycloackContext)
   return (
       <div className="App">
-{/*
           <Header></Header>
-*/}
           <Routes>
               {
                   //auth?.isLoggedIn

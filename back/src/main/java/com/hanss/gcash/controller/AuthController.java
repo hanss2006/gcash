@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 /**
  * REST auth user.
  */
-@AllArgsConstructor
+/*@AllArgsConstructor
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth")*/
 public class AuthController {
     private LoginService loginservice;
 

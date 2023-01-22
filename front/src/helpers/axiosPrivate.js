@@ -1,4 +1,6 @@
 import axios from "axios";
+import {useContext, useEffect} from "react";
+import {KeycloackContext} from "../KeycloakContext";
 
 const axiosInstance = axios.create();
 
@@ -27,24 +29,16 @@ axiosInstance.interceptors.response.use(
         const config = error?.config;
 
         if (error?.response?.status === 401 && !config?.sent) {
-            config.sent = true;
-            const refreshToken = sessionStorage.getItem("refresh-token");
-            const result = await axios.post("/auth/refresh", {
-                token: refreshToken,
-            });
-            if (result?.data?.access_token) {
-                config.headers = {
-                    ...config.headers,
-                    authorization: `Bearer ${result?.data?.access_token}`,
+            const {keycloackValue, authenticated} = useContext(KeycloackContext)
+            useEffect(() => {
+                if (keycloackValue && authenticated) {
+                    keycloackValue.onTokenExpired = () => keycloackValue.updateToken(600);
+                }
+                return () => {
+                    if (keycloackValue) keycloackValue.onTokenExpired = () => {
+                    };
                 };
-                const newAuthState = {
-                    isLoggedIn: true,
-                    user: result?.data,
-                };
-                sessionStorage.setItem("token", JSON.stringify(newAuthState));
-            }
-
-            return axios(config);
+            }, [authenticated, keycloackValue]);
         }
         return Promise.reject(error);
     }

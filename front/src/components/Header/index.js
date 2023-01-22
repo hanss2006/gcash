@@ -1,11 +1,10 @@
 import React, {useContext} from "react";
 import {connect, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {KeycloackContext} from "../../KeycloakContext";
 
 function Header(props) {
-    const {logout, filterState} = props;
-    const navigate = useNavigate();
+    const {filterState} = props;
     const {filterCurrentAccountFullName} = useSelector((state) => state.filterState);
     const { keycloackValue, authenticated } = useContext(KeycloackContext)
 
@@ -42,7 +41,7 @@ function Header(props) {
                         <React.Fragment>
                             <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}
                                     onClick={() => {
-                                        logout(navigate);
+                                        keycloackValue.logout();
                                     }}
                             >
                                 Logout

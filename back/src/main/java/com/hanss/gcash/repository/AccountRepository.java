@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,9 +25,13 @@ public interface AccountRepository extends JpaRepository<Account, String> {
                     "  a.status = ?1 " +
                     "ORDER BY name",
             nativeQuery = true)
-    List <Account> findByGuidNative(String guid);
+    List <Account> findByGuidNative(@Param("guid") String guid);
 
     Page<Account> findByNameContainingIgnoreCaseAndAccountTypeInAndCommodityScuEqualsAndPlaceholderEquals(
-            String name, List<String> accountTypes, Integer commodityScu, Integer placeholder, Pageable pageable
+            @Param("name") String name,
+            @Param("accountTypes") List<String> accountTypes,
+            @Param("commodityScu") Integer commodityScu,
+            @Param("placeholder") Integer placeholder,
+            @Param("pageable") Pageable pageable
     );
 }

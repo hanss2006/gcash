@@ -2,6 +2,7 @@
   "name": "gcash",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/gcash/",
   "proxy": "http://localhost:8081",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -29,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prod": "set \"PUBLIC_URL=/gcash\" && react-scripts build"
+    "prod": "set \"REACT_APP_KEYCLOAK_REALM=hanss-realm\" && set \"REACT_APP_KEYCLOAK_CLIENTID=gcash-client\" && set \"REACT_APP_KEYCLOAK_URL=/auth\" && set \"PUBLIC_URL=/gcash\" && react-scripts build"
   },
   "eslintConfig": {
     "extends": [

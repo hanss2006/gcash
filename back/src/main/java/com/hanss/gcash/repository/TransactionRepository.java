@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -62,12 +63,15 @@ public interface TransactionRepository extends JpaRepository<Transaction, String
                     "t1.account_guid =  ?1 " +
                     "AND transactions.description LIKE ?2 ",
             nativeQuery = true)
-    public Page<TransactionShortDto> findByAccountGuidNative(String accountGuid, String searchString, Pageable pageable);
+    public Page<TransactionShortDto> findByAccountGuidNative(
+            @Param("accountGuid") String accountGuid,
+            @Param("searchString") String searchString,
+            @Param("pageable") Pageable pageable);
 
     @Query(value = " SELECT\n" +
             "    ROUND(SUM(CAST(quantity_num AS numeric) / quantity_denom), 2) AS total_by_current\n" +
             "    FROM splits\n" +
             "    WHERE account_guid = ?",
             nativeQuery = true)
-    Double getAccountTotal(String accountGuid);
+    Double getAccountTotal(@Param("accountGuid")  String accountGuid);
 }

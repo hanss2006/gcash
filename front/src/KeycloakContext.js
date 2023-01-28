@@ -24,6 +24,16 @@ const KeycloackContextProvider = (props) => {
             sessionStorage.setItem('token', keycloak.token)
             sessionStorage.setItem('refresh-token', keycloak.refreshToken)
         })
+
+        keycloak.onTokenExpired = () => {
+            //Setting the update (refresh) of our token
+            keycloak.updateToken(5).then((refreshed) => {
+                if (refreshed) {
+                    sessionStorage.setItem('token', keycloak.token);
+                    sessionStorage.setItem('refresh-token', keycloak.refreshToken)
+                }
+            });
+        };
     }
 
     const logout = () => {

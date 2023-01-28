@@ -8,7 +8,7 @@ import Error from "./components/Error";
 import Header from "./components/Header";
 
 function App() {
-    const {keycloackValue, authenticated} = useContext(KeycloackContext)
+    const {keycloackValue, authenticated} = useContext(KeycloackContext);
     return (
         <div className="App">
             <Header></Header>

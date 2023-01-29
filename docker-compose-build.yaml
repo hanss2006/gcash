@@ -1,0 +1,57 @@
+version: '3.7'
+# Source: https://github.com/keycloak/keycloak-containers/blob/main/docker-compose-examples/keycloak-postgres.yml
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  react-app:
+    image: gcash:latest
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - type: bind
+        source: ./keycloak.json
+        target: /usr/share/nginx/html/config/keycloak.json
+    environment:
+      REACT_APP_KEYCLOAK_CLIENTID: test
+      REACT_APP_KEYCLOAK_REALM: test
+      REACT_APP_KEYCLOAK_URL: http://localhost/auth
+    depends_on:
+      - keycloak
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+  keycloak:
+    # Keycloak 20.0.3
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev
+    volumes:
+      - type: bind
+        source: ./realm-export.json
+        target: /tmp/realm-export.json
+    environment:
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KEYCLOAK_IMPORT: /tmp/realm-export.json
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres

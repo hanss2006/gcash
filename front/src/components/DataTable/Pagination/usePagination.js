@@ -1,14 +1,13 @@
 import {useMemo} from "react";
-
-export const DOTS = '...';
-
+export const DOTS1 = '...';
+export const DOTS2 = '....';
 export const usePagination = ({
                                   totalCount,
                                   pageSize,
                                   siblingCount = 1,
                                   currentPage
                               }) => {
-    const paginationRange = useMemo(() => {
+    return  useMemo(() => {
         const totalPageCount = Math.ceil(totalCount / pageSize);
 
         // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
@@ -48,7 +47,7 @@ export const usePagination = ({
             let leftItemCount = 3 + 2 * siblingCount;
             let leftRange = range(1, leftItemCount);
 
-            return [...leftRange, DOTS, totalPageCount];
+            return [...leftRange, DOTS1, totalPageCount];
         }
 
         /*
@@ -61,7 +60,7 @@ export const usePagination = ({
                 totalPageCount - rightItemCount + 1,
                 totalPageCount
             );
-            return [firstPageIndex, DOTS, ...rightRange];
+            return [firstPageIndex, DOTS2, ...rightRange];
         }
 
         /*
@@ -69,11 +68,9 @@ export const usePagination = ({
         */
         if (shouldShowLeftDots && shouldShowRightDots) {
             let middleRange = range(leftSiblingIndex, rightSiblingIndex);
-            return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
+            return [firstPageIndex, DOTS1, ...middleRange, DOTS2, lastPageIndex];
         }
     }, [totalCount, pageSize, siblingCount, currentPage]);
-
-    return paginationRange;
 };
 
 const range = (start, end) => {

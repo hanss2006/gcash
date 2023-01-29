@@ -1,6 +1,6 @@
 {
   "name": "gcash",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "private": true,
   "homepage": "/gcash/",
   "proxy": "http://localhost:8081",
@@ -10,7 +10,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/user-event": "^14.4.3",
     "axios": "^1.2.0",
     "bootstrap": "^5.2.3",
     "keycloak-js": "^20.0.3",
@@ -23,14 +23,14 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prod": "set \"REACT_APP_KEYCLOAK_REALM=hanss-realm\" && set \"REACT_APP_KEYCLOAK_CLIENTID=gcash-client\" && set \"REACT_APP_KEYCLOAK_URL=/auth\" && set \"PUBLIC_URL=/gcash\" && react-scripts build"
+    "prod": "set \"REACT_APP_KEYCLOAK_REALM=hanss-realm\" && set \"REACT_APP_KEYCLOAK_CLIENTID=gcash-client\" && set \"REACT_APP_KEYCLOAK_URL=https://xxxx.us.to/auth\" && set \"PUBLIC_URL=/gcash\" && react-scripts build"
   },
   "eslintConfig": {
     "extends": [

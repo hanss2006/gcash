@@ -33,9 +33,11 @@ function Header(props) {
                     </ul>
                     {!authenticated ? (
                         <React.Fragment>
+{/*
                             <Link to="./login">
                                 <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}>Login</button>
                             </Link>
+*/}
                         </React.Fragment>
                     ) : (
                         <React.Fragment>

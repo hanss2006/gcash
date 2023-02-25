@@ -1,3 +1,4 @@
+import './App.css';
 import {KeycloackContext} from "./KeycloakContext";
 import React, {useContext} from "react";
 import {Route, Routes} from "react-router-dom";
@@ -10,23 +11,28 @@ import Header from "./components/Header";
 function App() {
     const {keycloackValue, authenticated} = useContext(KeycloackContext);
     return (
-        <div className="App">
-            <Header></Header>
-            <Routes>
-                {
-                    //auth?.isLoggedIn
-                    (keycloackValue && authenticated)
-                        ? <>
-                            <Route exact path="/" element={<TransactionList/>}/>
-                            <Route exact path="tree" element={<TreePage/>}/>
-                            <Route exact path="transactions/account/:accountGuid" element={<TransactionList/>}/>
-                            <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
-                        </>
-                        : <></>
-                }
-                <Route path="*" element={<Error/>}/>
-            </Routes>
-        </div>
+        (keycloackValue && authenticated) ?
+            <React.Fragment>
+                <div className="container">
+                    <Header/>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <TreePage/>
+                            <Routes>
+                                {
+                                    <React.Fragment>
+                                        <Route exact path="/" element={<TransactionList/>}/>
+                                        <Route exact path="transactions/account/:accountGuid" element={<TransactionList/>}/>
+                                        <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
+                                    </React.Fragment>
+                                }
+                                <Route path="*" element={<Error/>}/>
+                            </Routes>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
+            : <></>
     );
 }
 

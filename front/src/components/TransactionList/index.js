@@ -108,75 +108,72 @@ const TransactionList = () => {
         description: '',
         value: 0
     }
-
     return (
         <>
-            <div className="row w-100">
-                <div className="col mb-3 col-12 text-center">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <button type='submit' onClick={addTransaction} className="btn btn-outline-primary">New</button>
-                        </div>
-                        <div className="col-md-6 d-flex flex-row-reverse">
-                            <Search
-                                onSearch={value => {
-                                    dispatch(setFilterSearchString(value));
-                                    setPage(0);
-                                }}
-                            />
-                        </div>
+            <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div className="btn-toolbar mb-2 mb-md-0">
+                        <button type="button" className="btn btn-sm btn-outline-secondary"
+                                onClick={addTransaction}
+                        >
+                            New
+                        </button>
                     </div>
-
-                    <table className="table table-striped">
-                        <TableHeader
-                            headers={headers}
-                            onSorting={(field, order) => dispatch(filterSortCol(field))}
-                        />
+                </div>
+                <div className="table-responsive">
+                    <table className="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Value</th>
+                        </tr>
+                        </thead>
                         <tbody>
                         {transactions.map(transaction => (
-                            <tr key={transaction.guid}>
-                                <th scope="row">
-                                    <Link to={`/transactions/${transaction.guid}`}
-                                          onClick={() => selectCurrentTransaction(transaction)}>
-                                        {transaction.description}
-                                    </Link>
-                                </th>
-                                <td>
-                                    <Link to={`/transactions/${transaction.guid}`}
-                                          onClick={() => selectCurrentTransaction(transaction)}>
-                                        {new Date(transaction.postDate)
-                                            .toLocaleTimeString('ru-Ru',
-                                                {
-                                                    year: 'numeric',
-                                                    month: 'numeric',
-                                                    day: 'numeric',
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                }
-                                            )
-                                        }
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={`/transactions/${transaction.guid}`}
-                                          onClick={() => selectCurrentTransaction(transaction)}>
-                                        {transaction.value}
-                                    </Link>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <Link to={`/transactions/${transaction.guid}`}
+                                    onClick={() => selectCurrentTransaction(transaction)}>
+                                    {transaction.description}
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to={`/transactions/${transaction.guid}`}
+                                      onClick={() => selectCurrentTransaction(transaction)}>
+                                    {new Date(transaction.postDate)
+                                        .toLocaleTimeString('ru-Ru',
+                                            {
+                                                year: 'numeric',
+                                                month: 'numeric',
+                                                day: 'numeric',
+                                                hour: '2-digit',
+                                                minute: '2-digit'
+                                            }
+                                        )
+                                    }
+                                </Link>
+                            </td>
+                            <td>
+                                <Link to={`/transactions/${transaction.guid}`}
+                                      onClick={() => selectCurrentTransaction(transaction)}>
+                                    {transaction.value}
+                                </Link>
+                            </td>
+                        </tr>
                         ))}
                         </tbody>
                     </table>
-                    <Pagination
-                        className="pagination-container"
-                        currentPage={filterPageNum + 1}
-                        totalCount={filterItemsNum}
-                        pageSize={filterPageSize}
-                        onPageChange={page => setPage(page - 1)}
-                    />
                 </div>
-            </div>
-            {loader}
+                <Pagination
+                    className="pagination-container"
+                    currentPage={filterPageNum + 1}
+                    totalCount={filterItemsNum}
+                    pageSize={filterPageSize}
+                    onPageChange={page => setPage(page - 1)}
+                />
+            </main>
         </>
     );
 };

@@ -132,7 +132,7 @@ const TransactionList = () => {
                         </thead>
                         <tbody>
                         {transactions.map(transaction => (
-                        <tr>
+                        <tr key={transaction.guid} >
                             <td>
                                 <Link to={`/transactions/${transaction.guid}`}
                                     onClick={() => selectCurrentTransaction(transaction)}>

@@ -94,7 +94,7 @@ const Transaction = () => {
     };
 
     return (
-        <div>
+        <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <form onSubmit={updateAPIData}>
                 <input
                     type='hidden'
@@ -159,7 +159,7 @@ const Transaction = () => {
                 <button type='button' onClick={duplicateAPIData} className="btn btn-outline-info">Double</button>
                 <button type='reset' onClick={cancelAPIData} className="btn btn-outline-secondary">Cancel</button>
             </form>
-        </div>
+        </main>
     )
 }
 

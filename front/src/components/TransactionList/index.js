@@ -38,7 +38,7 @@ const TransactionList = () => {
     const loadTransactions = () => {
         showLoader();
         let url = `/transaction/account/${filterCurrentAccountGuid}?page=${filterPageNum}&size=${filterPageSize}`;
-        if (filterSearchString !== ""){
+        if (filterSearchString !== "") {
             url = `${url}&searchString=${encodeURIComponent(filterSearchString)}`;
         }
         axiosPrivate.get(url)
@@ -63,11 +63,13 @@ const TransactionList = () => {
     const loadTotal = (transactionsData) => {
         axiosPrivate.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
             .then(res => {
+                const title = `Gcash : ${res.data.accountFullName} : ${res.data.accountTotal}`;
+                document.title = title;
                 batch(() => {
                     dispatch(setFilterPageNum(transactionsData.number));
                     dispatch(setFilterPageSize(transactionsData.size));
                     dispatch(setFilterItemsNum(transactionsData.totalElements));
-                    dispatch(setFilterCurrentAccountFullName(`${res.data.accountFullName} : ${res.data.accountTotal}`));
+                    dispatch(setFilterCurrentAccountFullName(title));
                 })
             })
             .catch(error => {
@@ -98,7 +100,7 @@ const TransactionList = () => {
     }
 
     let date = new Date();
-    date.setHours(new Date().getHours()+3);
+    date.setHours(new Date().getHours() + 3);
 
     const newTransaction = {
         postDate: date.toISOString().slice(0, -8),
@@ -132,36 +134,36 @@ const TransactionList = () => {
                         </thead>
                         <tbody>
                         {transactions.map(transaction => (
-                        <tr key={transaction.guid} >
-                            <td>
-                                <Link to={`/transactions/${transaction.guid}`}
-                                    onClick={() => selectCurrentTransaction(transaction)}>
-                                    {transaction.description}
-                                </Link>
-                            </td>
-                            <td>
-                                <Link to={`/transactions/${transaction.guid}`}
-                                      onClick={() => selectCurrentTransaction(transaction)}>
-                                    {new Date(transaction.postDate)
-                                        .toLocaleTimeString('ru-Ru',
-                                            {
-                                                year: 'numeric',
-                                                month: 'numeric',
-                                                day: 'numeric',
-                                                hour: '2-digit',
-                                                minute: '2-digit'
-                                            }
-                                        )
-                                    }
-                                </Link>
-                            </td>
-                            <td>
-                                <Link to={`/transactions/${transaction.guid}`}
-                                      onClick={() => selectCurrentTransaction(transaction)}>
-                                    {transaction.value}
-                                </Link>
-                            </td>
-                        </tr>
+                            <tr key={transaction.guid}>
+                                <td>
+                                    <Link to={`/transactions/${transaction.guid}`}
+                                          onClick={() => selectCurrentTransaction(transaction)}>
+                                        {transaction.description}
+                                    </Link>
+                                </td>
+                                <td>
+                                    <Link to={`/transactions/${transaction.guid}`}
+                                          onClick={() => selectCurrentTransaction(transaction)}>
+                                        {new Date(transaction.postDate)
+                                            .toLocaleTimeString('ru-Ru',
+                                                {
+                                                    year: 'numeric',
+                                                    month: 'numeric',
+                                                    day: 'numeric',
+                                                    hour: '2-digit',
+                                                    minute: '2-digit'
+                                                }
+                                            )
+                                        }
+                                    </Link>
+                                </td>
+                                <td>
+                                    <Link to={`/transactions/${transaction.guid}`}
+                                          onClick={() => selectCurrentTransaction(transaction)}>
+                                        {transaction.value}
+                                    </Link>
+                                </td>
+                            </tr>
                         ))}
                         </tbody>
                     </table>

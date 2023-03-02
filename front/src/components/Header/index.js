@@ -21,7 +21,7 @@ function Header(props) {
                     <div className="nav-item text-nowrap">
                         <a className="nav-link px-3"
                            onClick={() => {
-                               navigate("/gcash/");
+                               navigate("/");
                                keycloackValue.logout();
                            }}
                         >Sign out</a>

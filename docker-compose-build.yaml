@@ -30,7 +30,7 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: password
   keycloak:
-    # Keycloak 20.0.3
+    # Keycloak 21.0.1
     image: quay.io/keycloak/keycloak:latest
     command: start-dev
     volumes:

@@ -6,7 +6,7 @@ import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    setFilterSearchString, setFilterMenuLinkTo, setFilterPageSize, setFilterItemsNum,
+    setFilterMenuLinkTo, setFilterPageSize, setFilterItemsNum,
     setFilterPageNum, setFilterCurrentAccountFullName
 } from "../../redux/actions/filterAction";
 import {batch} from 'react-redux'
@@ -63,13 +63,11 @@ const TransactionList = () => {
     const loadTotal = (transactionsData) => {
         axiosPrivate.get(`/transaction/sum/account/${filterCurrentAccountGuid}`)
             .then(res => {
-                const title = `Gcash : ${res.data.accountFullName} : ${res.data.accountTotal}`;
-                document.title = title;
                 batch(() => {
                     dispatch(setFilterPageNum(transactionsData.number));
                     dispatch(setFilterPageSize(transactionsData.size));
                     dispatch(setFilterItemsNum(transactionsData.totalElements));
-                    dispatch(setFilterCurrentAccountFullName(title));
+                    dispatch(setFilterCurrentAccountFullName(`${res.data.accountTotal}:${res.data.accountFullName}`));
                 })
             })
             .catch(error => {

@@ -1,8 +1,10 @@
 import React from "react";
 import "./search.css";
 import {setFilterPageNum, setFilterSearchString} from "../../../redux/actions/filterAction";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 const Search = ({ onSearch }) => {
+    const { filterCurrentAccountFullName } = useSelector((state) => state.filterState);
+
     const dispatch = useDispatch();
     const setPage = (numPage) => {
         dispatch(setFilterPageNum(numPage));
@@ -10,7 +12,7 @@ const Search = ({ onSearch }) => {
     return (
         <React.Fragment>
             <input
-                type="search" id="search" className="form-control-dark form-control w-100" type="text" placeholder="Search"
+                type="search" id="search" className="form-control-dark form-control w-100" type="text" placeholder={filterCurrentAccountFullName}
                     aria-label="Search"
                 onChange={e => {
                     dispatch(setFilterSearchString(e.target.value.toLowerCase()));

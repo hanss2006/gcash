@@ -1,74 +1,35 @@
 import React, {useContext} from "react";
-import {connect, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {KeycloackContext} from "../../KeycloakContext";
+import Search from "./Search";
+import "./index.css"
 
 function Header(props) {
-    const {filterState} = props;
-    const {filterCurrentAccountFullName} = useSelector((state) => state.filterState);
-    const { keycloackValue, authenticated } = useContext(KeycloackContext)
-
+    const {keycloackValue} = useContext(KeycloackContext);
+    const navigate = useNavigate();
     return (
-        <header className="p-3 bg-dark text-white">
-            <div className="container">
-                <div className="d-flex justify-content-between">
-                    <ul className="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-1">
-                        {authenticated ? (
-                            <React.Fragment>
-                                <li>
-                                    <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
-                                        <img src='./images/menu.png' alt="Menu" />
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to={filterState.filterMenuLinkTo} className="nav-link px-2 text-secondary">
-                                        <span>{filterCurrentAccountFullName}</span>
-                                    </Link>
-                                </li>
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                            </React.Fragment>
-                        )}
-                    </ul>
-                    {!authenticated ? (
-                        <React.Fragment>
-{/*
-                            <Link to="./login">
-                                <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}>Login</button>
-                            </Link>
-*/}
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <button type="button" className="btn btn-outline-light me-2" style={{height: "38px"}}
-                                    onClick={() => {
-                                        keycloackValue.logout();
-                                    }}
-                            >
-                                Logout
-                            </button>
-                        </React.Fragment>
-                    )}
+        <React.Fragment>
+            <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+                <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/gcash/">Gcash</a>
+                <button class="navbar-toggler position-absolute d-md-none collapsed" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <Search/>
+                <div className="navbar-nav">
+                    <div className="nav-item text-nowrap">
+                        <a className="nav-link px-3"
+                           onClick={() => {
+                               navigate("/");
+                               keycloackValue.logout();
+                           }}
+                        >Sign out</a>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        </React.Fragment>
     );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        auth: state.authState,
-        filterState: state.filterState,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        logout: (navigate) => {
-            //dispatch(LogOutAuthAction(navigate));
-        },
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

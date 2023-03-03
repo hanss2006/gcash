@@ -1,12 +1,13 @@
 import {ActionTypesFilter} from "../actions/filterAction";
 
+const filterCurrentAccountGuid = '063ad681f1bef56cdb8be3695a74f9d6';
 const filterState = {
     filterMenuLinkTo: '/',
     filterSearchString: '',
     filterPageNum: 0,
     filterItemsNum: 0,
     filterSortCol: '',
-    filterCurrentAccountGuid: '063ad681f1bef56cdb8be3695a74f9d6',
+    filterCurrentAccountGuid: filterCurrentAccountGuid,
     filterPageSize: 5,
     filterCurrentAccountFullName: ''
 };

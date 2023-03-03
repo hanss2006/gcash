@@ -111,7 +111,7 @@ public class TransactionService {
         Account account = accountRepository.findById(accountGuid).get();
         String fullName = account.getName();
         for (Account acc = account.getParent(); acc.getParent()!=null; acc=acc.getParent()){
-            fullName = acc.getName() + ":" + fullName;
+            fullName = fullName + ":" + acc.getName();
         }
         accountTotalDto.setAccountFullName(fullName);
         return accountTotalDto;

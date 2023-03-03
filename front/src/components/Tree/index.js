@@ -4,18 +4,20 @@ import "./index.css";
 import * as fontawesome from "@fortawesome/fontawesome-svg-core";
 import {faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch} from "react-redux";
-import {setFilterCurrentAccountFullName, setFilterCurrentAccountGuid, setFilterMenuLinkTo} from "../../redux/actions/filterAction";
+import {
+    setFilterCurrentAccountFullName,
+    setFilterCurrentAccountGuid,
+    setFilterMenuLinkTo
+} from "../../redux/actions/filterAction";
 import {axiosPrivate} from "../../helpers/axiosPrivate";
 
 const Tree = ({data = []}) => {
     return (
-        <div className="d-tree">
-            <ul className="d-flex d-tree-container flex-column">
-                {data.map((tree) => (
-                    <TreeNode key={tree.guid} node={tree}/>
-                ))}
-            </ul>
-        </div>
+        <React.Fragment>
+            {data.map((tree) => (
+                <TreeNode key={tree.guid} node={tree}/>
+            ))}
+        </React.Fragment>
     );
 };
 
@@ -47,7 +49,7 @@ const TreeNode = ({node}) => {
     fontawesome.library.add(faCaretRight);
 
     return (
-        <li className="d-tree-node border-0">
+        <li key={node.guid} className="d-tree-node border-0">
             <div className="d-flex" onClick={(e) => selectCurrentAccount(node.guid)}>
                 {hasChild && (
                     <div

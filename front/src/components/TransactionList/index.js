@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import useFullPageLoader from "../../hooks/useFullPageLoader";
-import {Pagination, Search, TableHeader} from "../DataTable";
+//import useFullPageLoader from "../../hooks/useFullPageLoader";
+import {Pagination} from "../DataTable";
 import {Link, useNavigate} from "react-router-dom";
 import "./index.css";
 import {selectTransaction} from "../../redux/actions/transaction";
@@ -23,12 +23,7 @@ const TransactionList = () => {
         hasError: false,
         message: "",
     });
-    const headers = [
-        {name: "Comment", field: "description", sortable: false},
-        {name: "Date", field: "postDate", sortable: false},
-        {name: "Value", field: "value", sortable: false}
-    ];
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
+    //const [showLoader, hideLoader] = useFullPageLoader();
     const dispatch = useDispatch();
     const selectCurrentTransaction = (transaction) => {
         dispatch(selectTransaction({...transaction}));
@@ -36,7 +31,7 @@ const TransactionList = () => {
     };
 
     const loadTransactions = () => {
-        showLoader();
+        //showLoader();
         let url = `/transaction/account/${filterCurrentAccountGuid}?page=${filterPageNum}&size=${filterPageSize}`;
         if (filterSearchString !== "") {
             url = `${url}&searchString=${encodeURIComponent(filterSearchString)}`;
@@ -56,7 +51,7 @@ const TransactionList = () => {
                 }
             })
             .finally(() => {
-                hideLoader();
+                //hideLoader();
             });
     };
 
@@ -97,6 +92,12 @@ const TransactionList = () => {
         navigate(`/transactions/new`);
     }
 
+    const importList = (e) => {
+        e.preventDefault();
+        selectCurrentTransaction(newTransaction);
+        navigate(`/transactions/import`);
+    }
+
     let date = new Date();
     date.setHours(new Date().getHours() + 3);
 
@@ -118,6 +119,11 @@ const TransactionList = () => {
                                 onClick={addTransaction}
                         >
                             New
+                        </button>
+                        <button type="button" className="btn btn-sm btn-outline-secondary"
+                                onClick={importList}
+                        >
+                            Import
                         </button>
                     </div>
                 </div>

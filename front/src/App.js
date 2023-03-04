@@ -14,7 +14,7 @@ function App() {
     return (
         (keycloackValue && authenticated) ?
             <React.Fragment>
-                <div className="container">
+                <div className="main">
                     <Header/>
                     <div className="container-fluid">
                         <div className="row">

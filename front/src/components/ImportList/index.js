@@ -3,11 +3,19 @@ import "./index.css";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectTransaction} from "../../redux/actions/transaction";
+import {selectImports} from "../../redux/actions/imports";
 
 function ImportList(props) {
     const [file, setFile] = useState();
-    const [transactions, setTransactions] = useState([]);
-    const {currentTransaction} = useSelector((state) => state.transactionState);
+    //const [transactions, setTransactions] = useState([]);
+    const {imports} = useSelector((state) => state.importsState);
+
+/*
+    if (Array.isArray(Object.values(imports)) && Object.values(imports).length){
+        setTransactions(Object.values(imports));
+    }
+*/
+
     const dispatch = useDispatch();
 
     const fileReader = new FileReader();
@@ -33,19 +41,24 @@ function ImportList(props) {
         let transactions = new Array();
         array.forEach(function(item){
             if (item['"Статус"']==='"OK"'){
+                const dateStr = item['"Дата операции"'].replace(/["]/g,'');
+                const parts = dateStr.split('.');
+                const formattedDate = `${parts[1]}.${parts[0]}.${parts[2]}`;
+                const date = new Date(formattedDate).toISOString().slice(0, 16);
                 transactions.push(
                     {
-                        postDate: item['"Дата операции"'].replace(/["]/g,''),
+                        postDate: date,
                         guid: 'new',
                         currentAccountGuid: filterCurrentAccountGuid,
                         accountGuid: '',
                         description: item['"Описание"'].replace(/["]/g,''),
-                        value: item['"Сумма операции"'].replace(/["]/g,'')
+                        value: item['"Сумма операции"'].replace(/["]/g,'').replace(/[,]/g, ".")
                     }
                 );
             }
         })
-        setTransactions(transactions);
+        //setTransactions(transactions);
+        dispatch(selectImports(transactions));
     };
 
     const handleOnSubmit = (e) => {
@@ -71,17 +84,6 @@ function ImportList(props) {
         dispatch(selectTransaction({...transaction}));
         //navigate(`/transactions/${transaction.guid}`);
     };
-
-/*
-    {array.map((item) => (
-        <tr key={item.id}>
-            {Object.values(item).map((val) => (
-                <td>{val}</td>
-            ))}
-        </tr>
-    ))}
-*/
-
 
     return (
         <>
@@ -120,8 +122,8 @@ function ImportList(props) {
                         </tr>
                         </thead>
                         <tbody>
-                        {transactions.map(transaction => (
-                            <tr key={transaction.guid}>
+                        {Object.values(imports).map(transaction => (
+                            <tr key={transaction.postDate}>
                                 <td>
                                     <Link to={`/transactions/${transaction.guid}`}
                                           onClick={() => selectCurrentTransaction(transaction)}>

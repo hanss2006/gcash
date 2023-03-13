@@ -7,13 +7,14 @@ import TreePage from "./components/TreePage";
 import Transaction from "./components/Transaction";
 import Error from "./components/Error";
 import Header from "./components/Header";
+import ImportList from "./components/ImportList";
 
 function App() {
     const {keycloackValue, authenticated} = useContext(KeycloackContext);
     return (
         (keycloackValue && authenticated) ?
             <React.Fragment>
-                <div className="container">
+                <div className="main">
                     <Header/>
                     <div className="container-fluid">
                         <div className="row">
@@ -24,6 +25,7 @@ function App() {
                                         <Route exact path="/" element={<TransactionList/>}/>
                                         <Route exact path="transactions/account/:accountGuid" element={<TransactionList/>}/>
                                         <Route exact path="transactions/:transactionGuid" element={<Transaction/>}/>
+                                        <Route exact path="transactions/import" element={<ImportList/>}/>
                                     </React.Fragment>
                                 }
                                 <Route path="*" element={<Error/>}/>
